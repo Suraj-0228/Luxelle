@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/auth');
-const plantRoutes = require('./routes/plants');
+const productRoutes = require('./routes/products');
 const wishlistRoutes = require('./routes/wishlist');
 const orderRoutes = require('./routes/orders');
 const userRoutes = require('./routes/users');
@@ -24,14 +24,14 @@ app.use((req, res, next) => {
 });
 
 // Database Connection
-const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/plant-nursery';
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/fashion_store_db';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected!'))
   .catch(err => console.log(err));
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/plants', plantRoutes);
+app.use('/api/products', productRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);

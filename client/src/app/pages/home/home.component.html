@@ -1,0 +1,153 @@
+<!-- Hero Section -->
+<div class="relative h-screen min-h-[600px] w-full my-5 bg-gray-900 flex items-center justify-center overflow-hidden">
+    <!-- Background Gradient/Image Overlay -->
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1600&auto=format&fit=crop&q=80"
+            alt="Luxury Fashion" class="w-full h-full object-cover opacity-50 scale-105 animate-slow-zoom">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <span
+            class="inline-block py-1 px-3 border border-white/30 rounded-full text-xs font-medium tracking-widest text-white/90 uppercase mb-6 backdrop-blur-sm">
+            Spring Collection 2026
+        </span>
+        <h1
+            class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-2xl">
+            Redefine Your <br /> <span class="italic text-primary-400">Elegance</span>
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+            Curated pieces for the modern visionary. Experience luxury in every detail.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a routerLink="/shop"
+                class="px-8 py-4 bg-white text-gray-900 text-sm tracking-widest uppercase font-bold hover:bg-gray-100 transition-all transform hover:-translate-y-1 shadow-2xl min-w-[180px]">
+                Shop Latest
+            </a>
+            <a routerLink="/shop"
+                class="px-8 py-4 border border-white text-white text-sm tracking-widest uppercase font-bold hover:bg-white/10 transition-all backdrop-blur-sm min-w-[180px]">
+                View Lookbook
+            </a>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+</div>
+
+<!-- Value Propositions -->
+<div class="bg-white py-16 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-100">
+            <div *ngFor="let prop of valueProps"
+                class="p-6 group hover:bg-gray-50 transition-colors duration-300 rounded-lg">
+                <div
+                    class="w-12 h-12 mx-auto bg-gray-100 rounded-full flex items-center justify-center text-gray-900 mb-4 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="prop.icon">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-serif font-bold text-gray-900 mb-2">{{prop.title}}</h3>
+                <p class="text-sm text-gray-500 font-light">{{prop.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories Grid (Bento Style) -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">Curated Collections</h2>
+        <div class="w-24 h-1 bg-primary-500 mx-auto"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-auto md:h-[600px]">
+        <!-- Large Item -->
+        <div
+            class="relative group overflow-hidden md:col-span-2 lg:col-span-2 rounded-none md:rounded-lg h-96 md:h-full cursor-pointer">
+            <img [src]="categories[0].image"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 brightness-90 group-hover:brightness-100">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90">
+            </div>
+            <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full">
+                <span
+                    class="text-white/70 text-sm tracking-widest uppercase mb-2 block transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Collection</span>
+                <h3 class="text-3xl md:text-5xl font-serif text-white mb-4">{{categories[0].title}}</h3>
+                <a [routerLink]="categories[0].link"
+                    class="inline-flex items-center text-white border-b border-white pb-1 hover:text-primary-400 hover:border-primary-400 transition-colors">
+                    Explore Now <span class="ml-2">→</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Stacked Items -->
+        <div class="flex flex-col gap-6 h-full">
+            <div *ngFor="let cat of categories.slice(1)"
+                class="relative group overflow-hidden flex-1 rounded-none md:rounded-lg cursor-pointer h-80 md:h-auto">
+                <img [src]="cat.image"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-75 group-hover:brightness-90">
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute inset-0 flex flex-col justify-center items-center text-center p-6">
+                    <h3
+                        class="text-2xl font-serif text-white mb-2 transform group-hover:-translate-y-2 transition-transform duration-300">
+                        {{cat.title}}</h3>
+                    <a [routerLink]="cat.link"
+                        class="text-sm text-white/90 border-b border-white/50 pb-0.5 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        Shop Category
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Arrivals -->
+<div class="bg-accent/30 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div>
+                <span class="text-primary-600 font-bold tracking-widest text-xs uppercase mb-2 block">New In</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900">Featured Arrivals</h2>
+            </div>
+            <a routerLink="/shop"
+                class="group flex items-center text-sm font-bold uppercase tracking-widest hover:text-primary-700 transition-colors">
+                View All Products
+                <span class="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <app-product-card *ngFor="let product of featuredProducts" [product]="product"></app-product-card>
+        </div>
+    </div>
+</div>
+
+<!-- Newsletter -->
+<div class="bg-gray-900 py-24 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 pointer-events-none">
+        <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0 100 C 20 0 50 0 100 100 Z" fill="white" />
+        </svg>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-serif text-white mb-6">Join the Inner Circle</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto mb-10 font-light">
+            Subscribe to receive updates on new arrivals, special offers, and exclusive access to our VIP events.
+        </p>
+        <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+            <input type="email" placeholder="Your email address"
+                class="flex-1 bg-white/5 border border-white/10 text-white placeholder-gray-500 px-6 py-4 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all rounded-sm">
+            <button
+                class="bg-primary-600 text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-primary-500 transition-colors rounded-sm shadow-lg hover:shadow-primary-600/20">
+                Subscribe
+            </button>
+        </form>
+    </div>
+</div>

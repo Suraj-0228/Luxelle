@@ -1,0 +1,95 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Mobile Header (Breadcrumbs) -->
+        <div class="lg:hidden mb-8">
+            <h1 class="text-3xl font-serif font-bold text-gray-900">My Account</h1>
+        </div>
+
+        <div class="lg:grid lg:grid-cols-12 lg:gap-x-12">
+            <!-- Sidebar (Desktop) -->
+            <div class="hidden lg:block lg:col-span-3">
+                <app-profile-sidebar></app-profile-sidebar>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-9">
+                <!-- Dashboard Welcome -->
+                <div class="mb-10 flex items-end justify-between">
+                    <div>
+                        <h2 class="text-2xl font-serif font-medium text-gray-900">Dashboard</h2>
+                        <p class="mt-1 text-gray-500 font-light" *ngIf="user()">Hello, {{ user().fullname }}</p>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <!-- Ideally we would calculate these real stats. For now using placeholders or derived values if available -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white p-6 border border-gray-400 rounded-sm">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Orders</p>
+                        <p class="text-2xl font-serif text-gray-900">--</p>
+                        <a routerLink="/orders" class="text-xs text-primary-600 mt-2 hover:underline inline-block">View
+                            History</a>
+                    </div>
+                    <div class="bg-white p-6 border border-gray-400 rounded-sm">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Wishlist</p>
+                        <p class="text-2xl font-serif text-gray-900">--</p>
+                        <a routerLink="/wishlist"
+                            class="text-xs text-primary-600 mt-2 hover:underline inline-block">View Saved</a>
+                    </div>
+                    <div class="bg-white p-6 border border-gray-400 rounded-sm">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Account Status</p>
+                        <p class="text-sm font-medium text-green-600 mt-1 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                            Active Member
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Account Information (Grid) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" *ngIf="user()">
+                    <!-- Profile Info -->
+                    <div class="bg-white p-8 border border-gray-400 shadow-sm rounded-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-serif text-lg text-gray-900">Profile Information</h3>
+                            <button class="text-gray-400 hover:text-gray-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <span
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Name</span>
+                                <span class="text-sm text-gray-900">{{ user().fullname }}</span>
+                            </div>
+                            <div>
+                                <span
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Email</span>
+                                <span class="text-sm text-gray-900">{{ user().email }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Primary Address (Mockup or Link) -->
+                    <div class="bg-white p-8 border border-gray-400 shadow-sm rounded-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-serif text-lg text-gray-900">Default Address</h3>
+                            <a routerLink="/profile/address"
+                                class="text-xs font-bold uppercase tracking-widest text-gray-900 hover:text-primary-600">Manage</a>
+                        </div>
+                        <p class="text-sm text-gray-500 font-light italic">No default address set.</p>
+                        <div class="mt-6">
+                            <a routerLink="/profile/address"
+                                class="inline-block text-xs font-medium text-primary-600 hover:text-primary-800 border-b border-primary-200 pb-0.5">Add
+                                Address</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

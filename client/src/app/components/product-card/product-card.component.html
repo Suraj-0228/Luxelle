@@ -1,0 +1,27 @@
+<div class="group relative cursor-pointer">
+    <!-- Image Container -->
+    <div class="relative aspect-[3/4] w-full overflow-hidden bg-gray-100 mb-4">
+        <a [routerLink]="['/product', product._id]" class="block w-full h-full">
+            <img [src]="product.image" [alt]="product.name"
+                class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
+        </a>
+
+        <!-- Add to Bag Overlay Button -->
+        <button (click)="addToCart($event)"
+            class="absolute bottom-0 left-0 w-full bg-white/90 backdrop-blur-sm text-gray-900 py-3 text-xs font-bold uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300 hover:bg-gray-900 hover:text-white">
+            Add to Bag
+        </button>
+    </div>
+
+    <!-- Product Details -->
+    <div class="text-center">
+        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">{{ product.brand || 'Luxury' }}
+        </p>
+        <h3 class="text-base font-serif text-gray-900 mb-1 group-hover:text-primary-600 transition-colors">
+            <a [routerLink]="['/product', product._id]">
+                {{ product.name }}
+            </a>
+        </h3>
+        <p class="text-sm font-medium text-gray-900">${{ product.price }}</p>
+    </div>
+</div>

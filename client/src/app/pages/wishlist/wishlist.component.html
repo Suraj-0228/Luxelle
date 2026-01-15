@@ -1,0 +1,89 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Mobile Header -->
+        <div class="lg:hidden mb-8">
+            <h1 class="text-3xl font-serif font-bold text-gray-900">My Wishlist</h1>
+        </div>
+
+        <div class="lg:grid lg:grid-cols-12 lg:gap-x-12">
+            <!-- Sidebar -->
+            <div class="hidden lg:block lg:col-span-3">
+                <app-profile-sidebar></app-profile-sidebar>
+            </div>
+
+            <!-- Content -->
+            <div class="lg:col-span-9">
+                <div class="mb-8">
+                    <h1 class="text-2xl font-serif font-medium text-gray-900">My Wishlist</h1>
+                    <p class="mt-1 text-gray-500 font-light">Your curated collection of favorites.</p>
+                </div>
+
+                <div *ngIf="isLoading()" class="text-center py-24">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                    <p class="mt-4 text-gray-500 font-light text-sm tracking-wide">Loading your favorites...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div *ngIf="!isLoading() && wishlistItems().length === 0"
+                    class="bg-white px-6 py-24 text-center rounded-sm shadow-sm border border-gray-400">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                        </path>
+                    </svg>
+                    <h3 class="mt-4 text-lg font-serif font-medium text-gray-900">Your wishlist is empty</h3>
+                    <p class="mt-2 text-gray-500 font-light">Browse our collection and save your favorites.</p>
+                    <div class="mt-8">
+                        <a routerLink="/shop"
+                            class="inline-block bg-gray-900 text-white px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-black transition-colors shadow-lg">
+                            Start Shopping
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Grid -->
+                <div *ngIf="!isLoading() && wishlistItems().length > 0"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-6 xl:gap-x-8">
+                    <div *ngFor="let product of wishlistItems()"
+                        class="group relative bg-white border border-gray-400 rounded-sm hover:shadow-lg transition-all duration-300 flex flex-col">
+
+                        <!-- Image Container with Aspect Ratio -->
+                        <div
+                            class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200 xl:aspect-w-7 xl:aspect-h-8 relative">
+                            <img [src]="product.image" [alt]="product.name"
+                                class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+
+                            <!-- Remove Button -->
+                            <button (click)="removeFromWishlist(product._id); $event.stopPropagation()"
+                                class="absolute top-2 right-2 bg-white/80 backdrop-blur-sm p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-white transition-colors z-20">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-4 flex-1 flex flex-col">
+                            <h3 class="text-sm text-gray-700 font-medium">
+                                <a [routerLink]="['/product', product._id]">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    {{ product.name }}
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">{{ product.brand || 'LUXELLE' }}</p>
+                            <div class="mt-4 flex-1 flex items-end justify-between">
+                                <p class="text-sm font-medium text-gray-900">${{ product.price }}</p>
+                            </div>
+
+                            <button (click)="addToBag(product); $event.stopPropagation()"
+                                class="mt-4 w-full bg-gray-900 text-white py-3 px-4 text-xs font-bold uppercase tracking-widest hover:bg-black transition-colors relative z-10">
+                                Add to Bag
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

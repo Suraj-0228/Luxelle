@@ -1,0 +1,86 @@
+<div class="min-h-screen flex bg-white my-5 border border-gray-400">
+    <!-- Left Column: Editorial Image (Hidden on mobile) -->
+    <div class="hidden lg:block lg:w-1/2 relative overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop"
+            alt="Luxelle Fashion" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-16">
+            <blockquote class="text-white max-w-lg">
+                <p class="text-3xl font-serif italic mb-4">"Style is a way to say who you are without having to
+                    speak."</p>
+                <footer class="text-sm font-medium tracking-widest uppercase">— Rachel Zoe</footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <!-- Right Column: Login Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-16">
+        <div class="w-full max-w-sm space-y-10">
+            <div class="text-center lg:text-left">
+                <h2 class="text-3xl font-serif font-bold text-gray-900 tracking-tight">Welcome Back</h2>
+                <p class="mt-2 text-sm text-gray-500">
+                    Sign in to access your curated wishlist and orders.
+                </p>
+            </div>
+
+            <form class="space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <!-- Error Message -->
+                <div *ngIf="errorMsg" class="bg-red-50 text-red-600 p-4 rounded-sm text-sm flex items-start">
+                    <svg class="h-5 w-5 text-red-400 mr-2 shrink-0" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{ errorMsg }}
+                </div>
+
+                <div class="space-y-5">
+                    <div>
+                        <label for="email-address"
+                            class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Email
+                            Address</label>
+                        <input id="email-address" type="email" formControlName="email" required
+                            class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-gray-50 placeholder-gray-400 text-gray-900 transition-colors"
+                            placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label for="password"
+                                class="block text-xs font-bold uppercase tracking-widest text-gray-500">Password</label>
+                            <div class="text-xs">
+                                <a href="javascript:void(0)"
+                                    class="font-medium text-gray-500 hover:text-gray-900 transition-colors">Forgot
+                                    password?</a>
+                            </div>
+                        </div>
+                        <input id="password" type="password" formControlName="password" required
+                            class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-gray-50 placeholder-gray-400 text-gray-900 transition-colors"
+                            placeholder="••••••••">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" [disabled]="loginForm.invalid"
+                        class="w-full flex justify-center py-4 px-4 border border-transparent rounded-sm shadow-sm text-sm font-bold uppercase tracking-widest text-white bg-gray-900 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center relative">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div class="w-full border-t border-gray-900"></div>
+                </div>
+                <div class="relative flex justify-center">
+                    <span class="px-2 bg-white text-xs text-gray-400 uppercase tracking-widest">New to Luxelle?</span>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a routerLink="/register"
+                    class="w-full inline-flex justify-center py-4 px-4 border border-gray-900 rounded-sm shadow-sm text-sm font-bold uppercase tracking-widest text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-all">
+                    Create an Account
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

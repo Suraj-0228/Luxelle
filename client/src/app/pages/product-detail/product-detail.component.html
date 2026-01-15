@@ -1,0 +1,86 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" *ngIf="product">
+
+    <!-- Breadcrumbs -->
+    <div class="text-xs uppercase tracking-widest text-gray-500 mb-8 flex items-center gap-2">
+        <a routerLink="/" class="hover:text-gray-900 transition-colors">Home</a>
+        <span>/</span>
+        <a routerLink="/shop" class="hover:text-gray-900 transition-colors">Shop</a>
+        <span>/</span>
+        <span class="text-gray-900 font-medium">{{ product.name }}</span>
+    </div>
+
+    <div class="lg:grid lg:grid-cols-2 lg:gap-x-16 lg:items-start">
+
+        <!-- Image Section -->
+        <div class="relative bg-gray-50 aspect-[3/4] overflow-hidden group">
+            <img [src]="product.image" [alt]="product.name"
+                class="w-full h-full object-cover object-center transform transition-transform duration-700 group-hover:scale-105 origin-center">
+
+            <!-- Badges -->
+            <div class="absolute top-4 left-4" *ngIf="product.stock > 0">
+                <span
+                    class="bg-white/90 backdrop-blur-sm px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-gray-900">
+                    {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0 flex flex-col h-full justify-center">
+            <div class="mb-6">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-3">{{ product.brand || 'LUXELLE
+                    COLLECTION' }}</h3>
+                <h1 class="text-4xl md:text-5xl font-serif font-medium text-gray-900 mb-6 leading-tight">{{ product.name
+                    }}</h1>
+                <p class="text-3xl font-light text-gray-900">${{ product.price }}</p>
+            </div>
+
+            <div class="prose prose-sm text-gray-500 mb-10 leading-relaxed font-light">
+                <p>{{ product.description }}</p>
+            </div>
+
+            <!-- Attributes Grid -->
+            <div class="grid grid-cols-2 gap-y-4 gap-x-8 py-8 border-t border-b border-gray-100 mb-10">
+                <div>
+                    <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">Category</span>
+                    <span class="text-sm font-medium text-gray-900">{{ product.category }}</span>
+                </div>
+                <div>
+                    <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">Material</span>
+                    <span class="text-sm font-medium text-gray-900">{{ product.material || 'Premium Material' }}</span>
+                </div>
+                <div>
+                    <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">Availability</span>
+                    <span [class]="product.stock > 0 ? 'text-green-600' : 'text-red-600'" class="text-sm font-medium">
+                        {{ product.stock > 0 ? 'Available' : 'Sold Out' }}
+                    </span>
+                </div>
+                <div>
+                    <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">Shipping</span>
+                    <span class="text-sm font-medium text-gray-900">Free Standard</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <div class="flex gap-4">
+                    <button (click)="addToCart()"
+                        class="flex-1 bg-gray-900 text-white py-4 px-8 text-sm font-bold uppercase tracking-widest hover:bg-black transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl">
+                        Add to Bag
+                    </button>
+                    <button (click)="addToWishlist()"
+                        class="bg-white border border-gray-200 text-gray-900 py-4 px-6 hover:bg-gray-50 transition-colors tooltip"
+                        aria-label="Add to Wishlist">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-xs text-center text-gray-400 mt-2">
+                    Free 30-day returns. Secure checkout.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

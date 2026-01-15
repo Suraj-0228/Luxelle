@@ -1,0 +1,52 @@
+<!-- Page Header -->
+<div class="bg-gray-900 text-white my-5 py-20 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&auto=format&fit=crop&q=80"
+            class="w-full h-full object-cover">
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">Our Collection</h1>
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-400 uppercase tracking-widest">
+            <a routerLink="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <span class="text-white">Shop</span>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Filter Bar -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-gray-100 gap-4">
+        <div class="flex items-center space-x-4 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
+            <button *ngFor="let cat of categories" (click)="filterCategory(cat)"
+                [class.text-primary-600]="selectedCategory === cat" [class.border-b-2]="selectedCategory === cat"
+                [class.border-primary-600]="selectedCategory === cat" [class.text-gray-500]="selectedCategory !== cat"
+                class="whitespace-nowrap px-1 py-2 text-sm font-medium hover:text-primary-600 transition-colors border-b-2 border-transparent">
+                {{ cat }}
+            </button>
+        </div>
+
+        <div class="flex items-center text-sm text-gray-500">
+            <span class="mr-2">{{products.length}} Products</span>
+            <!-- Logic for sorting can be added here later -->
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
+        <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="products.length === 0" class="text-center py-24">
+        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+            </svg>
+        </div>
+        <h3 class="text-lg font-serif font-bold text-gray-900 mb-2">No products found</h3>
+        <p class="text-gray-500">Try selecting a different category.</p>
+    </div>
+</div>

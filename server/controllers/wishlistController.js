@@ -7,7 +7,7 @@ const User = require('../models/User');
 const getWishlist = async (req, res) => {
   try {
     const { userId } = req.params;
-    const wishlist = await Wishlist.findOne({ user: userId }).populate('plants');
+    const wishlist = await Wishlist.findOne({ user: userId }).populate('products');
     if (!wishlist) {
       return res.status(404).json({ message: 'Wishlist not found' });
     }
@@ -17,21 +17,21 @@ const getWishlist = async (req, res) => {
   }
 };
 
-// @desc    Add plant to wishlist
+// @desc    Add product to wishlist
 // @route   POST /api/wishlist
 // @access  Public
 const addToWishlist = async (req, res) => {
-  const { userId, plantId } = req.body;
+  const { userId, productId } = req.body;
 
   try {
     let wishlist = await Wishlist.findOne({ user: userId });
 
     if (!wishlist) {
-      wishlist = await Wishlist.create({ user: userId, plants: [plantId] });
+      wishlist = await Wishlist.create({ user: userId, products: [productId] });
       await User.findByIdAndUpdate(userId, { wishlist: wishlist._id });
     } else {
-      if (!wishlist.plants.includes(plantId)) {
-        wishlist.plants.push(plantId);
+      if (!wishlist.products.includes(productId)) {
+        wishlist.products.push(productId);
         await wishlist.save();
       }
     }
@@ -42,17 +42,17 @@ const addToWishlist = async (req, res) => {
   }
 };
 
-// @desc    Remove plant from wishlist
+// @desc    Remove product from wishlist
 // @route   DELETE /api/wishlist
 // @access  Public
 const removeFromWishlist = async (req, res) => {
-  const { userId, plantId } = req.body;
+  const { userId, productId } = req.body;
 
   try {
     const wishlist = await Wishlist.findOne({ user: userId });
 
     if (wishlist) {
-      wishlist.plants = wishlist.plants.filter(p => p.toString() !== plantId);
+      wishlist.products = wishlist.products.filter(p => p.toString() !== productId);
       await wishlist.save();
     }
 

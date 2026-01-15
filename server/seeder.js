@@ -2,24 +2,24 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const User = require('./models/User');
-const Plant = require('./models/Plant');
+const Product = require('./models/Product');
 
 // Connect to DB
-const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/plant-nursery';
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/fashion_store_db';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Read JSON files
 const users = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/users.json'), 'utf-8'));
-const plants = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/plants_data.json'), 'utf-8'));
+const products = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/products.json'), 'utf-8'));
 
 // Import data into DB
 const importData = async () => {
   try {
     await User.deleteMany();
-    await Plant.deleteMany();
+    await Product.deleteMany();
 
     await User.insertMany(users);
-    await Plant.insertMany(plants);
+    await Product.insertMany(products);
 
     console.log('Data Imported!');
     process.exit();
@@ -33,7 +33,7 @@ const importData = async () => {
 const destroyData = async () => {
   try {
     await User.deleteMany();
-    await Plant.deleteMany();
+    await Product.deleteMany();
 
     console.log('Data Destroyed!');
     process.exit();
