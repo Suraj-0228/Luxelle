@@ -9,9 +9,50 @@
       "Brown"
     ],
     "material": "Leather",
-    "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&auto=format&fit=crop&q=60",
-    "description": "A timeless leather handbag for every occasion.",
+    "image": "https://i.pinimg.com/736x/0e/94/c1/0e94c18a84a98ae98ae47f36d32eaafd.jpg",
+    "description": "Experience timeless elegance with this classic leather handbag. Crafted from premium full-grain leather, it features a spacious interior for all your daily essentials. The durable construction ensures it remains a staple in your wardrobe for years.",
     "stock": 50
+  },
+    {
+    "name": "Gold Plated Watch",
+    "brand": "Rolex",
+    "category": "Watches",
+    "price": 250,
+    "colors": [
+      "Gold"
+    ],
+    "material": "Stainless Steel",
+    "image": "https://i.pinimg.com/1200x/ee/d4/6e/eed46e2404518267f304ba7f45f5ac61.jpg",
+    "description": "Make a bold statement with this luxurious gold-plated timepiece. Precision-engineered for accuracy, it offers water resistance and a scratch-resistant face. A perfect blend of classic aesthetics and modern reliability for the professional.",
+    "stock": 30
+  },
+    {
+    "name": "Aviator Sunglasses",
+    "brand": "SunStyle",
+    "category": "Sunglasses",
+    "price": 85,
+    "colors": [
+      "Black",
+      "Gold"
+    ],
+    "material": "Metal",
+    "image": "https://i.pinimg.com/1200x/5a/b1/cd/5ab1cd477e668ff816737ee92eca8b59.jpg",
+    "description": "Soar high with these iconic aviator sunglasses featuring full UV protection. The lightweight metal frame ensures all-day comfort without sacrificing durability. A timeless accessory that adds a cool edge to any summer outfit.",
+    "stock": 100
+  },
+    {
+    "name": "Classic Leather Belt",
+    "brand": "LuxBrand",
+    "category": "Belts",
+    "price": 150,
+    "colors": [
+      "Black",
+      "Brown"
+    ],
+    "material": "Genuine Leather",
+    "image": "https://i.pinimg.com/736x/1b/f2/45/1bf2458d20390bb136033d7919a0a2ed.jpg",
+    "description": "Secure your style with this classic leather belt, featuring a polished silver buckle. Made from a single piece of genuine leather, it promises durability and character as it ages. Essential for both business suits and casual denim.",
+    "stock": 80
   },
   {
     "name": "Canvas Tote Bag",
@@ -23,9 +64,51 @@
       "Navy"
     ],
     "material": "Canvas",
-    "image": "https://images.unsplash.com/photo-1590874103328-96091983ba0d?w=500&auto=format&fit=crop&q=60",
-    "description": "Durable and stylish canvas tote for daily use.",
+    "image": "https://i.pinimg.com/1200x/44/e0/ee/44e0ee79c62b06719418bbc450759f5b.jpg",
+    "description": "This versatile canvas tote bag is the perfect companion for your daily adventures. Made from eco-friendly, heavy-duty canvas, it combines durability with lightweight comfort. Whether you're heading to the market or the beach, carry everything in style.",
     "stock": 100
+  },
+    {
+    "name": "Silver Sport Watch",
+    "brand": "Rolex",
+    "category": "Watches",
+    "price": 180,
+    "colors": [
+      "Silver",
+      "Black"
+    ],
+    "material": "Stainless Steel",
+    "image": "https://i.pinimg.com/1200x/4d/39/d1/4d39d1f5b3708a16732490d82945b22f.jpg",
+    "description": "Built for performance, this silver sport watch features a rugged stainless steel body. It includes chronographic functions and a durable strap for high-intensity activities. Stay on track and in style, whether you're at the gym or the office.",
+    "stock": 45
+  },
+    {
+    "name": "Oversized Square Sunglasses",
+    "brand": "Divashades",
+    "category": "Sunglasses",
+    "price": 110,
+    "colors": [
+      "Tortoise",
+      "Black"
+    ],
+    "material": "Acetate",
+    "image": "https://i.pinimg.com/1200x/34/9c/e7/349ce731777c9e7115f586f3891e0816.jpg",
+    "description": "Channel your inner celebrity with these bold, oversized square frames. Crafted from high-quality acetate, they offer superior durability and a premium feel. These sunglasses provide excellent coverage and an instant style upgrade.",
+    "stock": 80
+  },
+  {
+    "name": "Designer Logo Belt",
+    "brand": "Gucci",
+    "category": "Belts",
+    "price": 350,
+    "colors": [
+      "Black",
+      "Gold"
+    ],
+    "material": "Leather",
+    "image": "https://i.pinimg.com/1200x/d6/ce/3e/d6ce3ec595d17678d5d2cea3df85f48e.jpg",
+    "description": "Make an undeniable impression with this designer belt featuring an iconic logo buckle. The smooth, premium leather complements the bold metal hardware perfectly. It's the ultimate accessory to define your waist and elevate your outfit.",
+    "stock": 40
   },
   {
     "name": "Elegant Evening Clutch",
@@ -38,52 +121,11 @@
       "Black"
     ],
     "material": "Satin",
-    "image": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=500&auto=format&fit=crop&q=60",
-    "description": "The perfect accessory for your evening attire.",
+    "image": "https://i.pinimg.com/1200x/d8/67/ba/d867bade12fee7e3d9033d00d7555fba.jpg",
+    "description": "Elevate your evening attire with this sophisticated satin clutch. Featuring a sleek design and optional chain strap, it holds your phone and makeup securely. The perfect accessory to add a touch of glamour to any formal event.",
     "stock": 30
   },
-  {
-    "name": "Urban Travel Backpack",
-    "brand": "CityRoam",
-    "category": "Bags",
-    "price": 95,
-    "colors": [
-      "Grey",
-      "Black"
-    ],
-    "material": "Nylon",
-    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=60",
-    "description": "Functional and sleek backpack for the modern traveler.",
-    "stock": 60
-  },
-  {
-    "name": "Gold Plated Watch",
-    "brand": "TimeKeeper",
-    "category": "Watches",
-    "price": 250,
-    "colors": [
-      "Gold"
-    ],
-    "material": "Stainless Steel",
-    "image": "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500&auto=format&fit=crop&q=60",
-    "description": "Elegant gold plated watch.",
-    "stock": 30
-  },
-  {
-    "name": "Silver Sport Watch",
-    "brand": "ActiveTime",
-    "category": "Watches",
-    "price": 180,
-    "colors": [
-      "Silver",
-      "Black"
-    ],
-    "material": "Stainless Steel",
-    "image": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=500&auto=format&fit=crop&q=60",
-    "description": "Rugged sport watch with chronograph functions.",
-    "stock": 45
-  },
-  {
+    {
     "name": "Minimalist Leather Watch",
     "brand": "CleanDial",
     "category": "Watches",
@@ -93,51 +135,9 @@
       "Black"
     ],
     "material": "Leather",
-    "image": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500&auto=format&fit=crop&q=60",
-    "description": "A simple yet sophisticated timepiece.",
+    "image": "https://i.pinimg.com/1200x/cd/a3/1c/cda31c77081ea76a4bbd159c19e8147e.jpg",
+    "description": "Embrace simplicity with this beautifully designed minimalist leather watch. The clean dial and premium leather strap create an understated, sophisticated look. Perfect for those who appreciate design where less is truly more.",
     "stock": 70
-  },
-  {
-    "name": "Classic Chronograph",
-    "brand": "Heritage",
-    "category": "Watches",
-    "price": 299,
-    "colors": [
-      "Silver",
-      "Blue"
-    ],
-    "material": "Stainless Steel",
-    "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=500&auto=format&fit=crop&q=60",
-    "description": "Timeless chronograph design for the discerning collector.",
-    "stock": 25
-  },
-  {
-    "name": "Aviator Sunglasses",
-    "brand": "SunStyle",
-    "category": "Sunglasses",
-    "price": 85,
-    "colors": [
-      "Black",
-      "Gold"
-    ],
-    "material": "Metal",
-    "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&auto=format&fit=crop&q=60",
-    "description": "Classic aviator sunglasses with UV protection.",
-    "stock": 100
-  },
-  {
-    "name": "Oversized Square Sunglasses",
-    "brand": "Divashades",
-    "category": "Sunglasses",
-    "price": 110,
-    "colors": [
-      "Tortoise",
-      "Black"
-    ],
-    "material": "Acetate",
-    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&auto=format&fit=crop&q=60",
-    "description": "Make a statement with these bold oversized frames.",
-    "stock": 80
   },
   {
     "name": "Cat Eye Sunglasses",
@@ -149,9 +149,51 @@
       "Black"
     ],
     "material": "Plastic",
-    "image": "https://images.unsplash.com/photo-1577803645773-f96470509666?w=500&auto=format&fit=crop&q=60",
-    "description": "Vintage-inspired cat eye sunglasses.",
+    "image": "https://i.pinimg.com/1200x/bc/e3/3e/bce33e68e5a3c06d043c118abb20e2a6.jpg",
+    "description": "Step back in time with these vintage-inspired cat-eye sunglasses. The sharp angles and sleek plastic frame accentuate your cheekbones beautifully. Perfect for adding a touch of retro glamour to your modern wardrobe.",
     "stock": 65
+  },
+  {
+    "name": "Reversible Formal Belt",
+    "brand": "GentlemanChoose",
+    "category": "Belts",
+    "price": 120,
+    "colors": [
+      "Black",
+      "Brown"
+    ],
+    "material": "Leather",
+    "image": "https://i.pinimg.com/736x/45/30/5e/45305eef7e2621ea52c20ae28e2744af.jpg",
+    "description": "Get two looks in one with this clever reversible formal belt. Easily switch between black and brown leather to match any pair of dress shoes. A practical and stylish solution for the modern gentleman's wardrobe.",
+    "stock": 60
+  },
+  {
+    "name": "Urban Travel Backpack",
+    "brand": "CityRoam",
+    "category": "Bags",
+    "price": 95,
+    "colors": [
+      "Grey",
+      "Black"
+    ],
+    "material": "Nylon",
+    "image": "https://i.pinimg.com/736x/67/f1/65/67f165f4e6e7fb962bb9f71c88e64f2d.jpg",
+    "description": "Designed for the modern traveler, this backpack blends function with sleek urban style. It features water-resistant nylon fabric and multiple compartments for organized storage. Comfortable padded straps make it ideal for all-day wear in the city.",
+    "stock": 60
+  },
+  {
+    "name": "Classic Chronograph",
+    "brand": "Heritage",
+    "category": "Watches",
+    "price": 299,
+    "colors": [
+      "Silver",
+      "Blue"
+    ],
+    "material": "Stainless Steel",
+    "image": "https://i.pinimg.com/1200x/10/99/2c/10992c15101a98c91c816d380072f753.jpg",
+    "description": "A tribute to traditional watchmaking, this classic chronograph exudes authority. With intricate sub-dials and a polished stainless steel finish, it catches every eye. An essential piece for the discerning collector valus functionality and heritage.",
+    "stock": 25
   },
   {
     "name": "Round Vintage Sunglasses",
@@ -163,47 +205,22 @@
       "Silver"
     ],
     "material": "Metal",
-    "image": "https://images.unsplash.com/photo-1556306535-0f23af43d988?w=500&auto=format&fit=crop&q=60",
-    "description": "Circular frames for a retro bohemian look.",
+    "image": "https://i.pinimg.com/1200x/61/94/90/619490ffcfdd6bbc7fc82b99ce56fd30.jpg",
+    "description": "Achieve the perfect bohemian look with these round vintage sunglasses. The delicate metal wire frames are lightweight yet sturdy for festival season. Pair them with flowy fabrics for an effortless, free-spirited aesthetic.",
     "stock": 90
   },
   {
-    "name": "Silver Chain Necklace",
-    "brand": "JewelGem",
-    "category": "Jewelry",
-    "price": 45,
+    "name": "Woven Casual Belt",
+    "brand": "UrbanWeave",
+    "category": "Belts",
+    "price": 65,
     "colors": [
-      "Silver"
+      "Beige",
+      "Navy"
     ],
-    "material": "Silver",
-    "image": "https://images.unsplash.com/photo-1599643478518-17488fbbcd75?w=500&auto=format&fit=crop&q=60",
-    "description": "Minimalist silver chain necklace.",
-    "stock": 75
-  },
-  {
-    "name": "Gold Hoop Earrings",
-    "brand": "LuxeHoops",
-    "category": "Jewelry",
-    "price": 60,
-    "colors": [
-      "Gold"
-    ],
-    "material": "Gold Plated",
-    "image": "https://images.unsplash.com/photo-1630019852942-f89202989a51?w=500&auto=format&fit=crop&q=60",
-    "description": "Classic gold hoops that go with everything.",
-    "stock": 100
-  },
-  {
-    "name": "Diamond Stud Earrings",
-    "brand": "SparkleForever",
-    "category": "Jewelry",
-    "price": 350,
-    "colors": [
-      "Silver"
-    ],
-    "material": "White Gold",
-    "image": "https://images.unsplash.com/photo-1617038224558-283954a6388d?w=500&auto=format&fit=crop&q=60",
-    "description": "Elegant diamond studs for sensible luxury.",
-    "stock": 20
+    "material": "Fabric",
+    "image": "https://i.pinimg.com/1200x/43/5f/e8/435fe823c2bac6ae7130581bc22d6e2f.jpg",
+    "description": "Add texture to your outfit with this comfortable woven casual belt. The elastic fabric construction ensures a perfect, adjustable fit every time. It pairs excellently with chinos or shorts for a relaxed weekend vibe.",
+    "stock": 90
   }
 ]

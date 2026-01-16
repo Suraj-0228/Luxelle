@@ -27,15 +27,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                     <div class="bg-white p-6 border border-gray-400 rounded-sm">
                         <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Orders</p>
-                        <p class="text-2xl font-serif text-gray-900">--</p>
-                        <a routerLink="/orders" class="text-xs text-primary-600 mt-2 hover:underline inline-block">View
-                            History</a>
+                        <p class="text-3xl font-serif text-gray-900">{{ ordersCount() }}</p>
+                        <a routerLink="/orders"
+                            class="text-sm font-medium text-primary-600 mt-2 inline-block border border-gray-400 px-4 py-2 hover:bg-gray-900 hover:text-white duration-300">View
+                            Orders</a>
                     </div>
                     <div class="bg-white p-6 border border-gray-400 rounded-sm">
                         <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Wishlist</p>
-                        <p class="text-2xl font-serif text-gray-900">--</p>
+                        <p class="text-3xl font-serif text-gray-900">{{ wishlistCount() }}</p>
                         <a routerLink="/wishlist"
-                            class="text-xs text-primary-600 mt-2 hover:underline inline-block">View Saved</a>
+                            class="text-sm font-medium text-primary-600 mt-2 inline-block border border-gray-400 px-4 py-2 hover:bg-gray-900 hover:text-white duration-300">View
+                            Wishlist</a>
                     </div>
                     <div class="bg-white p-6 border border-gray-400 rounded-sm">
                         <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Account Status</p>
@@ -49,10 +51,11 @@
                 <!-- Account Information (Grid) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8" *ngIf="user()">
                     <!-- Profile Info -->
+                    <!-- Profile Info -->
                     <div class="bg-white p-8 border border-gray-400 shadow-sm rounded-sm">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="font-serif text-lg text-gray-900">Profile Information</h3>
-                            <button class="text-gray-400 hover:text-gray-600">
+                            <button (click)="toggleEdit()" class="text-gray-400 hover:text-gray-600">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                         d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
@@ -60,7 +63,9 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="space-y-4">
+
+                        <!-- View Mode -->
+                        <div class="space-y-4" *ngIf="!isEditing()">
                             <div>
                                 <span
                                     class="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Name</span>
@@ -72,21 +77,53 @@
                                 <span class="text-sm text-gray-900">{{ user().email }}</span>
                             </div>
                         </div>
+
+                        <!-- Edit Mode -->
+                        <div class="space-y-4" *ngIf="isEditing()">
+                            <div>
+                                <label
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Name</label>
+                                <input type="text" [(ngModel)]="editData.fullname"
+                                    class="w-full border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-black">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Email</label>
+                                <input type="email" [(ngModel)]="editData.email"
+                                    class="w-full border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-black">
+                            </div>
+                            <div class="flex gap-3 mt-4">
+                                <button (click)="saveProfile()"
+                                    class="bg-black text-white px-4 py-2 text-xs uppercase font-bold tracking-wider hover:bg-gray-800">Save</button>
+                                <button (click)="toggleEdit()"
+                                    class="border border-gray-300 text-gray-600 px-4 py-2 text-xs uppercase font-bold tracking-wider hover:bg-gray-50">Cancel</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Primary Address (Mockup or Link) -->
+                    <!-- Primary Address -->
                     <div class="bg-white p-8 border border-gray-400 shadow-sm rounded-sm">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="font-serif text-lg text-gray-900">Default Address</h3>
                             <a routerLink="/profile/address"
                                 class="text-xs font-bold uppercase tracking-widest text-gray-900 hover:text-primary-600">Manage</a>
                         </div>
-                        <p class="text-sm text-gray-500 font-light italic">No default address set.</p>
-                        <div class="mt-6">
-                            <a routerLink="/profile/address"
-                                class="inline-block text-xs font-medium text-primary-600 hover:text-primary-800 border-b border-primary-200 pb-0.5">Add
-                                Address</a>
+
+                        <div *ngIf="user().address && user().address.street; else noAddress">
+                            <p class="text-sm text-gray-900">{{ user().address.street }}</p>
+                            <p class="text-sm text-gray-900">{{ user().address.city }}, {{ user().address.state }} {{
+                                user().address.zip }}</p>
+                            <p class="text-sm text-gray-900">{{ user().address.country }}</p>
                         </div>
+
+                        <ng-template #noAddress>
+                            <p class="text-sm text-gray-500 font-light italic">No default address set.</p>
+                            <div class="mt-6">
+                                <a routerLink="/profile/address"
+                                    class="inline-block text-xs font-medium text-primary-600 hover:text-primary-800 border-b border-primary-200 pb-0.5">Add
+                                    Address</a>
+                            </div>
+                        </ng-template>
                     </div>
                 </div>
             </div>

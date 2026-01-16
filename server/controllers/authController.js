@@ -114,7 +114,16 @@ const updateUser = async (req, res) => {
       user.fullname = req.body.fullname || user.fullname;
       user.email = req.body.email || user.email;
       user.username = req.body.username || user.username;
-      user.isAdmin = req.body.isAdmin;
+
+      // Update address if provided
+      if (req.body.address) {
+        user.address = req.body.address;
+      }
+
+      // Update isAdmin if provided (be careful with this in production!)
+      if (req.body.isAdmin !== undefined) {
+        user.isAdmin = req.body.isAdmin;
+      }
 
       const updatedUser = await user.save();
 
@@ -123,6 +132,7 @@ const updateUser = async (req, res) => {
         fullname: updatedUser.fullname,
         email: updatedUser.email,
         username: updatedUser.username,
+        address: updatedUser.address, // Return address
         isAdmin: updatedUser.isAdmin,
       });
     } else {

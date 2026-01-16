@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -12,6 +13,9 @@ import { RouterLink } from '@angular/router';
 })
 export class CartComponent {
   cartService = inject(CartService);
+  authService = inject(AuthService);
+  router = inject(Router);
+
   cartItems = this.cartService.cartItems;
   totalPrice = this.cartService.totalPrice;
   subtotal = this.cartService.subtotal;
@@ -25,5 +29,13 @@ export class CartComponent {
 
   remove(id: string) {
     this.cartService.removeFromCart(id);
+  }
+
+  proceedToCheckout() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/checkout']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

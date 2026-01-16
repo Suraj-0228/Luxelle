@@ -19,6 +19,12 @@ export class CheckoutComponent {
     private authService = inject(AuthService);
     private router = inject(Router);
 
+    constructor() {
+        if (!this.authService.isLoggedIn()) {
+            this.router.navigate(['/login']);
+        }
+    }
+
     cartItems = this.cartService.cartItems;
     totalPrice = this.cartService.totalPrice;
     subtotal = this.cartService.subtotal;

@@ -36,7 +36,32 @@
 
     <!-- Product Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
-        <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        <app-product-card *ngFor="let product of paginatedProducts"
+            class="pb-5 hover:shadow-xl hover:-translate-y-1 cursor-pointer transition-all duration-300"
+            [product]="product"></app-product-card>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages > 1" class="flex justify-center mt-16">
+        <nav class="flex items-center space-x-2">
+            <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+                class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-sm text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                Previous
+            </button>
+
+            <button *ngFor="let page of pageNumbers" (click)="changePage(page)"
+                [class.bg-gray-900]="currentPage === page" [class.text-white]="currentPage === page"
+                [class.border-gray-900]="currentPage === page" [class.text-gray-700]="currentPage !== page"
+                [class.hover:bg-gray-50]="currentPage !== page"
+                class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-sm transition-colors">
+                {{ page }}
+            </button>
+
+            <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+                class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-sm text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                Next
+            </button>
+        </nav>
     </div>
 
     <!-- Empty State -->

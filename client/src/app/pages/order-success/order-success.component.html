@@ -1,41 +1,44 @@
-<div class="min-h-screen bg-white flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full text-center space-y-8 animate-fadeIn border border-gray-400 p-10">
-        <!-- Success Animation -->
-        <div class="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-green-50 mb-8">
-            <svg class="h-12 w-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-        </div>
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-xl w-full bg-white p-10 sm:p-16 border border-gray-400 shadow-xl relative overflow-hidden">
+        <!-- Decorative bg element -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-black"></div>
 
-        <div>
-            <h2 class="mt-2 text-4xl font-serif font-bold text-gray-900 tracking-tight">Order Confirmed</h2>
-            <p class="mt-4 text-lg text-gray-500">
-                Thank you for your purchase. We've received your order and sent a confirmation email to your inbox.
+        <div class="text-center">
+            <!-- Elegant Icon -->
+            <div
+                class="mx-auto flex items-center justify-center h-20 w-20 rounded-full border-2 border-green-500 mb-8 animate-fadeIn">
+                <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-2">Transaction Completed</p>
+            <h2 class="text-4xl font-serif font-medium text-gray-900 mb-6">Thank you for your order.</h2>
+
+            <div class="space-y-4 mb-10 text-gray-600 font-light">
+                <p>We are delighted to confirm your purchase.</p>
+                <p>A confirmation email has been sent to your inbox with the details of your order. We will notify you
+                    once your items are shipped.</p>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-24 h-px bg-gray-300 mx-auto mb-10"></div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a routerLink="/shop"
+                    class="group relative px-8 py-3 bg-gray-900 text-white text-xs font-bold uppercase tracking-[0.2em] overflow-hidden transition-all hover:shadow-lg hover:bg-black">
+                    <span class="relative z-10">Continue Shopping</span>
+                </a>
+                <a routerLink="/orders"
+                    class="px-8 py-3 border border-gray-300 hover:border-gray-900 duration-300 text-gray-900 text-xs font-bold uppercase tracking-[0.2em] hover:bg-gray-50 hover:text-gray-900 transition-colors">
+                    View My Orders
+                </a>
+            </div>
+
+            <p class="mt-12 text-xs text-gray-400 font-light">
+                Order ID: #<span class="font-medium text-gray-600">{{ 'ORD-' + (1000000 + (1000 * Math.random()) |
+                    number:'1.0-0') }}</span>
             </p>
         </div>
-
-        <div class="mt-8 space-y-4">
-            <div class="bg-gray-50 rounded-sm p-6 border border-gray-100">
-                <h3 class="text-sm font-medium text-gray-900 uppercase tracking-wide">What's Next?</h3>
-                <p class="mt-2 text-sm text-gray-500">
-                    We're getting your order ready to be shipped. We will notify you when it has been sent.
-                </p>
-            </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-            <a routerLink="/shop"
-                class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-bold uppercase tracking-widest text-white bg-gray-900 hover:bg-black transition-colors rounded-sm shadow-sm">
-                Continue Shopping
-            </a>
-            <a routerLink="/profile"
-                class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-bold uppercase tracking-widest text-gray-700 bg-white hover:bg-gray-50 transition-colors rounded-sm">
-                View Order
-            </a>
-        </div>
-
-        <p class="mt-8 text-xs text-gray-400">
-            Questions? Contact our <a routerLink="/contact" class="underline hover:text-gray-900">support team</a>.
-        </p>
     </div>
 </div>

@@ -37,18 +37,21 @@ export class HomeComponent implements OnInit {
       title: 'Luxury Bags',
       image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=60',
       link: '/shop',
+      queryParams: { category: 'Bags' },
       size: 'large'
     },
     {
       title: 'Timeless Watches',
       image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600&auto=format&fit=crop&q=60',
       link: '/shop',
+      queryParams: { category: 'Watches' },
       size: 'small'
     },
     {
-      title: 'Elegant Jewelry',
-      image: 'https://images.unsplash.com/photo-1599643477877-5313557d80fe?w=600&auto=format&fit=crop&q=60',
+      title: 'Premium Belts',
+      image: 'https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=600&auto=format&fit=crop&q=60',
       link: '/shop',
+      queryParams: { category: 'Belts' },
       size: 'small'
     }
   ];

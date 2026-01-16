@@ -1,4 +1,5 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
+import { Injectable, signal, computed, effect, inject } from '@angular/core';
+import { ToastService } from './toast.service';
 
 export interface CartItem {
   product: any;
@@ -10,6 +11,7 @@ export interface CartItem {
 })
 export class CartService {
   cartItems = signal<CartItem[]>(this.getCartFromStorage());
+  private toastService = inject(ToastService);
 
   count = computed(() => this.cartItems().reduce((acc, item) => acc + item.quantity, 0));
   subtotal = computed(() => this.cartItems().reduce((acc, item) => acc + (item.product.price * item.quantity), 0));
@@ -41,8 +43,11 @@ export class CartService {
     this.cartItems.update(items => {
       const existing = items.find(i => i.product._id === product._id);
       if (existing) {
+        // Optional: Toast for quantity update
+        this.toastService.show(`Increased quantity for ${product.name}`, 'info');
         return items.map(i => i.product._id === product._id ? { ...i, quantity: i.quantity + 1 } : i);
       }
+      this.toastService.show(`${product.name} added to cart`, 'success');
       return [...items, { product, quantity: 1 }];
     });
   }

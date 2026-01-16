@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
     private fb = inject(FormBuilder);
     private authService = inject(AuthService);
+    private toastService = inject(ToastService);
     private router = inject(Router);
     private route = inject(ActivatedRoute);
 
@@ -27,11 +29,14 @@ export class LoginComponent {
         if (this.loginForm.valid) {
             this.authService.login(this.loginForm.value).subscribe({
                 next: () => {
+                    this.toastService.show('Login Successful. Welcome to Luxelle!', 'success');
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                     this.router.navigateByUrl(returnUrl);
                 },
                 error: (err) => {
-                    this.errorMsg = err.error.message || 'Login failed';
+                    const msg = err.error.message || 'Login Failed';
+                    this.errorMsg = msg;
+                    this.toastService.show(msg, 'error');
                 }
             });
         }
