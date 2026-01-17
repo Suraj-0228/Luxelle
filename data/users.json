@@ -1,13 +1,7 @@
 [
   {
-    "fullname": "Manani Suraj",
-    "email": "suraj@example.com",
-    "username": "suraj_0228",
-    "password": "suraj_0228"
-  },
-  {
     "fullname": "Admin User",
-    "email": "admin@example.com",
+    "email": "admin@luxelle.com",
     "username": "admin_001",
     "password": "adminPassword",
     "isAdmin": true

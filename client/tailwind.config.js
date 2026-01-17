@@ -12,7 +12,7 @@ module.exports = {
             },
             fontFamily: {
                 serif: ['Playfair Display', 'serif'],
-                sans: ['Inter', 'sans-serif'],
+                sans: ['Poppins', 'sans-serif'],
             },
             keyframes: {
                 'slow-zoom': {
@@ -25,5 +25,5 @@ module.exports = {
             }
         },
     },
-    plugins: [],
+    plugins: [require("daisyui")],
 }

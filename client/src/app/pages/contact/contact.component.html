@@ -15,21 +15,25 @@
 
             <!-- Contact Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 border-b border-gray-900 pb-16">
-                <div class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div
+                    class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                     <h3 class="font-serif text-xl text-gray-900 mb-4">General Inquiries</h3>
                     <p class="text-gray-500 font-light mb-1">concierge@luxelle.com</p>
                     <p class="text-gray-500 font-light">+1 (800) LUX-ELLE</p>
                 </div>
-                <div class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div
+                    class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                     <h3 class="font-serif text-xl text-gray-900 mb-4">Visit Our Boutique</h3>
                     <p class="text-gray-500 font-light">123 Fashion Avenue</p>
                     <p class="text-gray-500 font-light">New York, NY 10001</p>
                 </div>
-                <div class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div
+                    class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                     <h3 class="font-serif text-xl text-gray-900 mb-4">Press & Media</h3>
                     <p class="text-gray-500 font-light">press@luxelle.com</p>
                 </div>
-                <div class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div
+                    class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                     <h3 class="font-serif text-xl text-gray-900 mb-4">Wholesale</h3>
                     <p class="text-gray-500 font-light">wholesale@luxelle.com</p>
                 </div>
@@ -44,26 +48,38 @@
                             <label for="name"
                                 class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">Full
                                 Name</label>
-                            <input type="text" id="name"
+                            <input type="text" id="name" name="name" [(ngModel)]="contact.name" #name="ngModel" required
                                 class="w-full border border-gray-400 py-2 px-3 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
                                 placeholder="Jane Doe">
+                            <div *ngIf="name.touched && name.invalid" class="text-red-500 text-xs mt-1">
+                                <span *ngIf="name.errors?.['required']">Full Name is required</span>
+                            </div>
                         </div>
 
                         <div class="group">
                             <label for="email"
                                 class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">Email
                                 Address</label>
-                            <input type="email" id="email"
+                            <input type="email" id="email" name="email" [(ngModel)]="contact.email" #email="ngModel"
+                                required email
                                 class="w-full border border-gray-400 py-2 px-3 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
                                 placeholder="jane@example.com">
+                            <div *ngIf="email.touched && email.invalid" class="text-red-500 text-xs mt-1">
+                                <span *ngIf="email.errors?.['required']">Email is required</span>
+                                <span *ngIf="email.errors?.['email']">Invalid email format</span>
+                            </div>
                         </div>
 
                         <div class="group">
                             <label for="message"
                                 class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">Message</label>
-                            <textarea id="message" rows="3"
+                            <textarea id="message" rows="3" name="message" [(ngModel)]="contact.message"
+                                #message="ngModel" required
                                 class="w-full border border-gray-400 py-2 px-3 focus:outline-none focus:border-black transition-colors bg-transparent resize-none placeholder-gray-300 font-light"
                                 placeholder="Your message..."></textarea>
+                            <div *ngIf="message.touched && message.invalid" class="text-red-500 text-xs mt-1">
+                                <span *ngIf="message.errors?.['required']">Message is required</span>
+                            </div>
                         </div>
                     </div>
 

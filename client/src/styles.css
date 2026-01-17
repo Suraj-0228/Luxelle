@@ -2,8 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 /* Custom Styles */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #f9fafb;
+}
+
+/* Force override to ensure Poppins is applies immediately without server restart */
+.font-sans {
+  font-family: 'Poppins', sans-serif !important;
 }

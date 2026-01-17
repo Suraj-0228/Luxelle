@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -17,6 +17,8 @@ export class RegisterComponent {
     private toastService = inject(ToastService);
     private router = inject(Router);
 
+    showPassword = signal(false);
+
     registerForm = this.fb.group({
         fullname: ['', Validators.required],
         username: ['', Validators.required],
@@ -25,6 +27,10 @@ export class RegisterComponent {
     });
 
     errorMsg = '';
+
+    togglePasswordValue() {
+        this.showPassword.update(value => !value);
+    }
 
     onSubmit() {
         if (this.registerForm.valid) {

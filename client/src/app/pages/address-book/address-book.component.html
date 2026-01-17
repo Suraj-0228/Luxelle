@@ -37,8 +37,12 @@
                                         class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">Street
                                         Address</label>
                                     <input type="text" id="street" [(ngModel)]="address.street" name="street"
+                                        #street="ngModel" required
                                         class="w-full border border-gray-400 px-4 py-2 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
                                         placeholder="123 Fashion Ave">
+                                    <div *ngIf="street.touched && street.invalid" class="text-red-500 text-xs mt-1">
+                                        <span *ngIf="street.errors?.['required']">Street Address is required</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -46,9 +50,13 @@
                                 <div class="group">
                                     <label for="city"
                                         class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">City</label>
-                                    <input type="text" id="city" [(ngModel)]="address.city" name="city"
+                                    <input type="text" id="city" [(ngModel)]="address.city" name="city" #city="ngModel"
+                                        required
                                         class="w-full border border-gray-400 px-4 py-2 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
                                         placeholder="New York">
+                                    <div *ngIf="city.touched && city.invalid" class="text-red-500 text-xs mt-1">
+                                        <span *ngIf="city.errors?.['required']">City is required</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -58,8 +66,12 @@
                                         class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">State
                                         / Province</label>
                                     <input type="text" id="state" [(ngModel)]="address.state" name="state"
+                                        #state="ngModel" required
                                         class="w-full border border-gray-400 px-4 py-2 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
                                         placeholder="NY">
+                                    <div *ngIf="state.touched && state.invalid" class="text-red-500 text-xs mt-1">
+                                        <span *ngIf="state.errors?.['required']">State is required</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -68,9 +80,13 @@
                                     <label for="zip"
                                         class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">ZIP
                                         / Postal Code</label>
-                                    <input type="text" id="zip" [(ngModel)]="address.zip" name="zip"
+                                    <input type="text" id="zip" [(ngModel)]="address.zip" name="zip" #zip="ngModel"
+                                        required
                                         class="w-full border border-gray-400 px-4 py-2 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
                                         placeholder="10001">
+                                    <div *ngIf="zip.touched && zip.invalid" class="text-red-500 text-xs mt-1">
+                                        <span *ngIf="zip.errors?.['required']">ZIP Code is required</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -79,8 +95,12 @@
                                     <label for="country"
                                         class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">Country</label>
                                     <input type="text" id="country" [(ngModel)]="address.country" name="country"
+                                        #country="ngModel" required
                                         class="w-full border border-gray-400 px-4 py-2 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
                                         placeholder="United States">
+                                    <div *ngIf="country.touched && country.invalid" class="text-red-500 text-xs mt-1">
+                                        <span *ngIf="country.errors?.['required']">Country is required</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

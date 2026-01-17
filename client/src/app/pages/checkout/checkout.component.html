@@ -149,6 +149,13 @@
                                     Address</label>
                                 <input type="email" id="email" formControlName="email"
                                     class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                <div *ngIf="checkoutForm.get('shippingAddress.email')?.touched && checkoutForm.get('shippingAddress.email')?.invalid"
+                                    class="text-red-500 text-xs mt-1">
+                                    <span *ngIf="checkoutForm.get('shippingAddress.email')?.errors?.['required']">Email
+                                        is required</span>
+                                    <span *ngIf="checkoutForm.get('shippingAddress.email')?.errors?.['email']">Invalid
+                                        email format</span>
+                                </div>
                             </div>
                             <div class="sm:col-span-2">
                                 <h3 class="text-lg font-medium text-gray-900 mt-6 mb-2">Shipping Address</h3>
@@ -160,6 +167,12 @@
                                     Name</label>
                                 <input type="text" id="fullName" formControlName="fullName"
                                     class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                <div *ngIf="checkoutForm.get('shippingAddress.fullName')?.touched && checkoutForm.get('shippingAddress.fullName')?.invalid"
+                                    class="text-red-500 text-xs mt-1">
+                                    <span
+                                        *ngIf="checkoutForm.get('shippingAddress.fullName')?.errors?.['required']">Full
+                                        Name is required</span>
+                                </div>
                             </div>
 
                             <div class="sm:col-span-2">
@@ -167,6 +180,12 @@
                                     class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Address</label>
                                 <input type="text" id="address" formControlName="street"
                                     class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                <div *ngIf="checkoutForm.get('shippingAddress.street')?.touched && checkoutForm.get('shippingAddress.street')?.invalid"
+                                    class="text-red-500 text-xs mt-1">
+                                    <span
+                                        *ngIf="checkoutForm.get('shippingAddress.street')?.errors?.['required']">Address
+                                        is required</span>
+                                </div>
                             </div>
 
                             <div>
@@ -174,6 +193,11 @@
                                     class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">City</label>
                                 <input type="text" id="city" formControlName="city"
                                     class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                <div *ngIf="checkoutForm.get('shippingAddress.city')?.touched && checkoutForm.get('shippingAddress.city')?.invalid"
+                                    class="text-red-500 text-xs mt-1">
+                                    <span *ngIf="checkoutForm.get('shippingAddress.city')?.errors?.['required']">City is
+                                        required</span>
+                                </div>
                             </div>
 
                             <div>
@@ -182,6 +206,11 @@
                                     Province</label>
                                 <input type="text" id="state" formControlName="state"
                                     class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                <div *ngIf="checkoutForm.get('shippingAddress.state')?.touched && checkoutForm.get('shippingAddress.state')?.invalid"
+                                    class="text-red-500 text-xs mt-1">
+                                    <span *ngIf="checkoutForm.get('shippingAddress.state')?.errors?.['required']">State
+                                        is required</span>
+                                </div>
                             </div>
 
                             <div>
@@ -190,6 +219,11 @@
                                     Code</label>
                                 <input type="text" id="zip" formControlName="zip"
                                     class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                <div *ngIf="checkoutForm.get('shippingAddress.zip')?.touched && checkoutForm.get('shippingAddress.zip')?.invalid"
+                                    class="text-red-500 text-xs mt-1">
+                                    <span *ngIf="checkoutForm.get('shippingAddress.zip')?.errors?.['required']">Postal
+                                        Code is required</span>
+                                </div>
                             </div>
 
                             <div>
@@ -197,6 +231,11 @@
                                     class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Phone</label>
                                 <input type="tel" id="phone" formControlName="phone"
                                     class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                <div *ngIf="checkoutForm.get('shippingAddress.phone')?.touched && checkoutForm.get('shippingAddress.phone')?.invalid"
+                                    class="text-red-500 text-xs mt-1">
+                                    <span *ngIf="checkoutForm.get('shippingAddress.phone')?.errors?.['required']">Phone
+                                        is required</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -263,12 +302,12 @@
                                         *ngIf="activePaymentTab() === 'Card'">
                                         <div class="grid grid-cols-1 gap-4">
                                             <input type="text" placeholder="Card number"
-                                                class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                                class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
                                             <div class="grid grid-cols-2 gap-4">
                                                 <input type="text" placeholder="MM / YY"
-                                                    class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                                    class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
                                                 <input type="text" placeholder="CVC"
-                                                    class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                                    class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
                                             </div>
                                         </div>
                                     </div>
@@ -290,7 +329,7 @@
                                     <div class="mt-4 text-gray-500 overflow-hidden transition-all duration-300"
                                         *ngIf="activePaymentTab() === 'UPI'">
                                         <input type="text" placeholder="username@upi"
-                                            class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                            class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
                                     </div>
                                 </div>
                             </div>

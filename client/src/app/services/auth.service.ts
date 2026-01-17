@@ -13,6 +13,7 @@ export class AuthService {
     currentUser = signal<any>(this.getUserFromStorage());
 
     isLoggedIn = computed(() => !!this.currentUser());
+    isAdmin = computed(() => this.currentUser()?.isAdmin || false);
 
     constructor(private http: HttpClient, private router: Router) { }
 

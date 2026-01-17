@@ -60,6 +60,10 @@ const loginUser = async (req, res) => {
 
     // In a real app, you would compare the password with the hashed password
     if (user && (password === user.password)) {
+      if (user.isBlocked) {
+        return res.status(403).json({ message: 'Your account has been blocked. Please contact support.' });
+      }
+
       console.log('Password comparison successful'); // Added for debugging
       res.json({
         _id: user._id,
@@ -123,6 +127,10 @@ const updateUser = async (req, res) => {
       // Update isAdmin if provided (be careful with this in production!)
       if (req.body.isAdmin !== undefined) {
         user.isAdmin = req.body.isAdmin;
+      }
+
+      if (req.body.isBlocked !== undefined) {
+        user.isBlocked = req.body.isBlocked;
       }
 
       const updatedUser = await user.save();

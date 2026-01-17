@@ -35,7 +35,6 @@ app.use('/api/products', productRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
-
 app.get('/', (req, res) => {
   res.send('Plant Nursery Server is Running!');
 });

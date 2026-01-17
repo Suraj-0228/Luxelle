@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -18,6 +18,8 @@ export class LoginComponent {
     private router = inject(Router);
     private route = inject(ActivatedRoute);
 
+    showPassword = signal(false);
+
     loginForm = this.fb.group({
         email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required]
@@ -25,13 +27,21 @@ export class LoginComponent {
 
     errorMsg = '';
 
+    togglePasswordValue() {
+        this.showPassword.update(value => !value);
+    }
+
     onSubmit() {
         if (this.loginForm.valid) {
             this.authService.login(this.loginForm.value).subscribe({
                 next: () => {
                     this.toastService.show('Login Successful. Welcome to Luxelle!', 'success');
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                    this.router.navigateByUrl(returnUrl);
+                    if (this.authService.isAdmin()) {
+                        this.router.navigate(['/admin/products']);
+                    } else {
+                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                        this.router.navigateByUrl(returnUrl);
+                    }
                 },
                 error: (err) => {
                     const msg = err.error.message || 'Login Failed';

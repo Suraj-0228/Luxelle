@@ -23,7 +23,7 @@ export class ApiService {
   }
 
   updateUser(id: string, data: any): Observable<any> {
-    return this.http.put(`http://localhost:5000/api/users/${id}`, data);
+    return this.http.put(`http://localhost:5000/api/auth/${id}`, data);
   }
 
   getWishlist(userId: string): Observable<any> {
@@ -37,5 +37,24 @@ export class ApiService {
   removeFromWishlist(userId: string, productId: string): Observable<any> {
     // Angular HttpClient delete/request with body workaround
     return this.http.request('delete', `http://localhost:5000/api/wishlist`, { body: { userId, productId } });
+  }
+  createProduct(product: any): Observable<any> {
+    return this.http.post(this.apiUrl, product);
+  }
+
+  updateProduct(id: string, product: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, product);
+  }
+
+  deleteProduct(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:5000/api/auth');
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(`http://localhost:5000/api/auth/${id}`);
   }
 }
