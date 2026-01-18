@@ -44,7 +44,8 @@ const getProductById = async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const createProduct = async (req, res) => {
-  const { name, brand, category, price, colors, material, image, description } = req.body;
+  console.log('createProduct body:', req.body);
+  const { name, brand, category, price, colors, material, image, description, stock } = req.body;
 
   try {
     const newProduct = new Product({
@@ -56,6 +57,7 @@ const createProduct = async (req, res) => {
       material,
       image,
       description,
+      stock,
     });
 
     const savedProduct = await newProduct.save();

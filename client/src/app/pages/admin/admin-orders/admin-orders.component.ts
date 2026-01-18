@@ -112,7 +112,7 @@ import { FormsModule } from '@angular/forms';
                         <td class="pl-6 py-4">
                             <div class="flex items-center gap-3">
                                 <div class="avatar placeholder">
-                                    <div class="bg-neutral-focus text-neutral-content rounded-full w-10 bg-gray-200 text-gray-500">
+                                    <div class="bg-neutral-focus text-neutral-content rounded-full ps-[14.5px] pb-[2px] w-10 bg-gray-200 text-gray-500">
                                         <span class="text-xs font-bold">{{ order.user?.fullname?.charAt(0) || 'U' }}</span>
                                     </div>
                                 </div>
@@ -134,15 +134,6 @@ import { FormsModule } from '@angular/forms';
                                     'bg-gray-100 text-gray-600': order.orderStatus === 'Returned',
                                     'bg-purple-50 text-purple-600': order.orderStatus === 'Confirmed'
                                   }">
-                                <div class="w-2 h-2 rounded-full"
-                                     [ngClass]="{
-                                        'bg-blue-600': order.orderStatus === 'Processing',
-                                        'bg-yellow-600': order.orderStatus === 'Shipped',
-                                        'bg-green-600': order.orderStatus === 'Delivered',
-                                        'bg-red-600': order.orderStatus === 'Cancelled',
-                                        'bg-gray-600': order.orderStatus === 'Returned',
-                                        'bg-purple-600': order.orderStatus === 'Confirmed'
-                                     }"></div>
                                 {{ order.orderStatus }}
                             </div>
                         </td>
@@ -155,7 +146,6 @@ import { FormsModule } from '@angular/forms';
                                 <option value="Shipped">Shipped</option>
                                 <option value="Delivered">Delivered</option>
                                 <option value="Cancelled">Cancelled</option>
-                                <option value="Returned">Returned</option>
                             </select>
                         </td>
                     </tr>

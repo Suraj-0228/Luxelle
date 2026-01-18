@@ -72,6 +72,7 @@ import { ToastService } from '../../../services/toast.service';
                         <th class="py-4 pl-6">Product Item</th>
                         <th>Category</th>
                         <th>Price</th>
+                        <th>Stock</th>
                         <th class="pr-6 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -94,6 +95,11 @@ import { ToastService } from '../../../services/toast.service';
                              <span class="badge badge-outline badge-sm">{{ product.category }}</span>
                         </td>
                         <td class="font-bold font-serif text-lg">{{ product.price | currency }}</td>
+                        <td>
+                            <span class="badge" [ngClass]="{'badge-success': (product.stock || 0) > 10, 'badge-warning': (product.stock || 0) <= 10 && (product.stock || 0) > 0, 'badge-error': (product.stock || 0) === 0}">
+                                {{ product.stock || 0 }}
+                            </span>
+                        </td>
                         <td class="pr-6 text-right">
                            <div class="join">
                                 <button class="btn mx-1 btn-square btn-ghost text-blue-600 join-item hover:bg-blue-50" (click)="openModal(product)" title="Edit">
@@ -185,6 +191,14 @@ import { ToastService } from '../../../services/toast.service';
                             <div *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid" class="text-red-500 text-xs mt-1 pl-1">
                                 <span *ngIf="productForm.get('price')?.errors?.['required']">Price is required</span>
                                 <span *ngIf="productForm.get('price')?.errors?.['min']">Price must be a positive number</span>
+                            </div>
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label pl-1"><span class="label-text font-bold text-gray-700">Stock</span></label>
+                            <input type="number" formControlName="stock" class="input input-bordered border-2 px-3 w-full bg-white border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all rounded-lg h-12" />
+                            <div *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid" class="text-red-500 text-xs mt-1 pl-1">
+                                <span *ngIf="productForm.get('stock')?.errors?.['required']">Stock is required</span>
+                                <span *ngIf="productForm.get('stock')?.errors?.['min']">Stock must be positive</span>
                             </div>
                         </div>
                     </div>
@@ -282,6 +296,7 @@ export class AdminProductsComponent {
         brand: ['', Validators.required],
         description: ['', Validators.required],
         price: [0, [Validators.required, Validators.min(0)]],
+        stock: [0, [Validators.required, Validators.min(0)]],
         category: ['', Validators.required],
         image: ['', Validators.required]
     });
