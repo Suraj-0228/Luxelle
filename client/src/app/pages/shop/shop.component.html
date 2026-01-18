@@ -18,7 +18,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
     <!-- Filter Bar -->
-    <div class="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-gray-100 gap-4">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-gray-500 gap-4">
         <div class="flex items-center space-x-4 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
             <button *ngFor="let cat of categories" (click)="filterCategory(cat)"
                 [class.text-primary-600]="selectedCategory === cat" [class.border-b-2]="selectedCategory === cat"

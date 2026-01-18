@@ -40,7 +40,7 @@ export class AuthService {
         this.router.navigate(['/login']);
     }
 
-    private setUser(user: any) {
+    setUser(user: any) {
         localStorage.setItem('user', JSON.stringify(user));
         this.currentUser.set(user);
     }

@@ -75,12 +75,14 @@ export class ProfileComponent implements OnInit {
 
         this.apiService.updateUser(this.user()!._id, this.editData).subscribe({
             next: (updatedUser) => {
-                let currentData = JSON.parse(localStorage.getItem('user_data') || '{}');
-                const newData = { ...currentData, ...updatedUser };
-                localStorage.setItem('user_data', JSON.stringify(newData));
-                window.location.reload();
+                // Properly update the auth service state (signal + localStorage)
+                this.authService.setUser(updatedUser);
+                this.toggleEdit(); // Close modal
             },
-            error: (err) => console.error('Failed to update profile', err)
+            error: (err) => {
+                console.error('Failed to update profile', err);
+                alert('Failed to update profile. Please try again.');
+            }
         });
     }
 

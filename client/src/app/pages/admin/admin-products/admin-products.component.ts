@@ -124,16 +124,16 @@ import { ToastService } from '../../../services/toast.service';
                 Showing {{ (currentPage() - 1) * itemsPerPage + 1 }} - {{ (currentPage() * itemsPerPage) > totalProducts() ? totalProducts() : (currentPage() * itemsPerPage) }} 
                 of {{ totalProducts() }} products
             </span>
-            <div class="join shadow-sm">
-                <button class="join-item btn btn-sm bg-white border-gray-200 hover:bg-gray-100 hover:border-gray-300 text-gray-600" 
+            <div class="join shadow-sm bg-gray-500/10 flex items-center">
+                <button class="join-item text-gray-900 font-bold" 
                         [disabled]="currentPage() === 1" 
                         (click)="changePage(currentPage() - 1)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 </button>
-                <button class="join-item btn btn-sm bg-white border-gray-200 text-gray-900 font-bold pointer-events-none px-4">
+                <button class="join-item bg-white text-gray-900 font-bold pointer-events-none px-4">
                     Page {{ currentPage() }}
                 </button>
-                <button class="join-item btn btn-sm bg-white border-gray-200 hover:bg-gray-100 hover:border-gray-300 text-gray-600" 
+                <button class="join-item text-gray-900 font-bold" 
                         [disabled]="currentPage() === totalPages()" 
                         (click)="changePage(currentPage() + 1)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>

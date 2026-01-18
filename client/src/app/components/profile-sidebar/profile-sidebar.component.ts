@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -11,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ProfileSidebarComponent {
     private authService = inject(AuthService);
+    router = inject(Router);
     user = this.authService.currentUser;
 
     logout() {

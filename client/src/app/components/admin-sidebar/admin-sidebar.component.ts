@@ -56,8 +56,8 @@ import { AuthService } from '../../services/auth.service';
       </nav>
 
       <!-- Logout -->
-      <div class="p-6 border-t border-gray-800 bg-black/20">
-         <button (click)="logout()" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-red-900/30 text-red-500 hover:bg-red-900/20 hover:text-red-400 hover:border-red-900/50 transition-all duration-300 group">
+      <div class="p-6 border-t border-gray-800">
+         <button (click)="logout()" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-red-900/30 bg-red-500/20 text-red-500 hover:bg-red-900/70 hover:text-red-400 hover:border-red-900/50 transition-all duration-300 group">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 group-hover:-translate-x-1 transition-transform">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
             </svg>
