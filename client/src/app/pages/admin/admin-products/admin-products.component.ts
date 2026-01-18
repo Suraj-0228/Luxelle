@@ -147,7 +147,7 @@ import { ToastService } from '../../../services/toast.service';
       <div class="modal-box w-11/12 max-w-4xl bg-white text-gray-800 p-0 rounded-2xl shadow-2xl relative z-10 scale-100 transition-transform duration-200 flex flex-col max-h-[90vh]" [class.scale-100]="isModalOpen()" [class.scale-95]="!isModalOpen()">
         
         <!-- Modal Header -->
-        <div class="bg-black text-white p-6 flex justify-between items-center shrink-0">
+        <div class="bg-gray-900 text-white p-6 flex justify-between items-center shrink-0">
             <div>
                 <h3 class="font-serif font-bold text-2xl tracking-wide">{{ isEditing() ? 'Edit Product' : 'Add New Product' }}</h3>
                 <p class="text-sm text-gray-400 mt-1">Fill in the details below to {{ isEditing() ? 'update the' : 'add a new' }} product.</p>
@@ -191,7 +191,7 @@ import { ToastService } from '../../../services/toast.service';
 
                     <div class="form-control w-full">
                         <label class="label pl-1"><span class="label-text font-bold text-gray-700">Category</span></label>
-                        <select formControlName="category" class="select select-bordered border-2 px-3 w-full bg-white border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all rounded-lg h-12">
+                        <select formControlName="category" class="select select-bordered border-2 px-3 w-full bg-white border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/20 transition-all rounded-lg h-12">
                             <option value="" disabled selected>Select Category</option>
                             <option value="Bags">Bags</option>
                             <option value="Watches">Watches</option>

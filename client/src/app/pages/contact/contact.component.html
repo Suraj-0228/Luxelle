@@ -1,96 +1,173 @@
-<div class="min-h-screen lg:flex m-20">
+<div class="min-h-screen my-10 flex flex-col lg:flex-row bg-white">
 
-    <!-- Image Section (Left) -->
-    <div class="hidden lg:block lg:w-1/2 relative bg-gray-100 overflow-hidden">
-        <img src="https://i.pinimg.com/1200x/e8/b0/51/e8b051c28ca504ea624d4e0fbebb7aaa.jpg"
-            class="absolute inset-0 w-full h-full object-cover object-center" alt="Luxury Concierge">
-        <div class="absolute inset-0 bg-black/30"></div>
+    <!-- Image Section (Left) - Fixed on Desktop -->
+    <div class="lg:w-1/2 relative min-h-[40vh] lg:min-h-screen bg-gray-100 overflow-hidden group">
+        <div class="absolute inset-0 bg-black/20 z-10"></div>
+        <img src="https://i.pinimg.com/1200x/57/8c/a0/578ca0c411afb34a2d68df95d3835eec.jpg"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            alt="Luxury Boutique Interior">
+
+        <div class="absolute bottom-0 left-0 p-8 lg:p-16 z-20 text-white">
+            <p class="text-xs font-bold tracking-[0.3em] uppercase mb-4 opacity-80">Est. 2024</p>
+            <h2 class="font-serif text-4xl lg:text-5xl italic">Excellence in Service.</h2>
+        </div>
     </div>
 
-    <!-- Content Section (Right) -->
-    <div class="flex-1 flex flex-col justify-center px-4 py-16 sm:px-6 lg:px-20 xl:px-24 bg-white">
+    <!-- Content Section (Right) - Scrollable -->
+    <div class="flex-1 flex flex-col justify-center px-6 py-16 sm:px-12 lg:px-20 xl:px-32 bg-white relative">
 
-        <div class="w-full max-w-xl mx-auto lg:mr-0">
-            <h1 class="font-serif text-4xl md:text-5xl text-gray-900 mb-12">Get in Touch</h1>
+        <div class="w-full max-w-lg mx-auto">
+            <!-- Header -->
+            <div class="mb-16">
+                <span class="block text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-4">Contact Us</span>
+                <h1 class="font-serif text-4xl md:text-5xl text-gray-900 leading-tight">We'd love to hear <br> from you.
+                </h1>
+            </div>
 
-            <!-- Contact Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 border-b border-gray-900 pb-16">
-                <div
-                    class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="font-serif text-xl text-gray-900 mb-4">General Inquiries</h3>
-                    <p class="text-gray-500 font-light mb-1">concierge@luxelle.com</p>
-                    <p class="text-gray-500 font-light">+1 (800) LUX-ELLE</p>
+            <!-- Contact Information with Icons -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 mb-16">
+                <!-- Concierge -->
+                <div class="group">
+                    <div class="flex items-center gap-3 mb-3 text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                        </svg>
+                        <h3 class="font-serif text-lg">Concierge</h3>
+                    </div>
+                    <p class="text-gray-500 font-light text-sm leading-relaxed pl-8">
+                        <a href="mailto:concierge@luxelle.com"
+                            class="hover:text-black transition-colors">concierge@luxelle.com</a><br>
+                        +1 (800) LUX-ELLE
+                    </p>
                 </div>
-                <div
-                    class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="font-serif text-xl text-gray-900 mb-4">Visit Our Boutique</h3>
-                    <p class="text-gray-500 font-light">123 Fashion Avenue</p>
-                    <p class="text-gray-500 font-light">New York, NY 10001</p>
+
+                <!-- Boutique -->
+                <div class="group">
+                    <div class="flex items-center gap-3 mb-3 text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                        </svg>
+                        <h3 class="font-serif text-lg">Visit</h3>
+                    </div>
+                    <p class="text-gray-500 font-light text-sm leading-relaxed pl-8">
+                        123 Fashion Avenue<br>
+                        New York, NY 10001
+                    </p>
                 </div>
-                <div
-                    class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="font-serif text-xl text-gray-900 mb-4">Press & Media</h3>
-                    <p class="text-gray-500 font-light">press@luxelle.com</p>
+
+                <!-- Media -->
+                <div class="group">
+                    <div class="flex items-center gap-3 mb-3 text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+                        </svg>
+                        <h3 class="font-serif text-lg">Press</h3>
+                    </div>
+                    <p class="text-gray-500 font-light text-sm leading-relaxed pl-8">
+                        <a href="mailto:press@luxelle.com"
+                            class="hover:text-black transition-colors">press@luxelle.com</a>
+                    </p>
                 </div>
-                <div
-                    class="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                    <h3 class="font-serif text-xl text-gray-900 mb-4">Wholesale</h3>
-                    <p class="text-gray-500 font-light">wholesale@luxelle.com</p>
+
+                <!-- Wholesale -->
+                <div class="group">
+                    <div class="flex items-center gap-3 mb-3 text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                        </svg>
+                        <h3 class="font-serif text-lg">Wholesale</h3>
+                    </div>
+                    <p class="text-gray-500 font-light text-sm leading-relaxed pl-8">
+                        <a href="mailto:wholesale@luxelle.com"
+                            class="hover:text-black transition-colors">wholesale@luxelle.com</a>
+                    </p>
                 </div>
             </div>
 
-            <!-- Form -->
-            <div class="border border-gray-400 p-10">
+            <div class="border-t border-gray-900 my-10"></div>
+
+            <!-- Enhanced Form -->
+            <div>
                 <h2 class="font-serif text-2xl text-gray-900 mb-8">Send a Message</h2>
-                <form (submit)="onSubmit(); $event.preventDefault()" class="space-y-8">
-                    <div class="space-y-8">
-                        <div class="group">
-                            <label for="name"
-                                class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">Full
-                                Name</label>
+                <form (submit)="onSubmit(); $event.preventDefault()" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Name -->
+                        <div class="group relative">
                             <input type="text" id="name" name="name" [(ngModel)]="contact.name" #name="ngModel" required
-                                class="w-full border border-gray-400 py-2 px-3 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
-                                placeholder="Jane Doe">
-                            <div *ngIf="name.touched && name.invalid" class="text-red-500 text-xs mt-1">
-                                <span *ngIf="name.errors?.['required']">Full Name is required</span>
+                                class="peer w-full border-b border-gray-300 py-3 bg-transparent text-gray-900 focus:outline-none focus:border-black transition-colors placeholder-transparent"
+                                placeholder="Full Name">
+                            <label for="name"
+                                class="absolute left-0 -top-3.5 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-gray-900 cursor-text">
+                                Full Name
+                            </label>
+                            <div *ngIf="name.touched && name.invalid"
+                                class="text-red-500 text-[10px] mt-1 uppercase tracking-wider absolute">
+                                <span *ngIf="name.errors?.['required']">Full Name is Required!!</span>
                             </div>
                         </div>
 
-                        <div class="group">
-                            <label for="email"
-                                class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">Email
-                                Address</label>
+                        <!-- Email -->
+                        <div class="group relative">
                             <input type="email" id="email" name="email" [(ngModel)]="contact.email" #email="ngModel"
                                 required email
-                                class="w-full border border-gray-400 py-2 px-3 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-light"
-                                placeholder="jane@example.com">
-                            <div *ngIf="email.touched && email.invalid" class="text-red-500 text-xs mt-1">
-                                <span *ngIf="email.errors?.['required']">Email is required</span>
-                                <span *ngIf="email.errors?.['email']">Invalid email format</span>
-                            </div>
-                        </div>
-
-                        <div class="group">
-                            <label for="message"
-                                class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 group-focus-within:text-gray-900 transition-colors">Message</label>
-                            <textarea id="message" rows="3" name="message" [(ngModel)]="contact.message"
-                                #message="ngModel" required
-                                class="w-full border border-gray-400 py-2 px-3 focus:outline-none focus:border-black transition-colors bg-transparent resize-none placeholder-gray-300 font-light"
-                                placeholder="Your message..."></textarea>
-                            <div *ngIf="message.touched && message.invalid" class="text-red-500 text-xs mt-1">
-                                <span *ngIf="message.errors?.['required']">Message is required</span>
+                                class="peer w-full border-b border-gray-300 py-3 bg-transparent text-gray-900 focus:outline-none focus:border-black transition-colors placeholder-transparent"
+                                placeholder="Email Address">
+                            <label for="email"
+                                class="absolute left-0 -top-3.5 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-gray-900 cursor-text">
+                                Email Address
+                            </label>
+                            <div *ngIf="email.touched && email.invalid"
+                                class="text-red-500 text-[10px] mt-1 uppercase tracking-wider absolute">
+                                <span *ngIf="email.errors?.['required']">Email is Required!!</span>
+                                <span *ngIf="email.errors?.['email']">Invalid Email!!</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="pt-4">
-                        <button type="submit" [disabled]="isSubmitting"
-                            class="inline-block bg-gray-900 text-white py-4 px-12 text-xs font-bold uppercase tracking-[0.2em] hover:bg-black transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                            {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+                    <!-- Message -->
+                    <div class="group relative pt-4">
+                        <textarea id="message" rows="1" name="message" [(ngModel)]="contact.message" #message="ngModel"
+                            required
+                            class="peer w-full border-b border-gray-300 py-3 bg-transparent text-gray-900 focus:outline-none focus:border-black transition-colors placeholder-transparent resize-none min-h-[50px] focus:min-h-[100px]"
+                            placeholder="Your Message"></textarea>
+                        <label for="message"
+                            class="absolute left-0 top-0.5 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-7 peer-focus:top-0.5 peer-focus:text-xs peer-focus:text-gray-900 cursor-text">
+                            Message
+                        </label>
+                        <div *ngIf="message.touched && message.invalid"
+                            class="text-red-500 text-[10px] mt-1 uppercase tracking-wider">
+                            <span *ngIf="message.errors?.['required']">Message is Required!!</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-8">
+                        <button type="submit"
+                            [disabled]="isSubmitting || name.invalid || email.invalid || message.invalid"
+                            class="group relative inline-flex items-center justify-start overflow-hidden px-8 py-4 bg-gray-900 text-white transition-all hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span class="relative text-xs font-bold uppercase tracking-[0.2em] mr-2">
+                                {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+                            </span>
+                            <svg *ngIf="!isSubmitting" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-4 h-4 relative transition-transform duration-300 group-hover:translate-x-1">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
                         </button>
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
