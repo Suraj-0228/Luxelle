@@ -35,21 +35,21 @@ export class HomeComponent implements OnInit {
   categories = [
     {
       title: 'Luxury Bags',
-      image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=60',
+      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800&auto=format&fit=crop', // Black luxury bag
       link: '/shop',
       queryParams: { category: 'Bags' },
       size: 'large'
     },
     {
       title: 'Timeless Watches',
-      image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600&auto=format&fit=crop&q=60',
+      image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=600&auto=format&fit=crop', // Dark watch
       link: '/shop',
       queryParams: { category: 'Watches' },
       size: 'small'
     },
     {
       title: 'Premium Belts',
-      image: 'https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=600&auto=format&fit=crop&q=60',
+      image: 'https://images.unsplash.com/photo-1624222247344-550fb60583dc?q=80&w=600&auto=format&fit=crop', // Belt
       link: '/shop',
       queryParams: { category: 'Belts' },
       size: 'small'

@@ -45,13 +45,13 @@
                 <div *ngIf="!isLoading() && wishlistItems().length > 0"
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-6 xl:gap-x-8">
                     <div *ngFor="let product of wishlistItems()"
-                        class="group relative bg-white border border-gray-400 rounded-sm hover:shadow-lg transition-all duration-300 flex flex-col">
+                        class="group relative bg-white rounded-sm hover:shadow-lg transition-all duration-300 flex flex-col">
 
                         <!-- Image Container with Aspect Ratio -->
                         <div
                             class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200 xl:aspect-w-7 xl:aspect-h-8 relative">
                             <img [src]="product.image" [alt]="product.name"
-                                class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                                class="h-[15rem] w-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
 
                             <!-- Remove Button -->
                             <button (click)="removeFromWishlist(product._id); $event.stopPropagation()"
