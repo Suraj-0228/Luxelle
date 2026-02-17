@@ -50,7 +50,7 @@
 
                 <!-- Orders List -->
                 <div *ngIf="!isLoading() && orders().length > 0" class="space-y-8">
-                    <div *ngFor="let order of orders()"
+                    <div *ngFor="let order of paginatedOrders()"
                         class="bg-white border border-gray-400 shadow-sm rounded-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
 
                         <!-- Order Header -->
@@ -111,10 +111,12 @@
                                                 </div>
                                                 <p class="mt-1 text-xs text-gray-500">{{ item.product?.brand ||
                                                     'LUXELLE' }}</p>
+                                                <p *ngIf="item.selectedColor" class="mt-1 text-xs text-gray-500">Color:
+                                                    {{ item.selectedColor }}</p>
                                             </div>
                                             <div class="mt-4 sm:mt-0 flex items-center gap-6">
                                                 <p class="text-sm font-light text-gray-500">Qty {{ item.quantity }}</p>
-                                                <p class="text-sm font-medium text-gray-900">${{ item.priceAtPurchase }}
+                                                <p class="text-sm font-medium text-gray-900">${{ item.product?.price }}
                                                 </p>
                                             </div>
                                         </div>
@@ -131,6 +133,30 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Pagination -->
+                <div *ngIf="!isLoading() && totalPages() > 1" class="flex justify-center mt-12 pb-12">
+                    <nav class="flex items-center space-x-2">
+                        <button (click)="changePage(currentPage() - 1)" [disabled]="currentPage() === 1"
+                            class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-sm text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            Previous
+                        </button>
+
+                        <button *ngFor="let page of pageNumbers()" (click)="changePage(page)"
+                            [class.bg-gray-900]="currentPage() === page" [class.text-white]="currentPage() === page"
+                            [class.border-gray-900]="currentPage() === page"
+                            [class.text-gray-700]="currentPage() !== page"
+                            [class.hover:bg-gray-50]="currentPage() !== page"
+                            class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-sm transition-colors">
+                            {{ page }}
+                        </button>
+
+                        <button (click)="changePage(currentPage() + 1)" [disabled]="currentPage() === totalPages()"
+                            class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-sm text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            Next
+                        </button>
+                    </nav>
                 </div>
             </div>
         </div>

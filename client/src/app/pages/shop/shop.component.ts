@@ -13,8 +13,20 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 })
 export class ShopComponent implements OnInit {
   products: any[] = [];
+  allProducts: any[] = []; // Store all fetched products
   categories = ['All', 'Bags', 'Watches', 'Sunglasses', 'Belts'];
   selectedCategory = 'All';
+  searchQuery = '';
+  selectedPriceRange = 'All';
+
+  priceRanges = [
+    { label: 'All Prices', value: 'All' },
+    { label: 'Under $100', min: 0, max: 100, value: '0-100' },
+    { label: '$100 - $300', min: 100, max: 300, value: '100-300' },
+    { label: '$300 - $500', min: 300, max: 500, value: '300-500' },
+    { label: 'Over $500', min: 500, max: Infinity, value: '500-inf' }
+  ];
+
   itemsPerPage = 8;
   currentPage = 1;
 
@@ -22,11 +34,11 @@ export class ShopComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
+      // Logic could be enhanced here to parse params for search/price too
       if (params['category']) {
-        this.filterCategory(params['category']);
-      } else {
-        this.getAllProducts();
+        this.selectedCategory = params['category'];
       }
+      this.getAllProducts();
     });
   }
 
@@ -52,25 +64,57 @@ export class ShopComponent implements OnInit {
 
   getAllProducts() {
     this.apiService.getProducts().subscribe(data => {
-      // If a category is selected (from manual click), filter locally if API doesn't support it or if we just fetched all
-      if (this.selectedCategory !== 'All') {
-        this.products = data.filter(p => p.category === this.selectedCategory);
-      } else {
-        this.products = data;
-      }
-      this.currentPage = 1;
+      this.allProducts = data;
+      this.applyFilters();
     });
   }
 
-  filterCategory(category: string) {
-    this.selectedCategory = category;
-    this.currentPage = 1;
-    if (category === 'All') {
-      this.getAllProducts();
-    } else {
-      this.apiService.getProductsByCategory(category).subscribe(data => {
-        this.products = data;
-      });
+  // Unified filter function
+  applyFilters() {
+    let filtered = [...this.allProducts];
+
+    // 1. Category Filter
+    if (this.selectedCategory !== 'All') {
+      filtered = filtered.filter(p => p.category === this.selectedCategory);
     }
+
+    // 2. Search Filter
+    if (this.searchQuery.trim()) {
+      const q = this.searchQuery.toLowerCase();
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        (p.brand && p.brand.toLowerCase().includes(q))
+      );
+    }
+
+    // 3. Price Filter
+    if (this.selectedPriceRange !== 'All') {
+      const range = this.priceRanges.find(r => r.value === this.selectedPriceRange);
+      if (range) {
+        filtered = filtered.filter(p => {
+          const price = typeof p.price === 'string' ? parseFloat(p.price) : p.price;
+          // @ts-ignore
+          return price >= range.min && price <= range.max;
+        });
+      }
+    }
+
+    this.products = filtered;
+    this.currentPage = 1; // Reset to first page on filter change
+  }
+
+  onSearch(query: string) {
+    this.searchQuery = query;
+    this.applyFilters();
+  }
+
+  onCategoryChange(category: string) {
+    this.selectedCategory = category;
+    this.applyFilters();
+  }
+
+  onPriceChange(rangeValue: string) {
+    this.selectedPriceRange = rangeValue;
+    this.applyFilters();
   }
 }

@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { ProfileSidebarComponent } from '../../components/profile-sidebar/profile-sidebar.component';
 
 @Component({
@@ -16,6 +17,7 @@ export class WishlistComponent implements OnInit {
     private apiService = inject(ApiService);
     private authService = inject(AuthService);
     private cartService = inject(CartService);
+    private wishlistService = inject(WishlistService);
 
     wishlistItems = signal<any[]>([]);
     isLoading = signal(true);
@@ -50,13 +52,11 @@ export class WishlistComponent implements OnInit {
     removeFromWishlist(productId: string) {
         if (!this.userId) return;
 
-        this.apiService.removeFromWishlist(this.userId, productId).subscribe({
-            next: () => {
-                // Remove locally
-                this.wishlistItems.update(items => items.filter(item => item._id !== productId));
-            },
-            error: (err) => console.error('Error removing from wishlist', err)
-        });
+        // Use service to sync global state
+        this.wishlistService.removeFromWishlist(productId);
+
+        // Remove locally from view
+        this.wishlistItems.update(items => items.filter(item => item._id !== productId));
     }
 
     addToBag(product: any) {

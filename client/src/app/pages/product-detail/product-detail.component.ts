@@ -1,9 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { CartService } from '../../services/cart.service';
-import { AuthService } from '../../services/auth.service';
-import { ToastService } from '../../services/toast.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -16,37 +15,41 @@ import { RouterLink } from '@angular/router';
 })
 export class ProductDetailComponent implements OnInit {
   product: any;
-  private toastService = inject(ToastService);
 
-  constructor(
-    private route: ActivatedRoute,
-    private apiService: ApiService,
-    private cartService: CartService,
-    private authService: AuthService
-  ) { }
+  private route = inject(ActivatedRoute);
+  private apiService = inject(ApiService);
+  private cartService = inject(CartService);
+  private wishlistService = inject(WishlistService);
+
+  isInWishlist = computed(() => this.product ? this.wishlistService.isInWishlist(this.product._id)() : false);
+  selectedColor: string = '';
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.apiService.getProductById(id).subscribe(data => this.product = data);
+      this.apiService.getProductById(id).subscribe(data => {
+        this.product = data;
+        if (this.product.colors && this.product.colors.length > 0) {
+          this.selectedColor = this.product.colors[0];
+        }
+      });
     }
+  }
+
+  selectColor(color: string) {
+    this.selectedColor = color;
   }
 
   addToCart() {
     if (this.product) {
-      this.cartService.addToCart(this.product);
+      const productToAdd = { ...this.product, selectedColor: this.selectedColor };
+      this.cartService.addToCart(productToAdd);
     }
   }
 
-  addToWishlist() {
-    const user = this.authService.currentUser();
-    if (this.product && user && user._id) {
-      this.apiService.addToWishlist(user._id, this.product._id).subscribe({
-        next: () => this.toastService.show('Product added to wishlist!', 'success'),
-        error: (err) => console.error('Error adding to wishlist', err)
-      });
-    } else {
-      this.toastService.show('Please sign in to add items to your wishlist.', 'info');
+  toggleWishlist() {
+    if (this.product) {
+      this.wishlistService.toggleWishlist(this.product);
     }
   }
 }

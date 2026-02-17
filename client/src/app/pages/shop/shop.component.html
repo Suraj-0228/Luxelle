@@ -18,19 +18,46 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
     <!-- Filter Bar -->
-    <div class="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-gray-500 gap-4">
-        <div class="flex items-center space-x-4 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
-            <button *ngFor="let cat of categories" (click)="filterCategory(cat)"
-                [class.text-primary-600]="selectedCategory === cat" [class.border-b-2]="selectedCategory === cat"
-                [class.border-primary-600]="selectedCategory === cat" [class.text-gray-500]="selectedCategory !== cat"
-                class="whitespace-nowrap px-1 py-2 text-sm font-medium hover:text-primary-600 transition-colors border-b-2 border-transparent">
-                {{ cat }}
-            </button>
+    <div class="bg-gray-50 border border-gray-200 p-6 rounded-sm mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+
+            <!-- Search -->
+            <div class="md:col-span-4 lg:col-span-5 relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input type="text" [value]="searchQuery" (input)="onSearch($any($event.target).value)"
+                    placeholder="Search products..."
+                    class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-sm leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-gray-900 sm:text-sm transition-shadow">
+            </div>
+
+            <!-- Category Filter -->
+            <div class="md:col-span-4 lg:col-span-3">
+                <select [value]="selectedCategory" (change)="onCategoryChange($any($event.target).value)"
+                    class="block w-full pl-3 pr-10 py-3 text-base border border-gray-300 focus:border-gray-300 focus:outline-none focus:ring-gray-900 sm:text-sm rounded-sm bg-white cursor-pointer">
+                    <option *ngFor="let cat of categories" [value]="cat">
+                        {{ cat === 'All' ? 'All Categories' : cat }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="md:col-span-4 lg:col-span-3">
+                <select [value]="selectedPriceRange" (change)="onPriceChange($any($event.target).value)"
+                    class="block w-full pl-3 pr-10 py-3 text-base border border-gray-300 focus:border-gray-300 focus:outline-none focus:ring-gray-900 sm:text-sm rounded-sm bg-white cursor-pointer">
+                    <option *ngFor="let range of priceRanges" [value]="range.value">{{ range.label }}</option>
+                </select>
+            </div>
+
         </div>
 
-        <div class="flex items-center text-sm text-gray-500">
-            <span class="mr-2">{{products.length}} Products</span>
-            <!-- Logic for sorting can be added here later -->
+        <div class="mt-4 flex justify-between items-center text-xs text-gray-500 border-t border-gray-200 pt-4">
+            <span>Showing {{ paginatedProducts.length }} of {{ products.length }} results</span>
+            <span *ngIf="selectedCategory !== 'All' || selectedPriceRange !== 'All' || searchQuery"
+                class="text-primary-600 font-medium">Filters applied</span>
         </div>
     </div>
 

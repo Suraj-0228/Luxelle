@@ -67,22 +67,22 @@ import { FormsModule } from '@angular/forms';
         <!-- Toolbar -->
         <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="tabs tabs-boxed bg-gray-100 p-1">
-                <a class="tab transition-all mx-2 duration-300 hover:cursor-pointer" 
+                <a class="tab transition-all mr-4 duration-300 hover:cursor-pointer" 
                    [class.tab-active]="filterStatus() === 'All'" 
                    [class.bg-white]="filterStatus() === 'All'"
                    [class.shadow-sm]="filterStatus() === 'All'"
                    (click)="setFilter('All')">All</a>
-                <a class="tab transition-all mx-2 duration-300 hover:cursor-pointer"
+                <a class="tab transition-all mx-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'Processing'" 
                    [class.bg-white]="filterStatus() === 'Processing'"
                    [class.text-warning]="filterStatus() === 'Processing'"
                     (click)="setFilter('Processing')">Processing</a>
-                <a class="tab transition-all mx-2 duration-300 hover:cursor-pointer"
+                <a class="tab transition-all mx-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'Shipped'"
                    [class.bg-white]="filterStatus() === 'Shipped'"
                    [class.text-primary]="filterStatus() === 'Shipped'"
                    (click)="setFilter('Shipped')">Shipped</a>
-                 <a class="tab transition-all mx-2 duration-300 hover:cursor-pointer"
+                 <a class="tab transition-all mx-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'Delivered'"
                    [class.bg-white]="filterStatus() === 'Delivered'"
                    [class.text-success]="filterStatus() === 'Delivered'"
@@ -138,15 +138,23 @@ import { FormsModule } from '@angular/forms';
                             </div>
                         </td>
                         <td class="pr-6 text-right">
-                             <select class="select select-bordered select-sm w-full max-w-[140px] bg-white hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary transition-all" 
-                                    [ngModel]="order.orderStatus" 
-                                    (ngModelChange)="updateStatus(order._id, $event)">
-                                <option value="Confirmed">Confirmed</option>
-                                <option value="Processing">Processing</option>
-                                <option value="Shipped">Shipped</option>
-                                <option value="Delivered">Delivered</option>
-                                <option value="Cancelled">Cancelled</option>
-                            </select>
+                             <div class="flex items-center justify-end gap-2">
+                                <button class="btn btn-square btn-ghost btn-sm text-gray-500 hover:bg-gray-100" (click)="viewOrderDetails(order)" title="View Details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                                 <select class="select select-bordered select-sm w-full max-w-[130px] bg-white hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary transition-all" 
+                                        [ngModel]="order.orderStatus" 
+                                        (ngModelChange)="updateStatus(order._id, $event)">
+                                    <option value="Confirmed">Confirmed</option>
+                                    <option value="Processing">Processing</option>
+                                    <option value="Shipped">Shipped</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                             </div>
                         </td>
                     </tr>
                     
@@ -160,7 +168,93 @@ import { FormsModule } from '@angular/forms';
             </table>
         </div>
     </div>
-  `
+
+    <!-- Order Details Modal -->
+    <div role="dialog" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-200 opacity-0 pointer-events-none" 
+         [class.opacity-100]="selectedOrder()" 
+         [class.opacity-0]="!selectedOrder()" 
+         [class.pointer-events-auto]="selectedOrder()" 
+         [class.pointer-events-none]="!selectedOrder()">
+      
+      <div class="modal-box w-11/12 max-w-3xl bg-white text-gray-800 p-0 rounded-2xl shadow-2xl relative z-10 scale-100 transition-transform duration-200 flex flex-col max-h-[90vh]" 
+           [class.scale-100]="selectedOrder()" 
+           [class.scale-95]="!selectedOrder()">
+        
+        <!-- Modal Header -->
+        <div class="bg-gray-900 text-white p-6 flex justify-between items-center shrink-0">
+            <div>
+                <h3 class="font-serif font-bold text-2xl tracking-wide">Order Details</h3>
+                <p class="text-sm text-gray-400 mt-1" *ngIf="selectedOrder()">
+                    Order #{{ selectedOrder()._id }} • {{ selectedOrder().orderDate | date:'medium' }}
+                </p>
+            </div>
+            <button (click)="closeDetailsModal()" class="btn btn-circle btn-ghost btn-sm text-white hover:bg-white/20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="p-8 overflow-y-auto flex-1" *ngIf="selectedOrder()">
+            
+            <!-- Customer Info -->
+            <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Customer</h4>
+                    <p class="font-bold text-gray-900">{{ selectedOrder().user?.fullname || 'Guest' }}</p>
+                    <p class="text-sm text-gray-600">{{ selectedOrder().user?.email }}</p>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Shipping Address</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        {{ selectedOrder().shippingAddress?.fullName }}<br>
+                        {{ selectedOrder().shippingAddress?.address }}<br>
+                        {{ selectedOrder().shippingAddress?.city }}, {{ selectedOrder().shippingAddress?.postalCode }}<br>
+                        {{ selectedOrder().shippingAddress?.country }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Order Items -->
+            <h4 class="font-serif font-bold text-xl mb-4 border-b border-gray-100 pb-2">Items</h4>
+            <div class="space-y-4">
+                <div *ngFor="let item of selectedOrder().items" class="flex items-center gap-4 py-2">
+                    <div class="avatar h-16 w-16 rounded-lg border border-gray-200 overflow-hidden shrink-0">
+                        <img [src]="item.product?.image" [alt]="item.product?.name" class="h-full w-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h5 class="font-bold text-gray-900">{{ item.product?.name || 'Product Unavailable' }}</h5>
+                                <p class="text-sm text-gray-500">{{ item.product?.brand }}</p>
+                                <p *ngIf="item.selectedColor" class="text-sm font-medium text-gray-600 mt-1">Color: <span class="text-gray-900">{{ item.selectedColor }}</span></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-gray-900">{{ item.product?.price | currency }}</p>
+                                <p class="text-sm text-gray-500">Qty: {{ item.quantity }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                <div class="w-full max-w-xs space-y-2">
+                    <div class="flex justify-between text-lg font-serif font-bold text-gray-900 pt-2 border-t border-gray-900">
+                        <span>Total</span>
+                        <span>{{ selectedOrder().totalAmount | currency }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="modal-action p-6 border-t border-gray-100 bg-gray-50 flex justify-end shrink-0 m-0 rounded-b-2xl">
+             <button type="button" class="btn btn-primary bg-gray-900 text-white hover:bg-black duration-300 px-6 py-2 font-bold rounded-lg shadow-lg" (click)="closeDetailsModal()">Close</button>
+        </div>
+      </div>
+    </div>
+    `
 })
 export class AdminOrdersComponent {
     orderService = inject(OrderService);
@@ -207,5 +301,16 @@ export class AdminOrdersComponent {
             },
             error: () => this.toastService.show('Failed to update status', 'error')
         });
+    }
+
+    // Order Details Modal
+    selectedOrder = signal<any>(null);
+
+    viewOrderDetails(order: any) {
+        this.selectedOrder.set(order);
+    }
+
+    closeDetailsModal() {
+        this.selectedOrder.set(null);
     }
 }

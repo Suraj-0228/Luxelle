@@ -61,19 +61,43 @@
                 </div>
             </div>
 
+            <!-- Colors -->
+            <div *ngIf="product.colors && product.colors.length > 0" class="mb-8">
+                <span class="block text-xs uppercase tracking-widest text-gray-400 mb-3">Color</span>
+                <div class="flex items-center space-x-3">
+                    <button *ngFor="let color of product.colors" (click)="selectColor(color)"
+                        [class.ring-2]="selectedColor === color" [class.ring-gray-900]="selectedColor === color"
+                        [class.ring-offset-2]="selectedColor === color"
+                        class="w-8 h-8 rounded-full border border-gray-200 focus:outline-none transition-all duration-200"
+                        [style.backgroundColor]="color | lowercase">
+                    </button>
+                </div>
+                <!-- Selected Color Label -->
+                <p class="mt-2 text-sm text-gray-700 font-medium">{{ selectedColor }}</p>
+            </div>
+
             <div class="flex flex-col gap-4">
                 <div class="flex gap-4">
                     <button (click)="addToCart()"
                         class="flex-1 bg-gray-900 text-white py-4 px-8 text-sm font-bold uppercase tracking-widest hover:bg-black transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl">
                         Add to Bag
                     </button>
-                    <button (click)="addToWishlist()"
-                        class="bg-white border border-gray-200 text-gray-900 py-4 px-6 hover:bg-gray-50 transition-colors tooltip"
+                    <button (click)="toggleWishlist()"
+                        class="bg-white border border-gray-200 py-4 px-6 hover:bg-gray-50 transition-colors tooltip"
+                        [ngClass]="{'text-red-500 border-red-200': isInWishlist(), 'text-gray-900': !isInWishlist()}"
                         aria-label="Add to Wishlist">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <!-- Outline Heart (Default) -->
+                        <svg *ngIf="!isInWishlist()" class="w-6 h-6" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
                             </path>
+                        </svg>
+                        <!-- Filled Heart (Active) -->
+                        <svg *ngIf="isInWishlist()" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                clip-rule="evenodd" />
                         </svg>
                     </button>
                 </div>

@@ -23,12 +23,12 @@ export class CartComponent {
   importDuty = this.cartService.importDuty;
   processingFee = this.cartService.processingFee;
 
-  updateQuantity(id: string, newQty: number) {
-    this.cartService.updateQuantity(id, newQty);
+  updateQuantity(id: string, newQty: number, selectedColor?: string) {
+    this.cartService.updateQuantity(id, newQty, selectedColor);
   }
 
-  remove(id: string) {
-    this.cartService.removeFromCart(id);
+  remove(id: string, selectedColor?: string) {
+    this.cartService.removeFromCart(id, selectedColor);
   }
 
   proceedToCheckout() {

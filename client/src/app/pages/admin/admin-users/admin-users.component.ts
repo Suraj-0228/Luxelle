@@ -56,17 +56,17 @@ import { FormsModule } from '@angular/forms';
         <!-- Toolbar -->
         <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="tabs tabs-boxed bg-gray-100 p-1">
-                <a class="tab transition-all mx-2 duration-300 hover:cursor-pointer"
+                <a class="tab transition-all mr-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'All'"
                    [class.bg-white]="filterStatus() === 'All'"
                    [class.shadow-sm]="filterStatus() === 'All'"
                    (click)="setFilter('All')">All Users</a>
-                <a class="tab transition-all mx-2 duration-300 hover:cursor-pointer"
+                <a class="tab transition-all mx-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'Admins'"
                    [class.bg-white]="filterStatus() === 'Admins'"
                    [class.text-primary]="filterStatus() === 'Admins'"
                    (click)="setFilter('Admins')">Admins</a>
-                <a class="tab transition-all mx-2 duration-300 hover:cursor-pointer"
+                <a class="tab transition-all mx-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'Blocked'"
                    [class.bg-white]="filterStatus() === 'Blocked'"
                    [class.text-error]="filterStatus() === 'Blocked'"

@@ -84,7 +84,8 @@ export class CheckoutComponent {
             user: this.authService.currentUser()._id,
             items: this.cartItems().map(item => ({
                 product: item.product._id,
-                quantity: item.quantity
+                quantity: item.quantity,
+                selectedColor: item.product.selectedColor
             })),
             totalAmount: this.totalPrice(),
             shippingAddress: formValue.shippingAddress,

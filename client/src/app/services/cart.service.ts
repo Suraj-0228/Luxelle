@@ -41,27 +41,29 @@ export class CartService {
 
   addToCart(product: any) {
     this.cartItems.update(items => {
-      const existing = items.find(i => i.product._id === product._id);
+      const existing = items.find(i => i.product._id === product._id && i.product.selectedColor === product.selectedColor);
       if (existing) {
         // Optional: Toast for quantity update
         this.toastService.show(`Increased quantity for ${product.name}`, 'info');
-        return items.map(i => i.product._id === product._id ? { ...i, quantity: i.quantity + 1 } : i);
+        return items.map(i => (i.product._id === product._id && i.product.selectedColor === product.selectedColor)
+          ? { ...i, quantity: i.quantity + 1 } : i);
       }
       this.toastService.show(`${product.name} added to cart`, 'success');
       return [...items, { product, quantity: 1 }];
     });
   }
 
-  removeFromCart(productId: string) {
-    this.cartItems.update(items => items.filter(i => i.product._id !== productId));
+  removeFromCart(productId: string, selectedColor?: string) {
+    this.cartItems.update(items => items.filter(i => !(i.product._id === productId && i.product.selectedColor === selectedColor)));
   }
 
-  updateQuantity(productId: string, quantity: number) {
+  updateQuantity(productId: string, quantity: number, selectedColor?: string) {
     if (quantity <= 0) {
-      this.removeFromCart(productId);
+      this.removeFromCart(productId, selectedColor);
       return;
     }
-    this.cartItems.update(items => items.map(i => i.product._id === productId ? { ...i, quantity } : i));
+    this.cartItems.update(items => items.map(i => (i.product._id === productId && i.product.selectedColor === selectedColor)
+      ? { ...i, quantity } : i));
   }
 
   clearCart() {

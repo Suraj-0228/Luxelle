@@ -27,24 +27,28 @@
                                     <p class="mt-1 text-sm text-gray-500 font-light uppercase tracking-wide">{{
                                         item.product.brand || 'LUXELLE' }}</p>
                                     <p class="mt-1 text-sm text-gray-500 font-light">{{ item.product.material }}</p>
+                                    <p *ngIf="item.product.selectedColor" class="mt-1 text-sm text-gray-500 font-light">
+                                        Color: {{ item.product.selectedColor }}</p>
                                     <p class="mt-4 text-base font-medium text-gray-900">${{ item.product.price }}</p>
                                 </div>
 
                                 <div class="mt-4 sm:mt-0 sm:pr-9">
                                     <div class="flex items-center space-x-4">
                                         <div class="flex items-center border border-gray-400">
-                                            <button (click)="updateQuantity(item.product._id, item.quantity - 1)"
+                                            <button
+                                                (click)="updateQuantity(item.product._id, item.quantity - 1, item.product.selectedColor)"
                                                 class="px-3 py-2 text-gray-500 hover:bg-gray-50 transition-colors disabled:opacity-50"
                                                 [disabled]="item.quantity <= 1">-</button>
                                             <span class="px-3 py-2 text-gray-900 font-medium text-sm w-8 text-center">{{
                                                 item.quantity }}</span>
-                                            <button (click)="updateQuantity(item.product._id, item.quantity + 1)"
+                                            <button
+                                                (click)="updateQuantity(item.product._id, item.quantity + 1, item.product.selectedColor)"
                                                 class="px-3 py-2 text-gray-500 hover:bg-gray-50 transition-colors">+</button>
                                         </div>
                                     </div>
 
                                     <div class="mt-4">
-                                        <button (click)="remove(item.product._id)"
+                                        <button (click)="remove(item.product._id, item.product.selectedColor)"
                                             class="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-red-500 transition-colors border-b border-transparent hover:border-red-500 pb-0.5">
                                             Remove
                                         </button>

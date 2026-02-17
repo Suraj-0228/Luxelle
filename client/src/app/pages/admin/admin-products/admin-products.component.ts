@@ -218,6 +218,12 @@ import { ToastService } from '../../../services/toast.service';
                     </div>
 
                     <div class="form-control w-full">
+                        <label class="label pl-1"><span class="label-text font-bold text-gray-700">Colors</span></label>
+                        <input type="text" formControlName="colors" placeholder="e.g. Red, Blue, Green (Comma separated)" class="input input-bordered border-2 px-3 w-full bg-white border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all rounded-lg h-12" />
+                        <label class="label pl-1"><span class="label-text-alt text-gray-400">Separate multiple colors with commas</span></label>
+                    </div>
+
+                    <div class="form-control w-full">
                         <label class="label pl-1"><span class="label-text font-bold text-gray-700">Description</span></label>
                         <textarea formControlName="description" placeholder="Describe the product features and materials..." class="textarea textarea-bordered border-2 px-3 w-full h-24 bg-white border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all rounded-lg text-base py-3 leading-relaxed resize-none"></textarea>
                         <div *ngIf="productForm.get('description')?.touched && productForm.get('description')?.invalid" class="text-red-500 text-xs mt-1 pl-1">
@@ -251,7 +257,7 @@ import { ToastService } from '../../../services/toast.service';
 
         <!-- Modal Actions (Fixed Footer) -->
         <div class="modal-action p-6 border-t border-gray-100 bg-gray-50 flex justify-end shrink-0 m-0">
-             <button type="button" class="btn btn-ghost hover:bg-gray-200 rounded-lg text-gray-600" (click)="closeModal()">Cancel</button>
+             <button type="button" class="btn btn-ghost hover:bg-gray-200 rounded-lg text-gray-600 px-6 py-2" (click)="closeModal()">Cancel</button>
              <button type="button" class="btn btn-primary bg-gray-900 text-white hover:bg-black duration-300 hover:cursor-pointer ml-3 px-6 py-2 font-bold rounded-lg shadow-lg" (click)="onSubmit()" [disabled]="productForm.invalid">
                 {{ isEditing() ? 'Update Product' : 'Add Product' }}
             </button>
@@ -298,7 +304,8 @@ export class AdminProductsComponent {
         price: [0, [Validators.required, Validators.min(0)]],
         stock: [0, [Validators.required, Validators.min(0)]],
         category: ['', Validators.required],
-        image: ['', Validators.required]
+        image: ['', Validators.required],
+        colors: ['']
     });
 
     constructor() {
@@ -317,7 +324,12 @@ export class AdminProductsComponent {
         if (product) {
             this.isEditing.set(true);
             this.currentId = product._id;
-            this.productForm.patchValue(product);
+            // Handle colors array -> string
+            const formValue = { ...product };
+            if (Array.isArray(product.colors)) {
+                formValue.colors = product.colors.join(', ');
+            }
+            this.productForm.patchValue(formValue);
         } else {
             this.isEditing.set(false);
             this.currentId = null;
@@ -333,6 +345,12 @@ export class AdminProductsComponent {
         if (this.productForm.invalid) return;
 
         const data = this.productForm.value;
+
+        // Process colors string -> array
+        if (typeof data.colors === 'string') {
+            data.colors = data.colors.split(',').map((c: string) => c.trim()).filter((c: string) => c.length > 0);
+        }
+
         const request = this.isEditing() && this.currentId
             ? this.apiService.updateProduct(this.currentId, data)
             : this.apiService.createProduct(data);
