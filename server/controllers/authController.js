@@ -6,6 +6,11 @@ const User = require('../models/User');
 const registerUser = async (req, res) => {
   const { fullname, email, username, password } = req.body;
 
+  // Email validation: must contain @, gmail, and .com
+  if (!email || !email.includes('@') || !email.includes('gmail') || !email.includes('.com')) {
+    return res.status(400).json({ message: 'Invalid email. Must be a Gmail address containing "@", "gmail", and ".com"' });
+  }
+
   try {
     const userExists = await User.findOne({ email });
 

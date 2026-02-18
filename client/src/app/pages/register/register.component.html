@@ -69,6 +69,8 @@
                             class="text-red-500 text-xs mt-1">
                             <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</span>
                             <span *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</span>
+                            <span *ngIf="registerForm.get('email')?.errors?.['gmailInvalid']">Email must contain '@',
+                                'gmail', and '.com'</span>
                         </div>
                     </div>
                     <div>
