@@ -96,9 +96,17 @@ import { ToastService } from '../../../services/toast.service';
                         </td>
                         <td class="font-bold font-serif text-lg">{{ product.price | currency }}</td>
                         <td>
-                            <span class="badge" [ngClass]="{'badge-success': (product.stock || 0) > 10, 'badge-warning': (product.stock || 0) <= 10 && (product.stock || 0) > 0, 'badge-error': (product.stock || 0) === 0}">
-                                {{ product.stock || 0 }}
-                            </span>
+                            <div class="flex items-center">
+                                <span *ngIf="(product.stock || 0) === 0" class="px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200">
+                                    Out of Stock
+                                </span>
+                                <span *ngIf="(product.stock || 0) > 0 && (product.stock || 0) <= 5" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                                    Low Stock: {{ product.stock }}
+                                </span>
+                                <span *ngIf="(product.stock || 0) > 5" class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-200">
+                                    Stock: {{ product.stock }}
+                                </span>
+                            </div>
                         </td>
                         <td class="pr-6 text-right">
                            <div class="join">

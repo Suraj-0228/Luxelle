@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  featuredProducts: any[] = [];
+
 
   valueProps = [
     {
@@ -59,9 +59,5 @@ export class HomeComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.apiService.getProducts().subscribe(data => {
-      // Just take first 4 as featured
-      this.featuredProducts = data.slice(0, 4);
-    });
   }
 }

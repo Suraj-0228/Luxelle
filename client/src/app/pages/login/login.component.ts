@@ -34,8 +34,8 @@ export class LoginComponent {
     onSubmit() {
         if (this.loginForm.valid) {
             this.authService.login(this.loginForm.value).subscribe({
-                next: () => {
-                    this.toastService.show('Login Successful. Welcome to Luxelle!', 'success');
+                next: (res) => {
+                    this.toastService.show(`Login Successful. Welcome to Luxelle, ${res.username}!`, 'success');
                     if (this.authService.isAdmin()) {
                         this.router.navigate(['/admin/products']);
                     } else {

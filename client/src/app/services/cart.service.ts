@@ -41,15 +41,32 @@ export class CartService {
 
   addToCart(product: any) {
     this.cartItems.update(items => {
-      const existing = items.find(i => i.product._id === product._id && i.product.selectedColor === product.selectedColor);
+      // Ensure we have a selectedColor, default to first color if available and not set
+      const colorToUse = product.selectedColor || (product.colors && product.colors.length > 0 ? product.colors[0] : undefined);
+
+      // Create a product object that definitely has the selectedColor set
+      const productToAdd = { ...product, selectedColor: colorToUse };
+
+      const existing = items.find(i => i.product._id === productToAdd._id && i.product.selectedColor === colorToUse);
+
       if (existing) {
+        if (existing.quantity + 1 > productToAdd.stock) {
+          this.toastService.show(`Cannot add more. Only ${productToAdd.stock} items in stock.`, 'error');
+          return items;
+        }
         // Optional: Toast for quantity update
-        this.toastService.show(`Increased quantity for ${product.name}`, 'info');
-        return items.map(i => (i.product._id === product._id && i.product.selectedColor === product.selectedColor)
+        this.toastService.show(`Increased quantity for ${productToAdd.name}`, 'info');
+        return items.map(i => (i.product._id === productToAdd._id && i.product.selectedColor === colorToUse)
           ? { ...i, quantity: i.quantity + 1 } : i);
       }
-      this.toastService.show(`${product.name} added to cart`, 'success');
-      return [...items, { product, quantity: 1 }];
+
+      if (productToAdd.stock < 1) {
+        this.toastService.show(`This item is out of stock.`, 'error');
+        return items;
+      }
+
+      this.toastService.show(`${productToAdd.name} added to cart`, 'success');
+      return [...items, { product: productToAdd, quantity: 1 }];
     });
   }
 
@@ -62,8 +79,17 @@ export class CartService {
       this.removeFromCart(productId, selectedColor);
       return;
     }
-    this.cartItems.update(items => items.map(i => (i.product._id === productId && i.product.selectedColor === selectedColor)
-      ? { ...i, quantity } : i));
+
+    this.cartItems.update(items => {
+      const item = items.find(i => i.product._id === productId && i.product.selectedColor === selectedColor);
+      if (item && quantity > item.product.stock) {
+        this.toastService.show(`Cannot add more. Max stock reached (${item.product.stock}).`, 'error');
+        return items; // Do not update
+      }
+
+      return items.map(i => (i.product._id === productId && i.product.selectedColor === selectedColor)
+        ? { ...i, quantity } : i);
+    });
   }
 
   clearCart() {

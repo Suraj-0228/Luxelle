@@ -153,8 +153,9 @@
                                     class="text-red-500 text-xs mt-1">
                                     <span *ngIf="checkoutForm.get('shippingAddress.email')?.errors?.['required']">Email
                                         is required</span>
-                                    <span *ngIf="checkoutForm.get('shippingAddress.email')?.errors?.['email']">Invalid
-                                        email format</span>
+                                    <span
+                                        *ngIf="checkoutForm.get('shippingAddress.email')?.errors?.['gmailInvalid']">Invalid
+                                        email format. Must be a Gmail address containing "@", "gmail", and ".com"</span>
                                 </div>
                             </div>
                             <div class="sm:col-span-2">
@@ -223,6 +224,8 @@
                                     class="text-red-500 text-xs mt-1">
                                     <span *ngIf="checkoutForm.get('shippingAddress.zip')?.errors?.['required']">Postal
                                         Code is required</span>
+                                    <span *ngIf="checkoutForm.get('shippingAddress.zip')?.errors?.['pattern']">Postal
+                                        Code must be 6 digits</span>
                                 </div>
                             </div>
 
@@ -235,6 +238,8 @@
                                     class="text-red-500 text-xs mt-1">
                                     <span *ngIf="checkoutForm.get('shippingAddress.phone')?.errors?.['required']">Phone
                                         is required</span>
+                                    <span *ngIf="checkoutForm.get('shippingAddress.phone')?.errors?.['pattern']">Phone
+                                        must be 10 digits</span>
                                 </div>
                             </div>
                         </div>
@@ -300,14 +305,47 @@
                                         Card</label>
                                     <div class="mt-4 text-gray-500 overflow-hidden transition-all duration-300"
                                         *ngIf="activePaymentTab() === 'Card'">
-                                        <div class="grid grid-cols-1 gap-4">
-                                            <input type="text" placeholder="Card number"
-                                                class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                        <div class="grid grid-cols-1 gap-4" formGroupName="card">
+                                            <div>
+                                                <input type="text" formControlName="number" placeholder="Card number"
+                                                    class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                                <div *ngIf="checkoutForm.get('card.number')?.touched && checkoutForm.get('card.number')?.invalid"
+                                                    class="text-red-500 text-xs mt-1">
+                                                    <span
+                                                        *ngIf="checkoutForm.get('card.number')?.errors?.['required']">Card
+                                                        number is required</span>
+                                                    <span
+                                                        *ngIf="checkoutForm.get('card.number')?.errors?.['pattern']">Card
+                                                        number must be 16 digits</span>
+                                                </div>
+                                            </div>
                                             <div class="grid grid-cols-2 gap-4">
-                                                <input type="text" placeholder="MM / YY"
-                                                    class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
-                                                <input type="text" placeholder="CVC"
-                                                    class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                                <div>
+                                                    <input type="text" formControlName="expiry" placeholder="MM / YY"
+                                                        class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                                    <div *ngIf="checkoutForm.get('card.expiry')?.touched && checkoutForm.get('card.expiry')?.invalid"
+                                                        class="text-red-500 text-xs mt-1">
+                                                        <span
+                                                            *ngIf="checkoutForm.get('card.expiry')?.errors?.['required']">Expiry
+                                                            is required</span>
+                                                        <span
+                                                            *ngIf="checkoutForm.get('card.expiry')?.errors?.['pattern']">Invalid
+                                                            expiry date (MM/YY)</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <input type="text" formControlName="cvc" placeholder="CVC"
+                                                        class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                                    <div *ngIf="checkoutForm.get('card.cvc')?.touched && checkoutForm.get('card.cvc')?.invalid"
+                                                        class="text-red-500 text-xs mt-1">
+                                                        <span
+                                                            *ngIf="checkoutForm.get('card.cvc')?.errors?.['required']">CVC
+                                                            is required</span>
+                                                        <span
+                                                            *ngIf="checkoutForm.get('card.cvc')?.errors?.['pattern']">CVC
+                                                            must be 3-4 digits</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -328,8 +366,29 @@
                                         class="font-medium text-gray-700 cursor-pointer w-full block">UPI</label>
                                     <div class="mt-4 text-gray-500 overflow-hidden transition-all duration-300"
                                         *ngIf="activePaymentTab() === 'UPI'">
-                                        <input type="text" placeholder="username@upi"
-                                            class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                        <div class="grid grid-cols-1 gap-4">
+                                            <div
+                                                class="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-sm bg-gray-50">
+                                                <p class="text-xs text-gray-500 mb-2 uppercase font-bold">Scan to Pay
+                                                </p>
+                                                <img src="QR Scanner.jpg" alt="UPI QR Code"
+                                                    class="w-48 h-48 object-contain bg-white p-2 rounded-sm shadow-sm">
+                                            </div>
+                                            <div>
+                                                <label
+                                                    class="block text-xs font-bold uppercase text-gray-700 mb-1">Enter
+                                                    UPI ID</label>
+                                                <input type="text" formControlName="upiId" placeholder="example@upi"
+                                                    class="block w-full border border-gray-400 text-gray-900 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-white">
+                                                <div *ngIf="checkoutForm.get('upiId')?.touched && checkoutForm.get('upiId')?.invalid"
+                                                    class="text-red-500 text-xs mt-1">
+                                                    <span *ngIf="checkoutForm.get('upiId')?.errors?.['required']">UPI ID
+                                                        is required</span>
+                                                    <span *ngIf="checkoutForm.get('upiId')?.errors?.['pattern']">Invalid
+                                                        UPI ID. Must end with @upi</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

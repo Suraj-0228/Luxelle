@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth.service';
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
     selector: 'app-checkout',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule, RouterLink],
     templateUrl: './checkout.component.html',
 })
 export class CheckoutComponent {
@@ -23,6 +23,11 @@ export class CheckoutComponent {
         if (!this.authService.isLoggedIn()) {
             this.router.navigate(['/login']);
         }
+        // Initialize disabled state for payment fields (default is COD)
+        setTimeout(() => {
+            this.checkoutForm.get('upiId')?.disable();
+            this.checkoutForm.get('card')?.disable();
+        });
     }
 
     cartItems = this.cartService.cartItems;
@@ -45,15 +50,21 @@ export class CheckoutComponent {
     checkoutForm = this.fb.group({
         shippingAddress: this.fb.group({
             fullName: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            phone: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email, this.gmailValidator]],
+            phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
             street: ['', Validators.required],
             city: ['', Validators.required],
             state: ['', Validators.required],
-            zip: ['', Validators.required],
+            zip: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
             country: ['India', Validators.required]
         }),
-        paymentMethod: ['COD', Validators.required]
+        paymentMethod: ['COD', Validators.required],
+        upiId: ['', Validators.pattern('^[a-zA-Z0-9.-]+@upi$')],
+        card: this.fb.group({
+            number: ['', Validators.pattern('^[0-9]{16}$')],
+            expiry: ['', Validators.pattern('^(0[1-9]|1[0-2])\/?([0-9]{2})$')],
+            cvc: ['', Validators.pattern('^[0-9]{3,4}$')]
+        })
     });
 
     proceedToPayment() {
@@ -72,6 +83,43 @@ export class CheckoutComponent {
     setPaymentMethod(method: string) {
         this.activePaymentTab.set(method);
         this.checkoutForm.patchValue({ paymentMethod: method });
+
+        const upiControl = this.checkoutForm.get('upiId');
+        const cardGroup = this.checkoutForm.get('card');
+
+        // Reset validators first to clear previous required state
+        upiControl?.clearValidators();
+        upiControl?.setValidators(Validators.pattern('^[a-zA-Z0-9.-]+@upi$'));
+
+        cardGroup?.get('number')?.clearValidators();
+        cardGroup?.get('number')?.setValidators(Validators.pattern('^[0-9]{16}$'));
+
+        cardGroup?.get('expiry')?.clearValidators();
+        cardGroup?.get('expiry')?.setValidators(Validators.pattern('^(0[1-9]|1[0-2])\/?([0-9]{2})$'));
+
+        cardGroup?.get('cvc')?.clearValidators();
+        cardGroup?.get('cvc')?.setValidators(Validators.pattern('^[0-9]{3,4}$'));
+
+        if (method === 'UPI') {
+            upiControl?.addValidators(Validators.required);
+            upiControl?.enable();
+            cardGroup?.disable();
+        } else if (method === 'Card') {
+            cardGroup?.enable();
+            cardGroup?.get('number')?.addValidators(Validators.required);
+            cardGroup?.get('expiry')?.addValidators(Validators.required);
+            cardGroup?.get('cvc')?.addValidators(Validators.required);
+            upiControl?.disable();
+        } else {
+            upiControl?.disable();
+            cardGroup?.disable();
+        }
+
+        upiControl?.updateValueAndValidity();
+        cardGroup?.get('number')?.updateValueAndValidity();
+        cardGroup?.get('expiry')?.updateValueAndValidity();
+        cardGroup?.get('cvc')?.updateValueAndValidity();
+        cardGroup?.updateValueAndValidity();
     }
 
     onSubmit() {
@@ -103,5 +151,13 @@ export class CheckoutComponent {
                 this.isSubmitting.set(false);
             }
         });
+    }
+    gmailValidator(control: AbstractControl): ValidationErrors | null {
+        const email = control.value;
+        if (!email) return null;
+        if (email.endsWith('@gmail.com')) {
+            return null;
+        }
+        return { gmailInvalid: true };
     }
 }

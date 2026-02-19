@@ -51,9 +51,19 @@
                 </div>
                 <div>
                     <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">Availability</span>
-                    <span [class]="product.stock > 0 ? 'text-green-600' : 'text-red-600'" class="text-sm font-medium">
-                        {{ product.stock > 0 ? 'Available' : 'Sold Out' }}
-                    </span>
+                    <ng-container *ngIf="product.stock > 0; else outOfStock">
+                        <span *ngIf="product.stock > 5" class="text-sm font-medium text-green-600">
+                            Available
+                        </span>
+                        <span *ngIf="product.stock <= 5" class="text-sm font-medium text-amber-600 animate-pulse">
+                            Low Stock: Only {{ product.stock }} left
+                        </span>
+                    </ng-container>
+                    <ng-template #outOfStock>
+                        <span class="text-sm font-medium text-red-600">
+                            Sold Out
+                        </span>
+                    </ng-template>
                 </div>
                 <div>
                     <span class="block text-xs uppercase tracking-widest text-gray-400 mb-1">Shipping</span>

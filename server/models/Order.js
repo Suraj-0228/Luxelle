@@ -24,6 +24,18 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  subtotal: {
+    type: Number,
+    default: 0
+  },
+  tax: {
+    type: Number,
+    default: 0
+  },
+  shippingCost: {
+    type: Number,
+    default: 0
+  },
   shippingAddress: {
     fullName: { type: String, required: true },
     email: { type: String, required: true },

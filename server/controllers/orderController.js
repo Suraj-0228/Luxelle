@@ -13,13 +13,37 @@ exports.createOrder = async (req, res) => {
       if (!product) {
         return res.status(404).json({ success: false, error: `Product with id ${item.product} not found` });
       }
+
+      if (product.stock < item.quantity) {
+        return res.status(400).json({ success: false, error: `Insufficient stock for product ${product.name}` });
+      }
+
+      product.stock -= item.quantity;
+      await product.save();
+
       totalAmount += product.price * item.quantity;
     }
+
+    // Tax Calculations (Matching Client Side)
+    // stateTax = subtotal * 0.08
+    // importDuty = subtotal * 0.05
+    // processingFee = 2.99
+
+    const subtotal = totalAmount;
+    const stateTax = subtotal * 0.08;
+    const importDuty = subtotal * 0.05;
+    const processingFee = 2.99;
+    const tax = stateTax + importDuty;
+
+    const grandTotal = subtotal + tax + processingFee;
 
     const order = new Order({
       user,
       items,
-      totalAmount,
+      totalAmount: grandTotal,
+      subtotal: subtotal,
+      tax: tax,
+      shippingCost: processingFee,
       shippingAddress,
       billingAddress,
       paymentMethod,

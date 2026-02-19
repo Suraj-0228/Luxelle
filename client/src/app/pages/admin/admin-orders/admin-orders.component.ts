@@ -67,22 +67,22 @@ import { FormsModule } from '@angular/forms';
         <!-- Toolbar -->
         <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="tabs tabs-boxed bg-gray-100 p-1">
-                <a class="tab transition-all mr-4 duration-300 hover:cursor-pointer" 
+                <a class="tab transition-all mr-4 px-4 duration-300 hover:cursor-pointer" 
                    [class.tab-active]="filterStatus() === 'All'" 
                    [class.bg-white]="filterStatus() === 'All'"
                    [class.shadow-sm]="filterStatus() === 'All'"
                    (click)="setFilter('All')">All</a>
-                <a class="tab transition-all mx-4 duration-300 hover:cursor-pointer"
+                <a class="tab transition-all mx-4 px-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'Processing'" 
                    [class.bg-white]="filterStatus() === 'Processing'"
                    [class.text-warning]="filterStatus() === 'Processing'"
                     (click)="setFilter('Processing')">Processing</a>
-                <a class="tab transition-all mx-4 duration-300 hover:cursor-pointer"
+                <a class="tab transition-all mx-4 px-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'Shipped'"
                    [class.bg-white]="filterStatus() === 'Shipped'"
                    [class.text-primary]="filterStatus() === 'Shipped'"
                    (click)="setFilter('Shipped')">Shipped</a>
-                 <a class="tab transition-all mx-4 duration-300 hover:cursor-pointer"
+                 <a class="tab transition-all mx-4 px-4 duration-300 hover:cursor-pointer"
                    [class.tab-active]="filterStatus() === 'Delivered'"
                    [class.bg-white]="filterStatus() === 'Delivered'"
                    [class.text-success]="filterStatus() === 'Delivered'"
@@ -240,6 +240,18 @@ import { FormsModule } from '@angular/forms';
             <!-- Order Summary -->
             <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
                 <div class="w-full max-w-xs space-y-2">
+                    <div class="flex justify-between text-gray-600">
+                        <span>Subtotal</span>
+                        <span>{{ (selectedOrder().subtotal || selectedOrder().totalAmount) | currency }}</span>
+                    </div>
+                    <div class="flex justify-between text-gray-600" *ngIf="selectedOrder().tax > 0">
+                        <span>Tax (13%)</span>
+                        <span>{{ selectedOrder().tax | currency }}</span>
+                    </div>
+                     <div class="flex justify-between text-gray-600" *ngIf="selectedOrder().shippingCost > 0">
+                        <span>Processing Fee</span>
+                        <span>{{ selectedOrder().shippingCost | currency }}</span>
+                    </div>
                     <div class="flex justify-between text-lg font-serif font-bold text-gray-900 pt-2 border-t border-gray-900">
                         <span>Total</span>
                         <span>{{ selectedOrder().totalAmount | currency }}</span>
