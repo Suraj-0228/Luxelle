@@ -51,7 +51,9 @@ export class RegisterComponent {
     gmailValidator(control: AbstractControl): ValidationErrors | null {
         const email = control.value;
         if (!email) return null;
-        if (email.includes('@') && email.includes('gmail') && email.includes('.com')) {
+        if (email === 'admin@example.com' || email === 'admin@luxelle.com') return null;
+        const emailRegex = /^[a-zA-Z0-9._-]+@gmail\.com$/;
+        if (emailRegex.test(email)) {
             return null;
         }
         return { gmailInvalid: true };

@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
@@ -21,7 +21,7 @@ export class LoginComponent {
     showPassword = signal(false);
 
     loginForm = this.fb.group({
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email, this.gmailValidator]],
         password: ['', Validators.required]
     });
 
@@ -50,5 +50,16 @@ export class LoginComponent {
                 }
             });
         }
+    }
+
+    gmailValidator(control: AbstractControl): ValidationErrors | null {
+        const email = control.value;
+        if (!email) return null;
+        if (email === 'admin@example.com' || email === 'admin@luxelle.com') return null;
+        const emailRegex = /^[a-zA-Z0-9._-]+@gmail\.com$/;
+        if (emailRegex.test(email)) {
+            return null;
+        }
+        return { gmailInvalid: true };
     }
 }

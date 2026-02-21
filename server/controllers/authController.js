@@ -6,9 +6,12 @@ const User = require('../models/User');
 const registerUser = async (req, res) => {
   const { fullname, email, username, password } = req.body;
 
-  // Email validation: must contain @, gmail, and .com
-  if (!email || !email.includes('@') || !email.includes('gmail') || !email.includes('.com')) {
-    return res.status(400).json({ message: 'Invalid email. Must be a Gmail address containing "@", "gmail", and ".com"' });
+  // Email validation: must be a valid @gmail.com address (bypassed for admins)
+  if (email !== 'admin@example.com' && email !== 'admin@luxelle.com') {
+    const emailRegex = /^[a-zA-Z0-9._-]+@gmail\.com$/;
+    if (!email || !emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email. Must be a valid Gmail address ending with "@gmail.com"' });
+    }
   }
 
   try {

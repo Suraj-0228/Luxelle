@@ -20,13 +20,13 @@ The primary goals of the Luxelle platform are:
 
 ## 2. System Architecture & Technology Stack
 
-Luxelle is built on the robust **MEAN Stack**, ensuring a full JavaScript-based solution that is both scalable and maintainable.
+Luxelle is built on the robust **MERN Stack**, ensuring a full JavaScript-based solution that is both scalable and maintainable.
 
 ### 2.1 Technology Breakdown
 
 | Component | Technology | Role & Description |
 | :--- | :--- | :--- |
-| **Frontend** | ![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white) **Angular 17+** | The core user interface framework. It pushes for a component-based architecture, utilizing **Signals** for reactive state management and standalone components for optimized loading. |
+| **Frontend** | ![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white) **Angular 21+** | The core user interface framework. It pushes for a component-based architecture, utilizing **Signals** for reactive state management and standalone components for optimized loading. |
 | **Styling** | ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white) **Tailwind CSS** | A utility-first CSS framework that allows for rapid UI development and implementing a bespoke design system without fighting default styles. |
 | **Backend** | ![NodeJS](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white) **Node.js** | The server-side runtime that handles API requests, business logic, and database communication asynchronously. |
 | **API Framework** | ![ExpressJS](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) **Express.js** | A minimalistic web framework used to define RESTful API routes, middleware for authentication, and error handling. |
@@ -63,7 +63,7 @@ Registration transforms a visitor into a loyal customer, unlocking a suite of pe
 *   **Persistent Cart:** Items added to the cart are saved, allowing users to continue shopping without losing their selection. It calculates subtotals, taxes, and shipping in real-time.
 *   **Multi-Step Checkout:** A guided, disturbance-free process:
     1.  **Shipping:** Select or enter a delivery address.
-    2.  **Billing:** separate billing address confirmation.
+    2.  **Billing:** Separate billing address confirmation.
     3.  **Payment:** Choose a payment method (Credit Card/COD).
     4.  **Confirmation:** Final review before purchase.
 *   **Instant Feedback:** Users receive immediate visual confirmation upon successful order placement.

@@ -128,8 +128,12 @@
                         <!-- Order Footer -->
                         <div class="bg-gray-50/30 px-6 py-4 border-t border-gray-100 flex items-center justify-between">
                             <div class="text-xs text-gray-500">
-                                <span class="font-medium">Shipping to:</span> {{ order.shippingAddress.fullName }}, {{
-                                order.shippingAddress.city }}
+                                <span class="font-medium text-gray-900">Shipping to:</span> {{ order.shippingAddress.fullName }},
+                                {{ order.shippingAddress.street }}, {{ order.shippingAddress.city }},
+                                {{ order.shippingAddress.state }} {{ order.shippingAddress.zip }}, {{
+                                order.shippingAddress.country }}
+                                <span *ngIf="order.shippingAddress.phone">| <span class="font-medium text-gray-900">Phone:</span> {{
+                                    order.shippingAddress.phone }}</span>
                             </div>
                         </div>
                     </div>

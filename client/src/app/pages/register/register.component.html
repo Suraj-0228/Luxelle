@@ -66,11 +66,10 @@
                             class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-gray-50 placeholder-gray-400 text-gray-900 transition-colors"
                             placeholder="you@example.com">
                         <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
-                            class="text-red-500 text-xs mt-1">
+                            class="text-red-500 text-xs mt-1 flex flex-col gap-1">
                             <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</span>
-                            <span *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</span>
-                            <span *ngIf="registerForm.get('email')?.errors?.['gmailInvalid']">Email must contain '@',
-                                'gmail', and '.com'</span>
+                            <span *ngIf="registerForm.get('email')?.errors?.['email'] && !registerForm.get('email')?.errors?.['gmailInvalid']">Invalid email format</span>
+                            <span *ngIf="registerForm.get('email')?.errors?.['gmailInvalid']">Email must be a valid (example@gmail.com)</span>
                         </div>
                     </div>
                     <div>

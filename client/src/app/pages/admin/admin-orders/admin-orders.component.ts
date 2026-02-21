@@ -202,13 +202,16 @@ import { FormsModule } from '@angular/forms';
                     <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Customer</h4>
                     <p class="font-bold text-gray-900">{{ selectedOrder().user?.fullname || 'Guest' }}</p>
                     <p class="text-sm text-gray-600">{{ selectedOrder().user?.email }}</p>
+                    <p class="text-sm text-gray-600 mt-1" *ngIf="selectedOrder().shippingAddress?.phone || selectedOrder().user?.phone">
+                        {{ selectedOrder().shippingAddress?.phone || selectedOrder().user?.phone }}
+                    </p>
                 </div>
                 <div>
                     <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Shipping Address</h4>
                     <p class="text-sm text-gray-700 leading-relaxed">
                         {{ selectedOrder().shippingAddress?.fullName }}<br>
-                        {{ selectedOrder().shippingAddress?.address }}<br>
-                        {{ selectedOrder().shippingAddress?.city }}, {{ selectedOrder().shippingAddress?.postalCode }}<br>
+                        {{ selectedOrder().shippingAddress?.street }}<br>
+                        {{ selectedOrder().shippingAddress?.city }}, {{ selectedOrder().shippingAddress?.state }} {{ selectedOrder().shippingAddress?.zip }}<br>
                         {{ selectedOrder().shippingAddress?.country }}
                     </p>
                 </div>

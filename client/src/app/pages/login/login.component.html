@@ -42,9 +42,12 @@
                             class="block w-full border border-gray-400 rounded-sm shadow-sm focus:ring-black focus:border-black sm:text-sm py-3 px-4 bg-gray-50 placeholder-gray-400 text-gray-900 transition-colors"
                             placeholder="you@example.com">
                         <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
-                            class="text-red-500 text-xs mt-1">
-                            <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
-                            <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</span>
+                            class="text-red-500 text-xs mt-1 flex flex-col gap-1">
+                            <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is Required!!</span>
+                            <span
+                                *ngIf="loginForm.get('email')?.errors?.['email'] && !loginForm.get('email')?.errors?.['gmailInvalid']">Invalid
+                                Email Format</span>
+                            <span *ngIf="loginForm.get('email')?.errors?.['gmailInvalid']">Email must be a valid (example@gmail.com)</span>
                         </div>
                     </div>
                     <div>
@@ -80,7 +83,7 @@
                         </div>
                         <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
                             class="text-red-500 text-xs mt-1">
-                            <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+                            <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is Required!!</span>
                         </div>
                     </div>
                 </div>

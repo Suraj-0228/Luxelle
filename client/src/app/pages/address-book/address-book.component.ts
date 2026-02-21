@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ProfileSidebarComponent } from '../../components/profile-sidebar/profile-sidebar.component';
@@ -9,7 +9,7 @@ import { ApiService } from '../../services/api.service';
 @Component({
     selector: 'app-address-book',
     standalone: true,
-    imports: [CommonModule, FormsModule, RouterLink, ProfileSidebarComponent],
+    imports: [CommonModule, FormsModule, ProfileSidebarComponent],
     templateUrl: './address-book.component.html',
 })
 export class AddressBookComponent implements OnInit {
