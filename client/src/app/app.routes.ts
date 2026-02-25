@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ShopComponent } from './pages/shop/shop.component';
+import { LatestComponent } from './pages/latest/latest.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -42,6 +43,7 @@ export const routes: Routes = [
         children: [
             { path: '', component: HomeComponent, title: 'Luxelle - Home' },
             { path: 'shop', component: ShopComponent, title: 'Luxelle - Shop' },
+            { path: 'latest', component: LatestComponent, title: 'Luxelle - Latest Collection' },
             { path: 'product/:id', component: ProductDetailComponent, title: 'Luxelle - Product Details', canActivate: [authGuard] },
             { path: 'cart', component: CartComponent, title: 'Luxelle - Shopping Cart' },
             { path: 'checkout', component: CheckoutComponent, title: 'Luxelle - Checkout', canActivate: [authGuard] },

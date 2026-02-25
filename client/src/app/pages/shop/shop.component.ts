@@ -18,6 +18,7 @@ export class ShopComponent implements OnInit {
   selectedCategory = 'All';
   searchQuery = '';
   selectedPriceRange = 'All';
+  selectedSort = 'default';
 
   priceRanges = [
     { label: 'All Prices', value: 'All' },
@@ -37,6 +38,9 @@ export class ShopComponent implements OnInit {
       // Logic could be enhanced here to parse params for search/price too
       if (params['category']) {
         this.selectedCategory = params['category'];
+      }
+      if (params['sort']) {
+        this.selectedSort = params['sort'];
       }
       this.getAllProducts();
     });
@@ -97,6 +101,13 @@ export class ShopComponent implements OnInit {
           return price >= range.min && price <= range.max;
         });
       }
+    }
+
+    // 4. Sort Filter
+    if (this.selectedSort === 'newest') {
+      filtered = filtered.sort((a, b) => {
+        return new Date(b.createdAt || b._id).getTime() - new Date(a.createdAt || a._id).getTime();
+      });
     }
 
     this.products = filtered;

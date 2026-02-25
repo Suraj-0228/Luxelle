@@ -160,4 +160,22 @@ export class CheckoutComponent {
         }
         return { gmailInvalid: true };
     }
+
+    formatExpiryDate(event: Event) {
+        const input = event.target as HTMLInputElement;
+        let value = input.value.replace(/\D/g, ''); // Remove non-digits
+
+        if (value.length > 4) {
+            value = value.substring(0, 4);
+        }
+
+        if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2);
+        }
+
+        // Handle case where user ends with slash and hits backspace (handled naturally by replacing \D)
+
+        input.value = value;
+        this.checkoutForm.get('card.expiry')?.setValue(value, { emitEvent: false });
+    }
 }

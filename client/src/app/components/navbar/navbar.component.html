@@ -45,7 +45,7 @@
                             class="flex items-center space-x-2 text-sm font-medium text-gray-300 hover:text-white transition-colors focus:outline-none group">
                             <div
                                 class="h-8 w-8 rounded-full bg-gray-800 text-primary-400 border border-gray-700 flex items-center justify-center font-serif font-bold group-hover:bg-gray-700 transition-colors">
-                                {{ user().fullname.charAt(0) }}
+                                {{ user()?.fullname?.charAt(0) || 'U' }}
                             </div>
                             <svg class="h-4 w-4 text-gray-500 group-hover:text-white transition-colors duration-200"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,7 +59,7 @@
                             class="absolute right-0 mt-3 w-56 rounded-sm shadow-xl bg-gray-900 border border-gray-800 ring-1 ring-black ring-opacity-5 origin-top-right animate-fade-in-down focus:outline-none z-50">
                             <div class="px-5 py-4 border-b border-gray-800">
                                 <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">Signed in as</p>
-                                <p class="text-sm font-medium text-white truncate mt-1">{{ user().fullname }}</p>
+                                <p class="text-sm font-medium text-white truncate mt-1">{{ user()?.fullname }}</p>
                             </div>
                             <div class="py-2">
                                 <a routerLink="/profile" (click)="toggleUserMenu()"
@@ -151,12 +151,12 @@
                 <div class="flex-shrink-0">
                     <div
                         class="h-10 w-10 rounded-full bg-gray-700 text-primary-400 border border-gray-600 flex items-center justify-center font-bold">
-                        {{ user().fullname.charAt(0) }}
+                        {{ user()?.fullname?.charAt(0) || 'U' }}
                     </div>
                 </div>
                 <div class="ml-3">
-                    <div class="text-base font-medium leading-none text-white">{{ user().fullname }}</div>
-                    <div class="text-sm font-medium leading-none text-gray-400 mt-1">{{ user().email }}</div>
+                    <div class="text-base font-medium leading-none text-white">{{ user()?.fullname }}</div>
+                    <div class="text-sm font-medium leading-none text-gray-400 mt-1">{{ user()?.email }}</div>
                 </div>
             </div>
             <div class="mt-3 px-2 space-y-1">
