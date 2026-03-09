@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -71,6 +72,18 @@ export class AdminSidebarComponent {
   authService = inject(AuthService);
 
   logout() {
-    this.authService.logout();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out of your admin session.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#000',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Sign Out'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.logout();
+      }
+    });
   }
 }

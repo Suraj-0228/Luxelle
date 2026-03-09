@@ -4,8 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { OrderService } from '../../services/order.service';
 import { ApiService } from '../../services/api.service';
 import { ProfileSidebarComponent } from '../../components/profile-sidebar/profile-sidebar.component';
-
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-profile',
@@ -86,6 +86,18 @@ export class ProfileComponent implements OnInit {
     }
 
     logout() {
-        this.authService.logout();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out of your account.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#000',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Sign Out'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.authService.logout();
+            }
+        });
     }
 }

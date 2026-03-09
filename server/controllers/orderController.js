@@ -77,10 +77,17 @@ exports.cancelOrder = async (req, res) => {
       return res.status(404).json({ success: false, error: 'Order not found' });
     }
 
-    // Add logic here to check if the order can be cancelled
-    // For example, an order can only be cancelled if it is in 'Confirmed' or 'Processing' state
-    if (order.orderStatus === 'Delivered' || order.orderStatus === 'Shipped') {
-      return res.status(400).json({ success: false, error: 'Cannot cancel an order that has been shipped or delivered' });
+    if (order.orderStatus === 'Delivered' || order.orderStatus === 'Shipped' || order.orderStatus === 'Cancelled') {
+      return res.status(400).json({ success: false, error: 'Cannot cancel this order' });
+    }
+
+    // Restore product quantities
+    for (const item of order.items) {
+      const product = await Product.findById(item.product);
+      if (product) {
+        product.stock += item.quantity;
+        await product.save();
+      }
     }
 
     order.orderStatus = 'Cancelled';

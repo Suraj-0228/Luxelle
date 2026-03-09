@@ -22,7 +22,7 @@
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
 
             <!-- Search -->
-            <div class="md:col-span-4 lg:col-span-5 relative">
+            <div class="md:col-span-12 lg:col-span-6 relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -35,21 +35,31 @@
             </div>
 
             <!-- Category Filter -->
-            <div class="md:col-span-4 lg:col-span-3">
+            <div class="md:col-span-6 lg:col-span-3 relative">
                 <select [value]="selectedCategory" (change)="onCategoryChange($any($event.target).value)"
-                    class="block w-full pl-3 pr-10 py-3 text-base border border-gray-300 focus:border-gray-300 focus:outline-none focus:ring-gray-900 sm:text-sm rounded-sm bg-white cursor-pointer">
+                    class="block w-full pl-4 pr-10 py-3 text-sm border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 focus:outline-none rounded-sm bg-white cursor-pointer appearance-none transition-colors">
                     <option *ngFor="let cat of categories" [value]="cat">
                         {{ cat === 'All' ? 'All Categories' : cat }}
                     </option>
                 </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
             </div>
 
             <!-- Price Filter -->
-            <div class="md:col-span-4 lg:col-span-3">
+            <div class="md:col-span-6 lg:col-span-3 relative">
                 <select [value]="selectedPriceRange" (change)="onPriceChange($any($event.target).value)"
-                    class="block w-full pl-3 pr-10 py-3 text-base border border-gray-300 focus:border-gray-300 focus:outline-none focus:ring-gray-900 sm:text-sm rounded-sm bg-white cursor-pointer">
+                    class="block w-full pl-4 pr-10 py-3 text-sm border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 focus:outline-none rounded-sm bg-white cursor-pointer appearance-none transition-colors">
                     <option *ngFor="let range of priceRanges" [value]="range.value">{{ range.label }}</option>
                 </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
             </div>
 
         </div>

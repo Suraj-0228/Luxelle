@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -17,22 +18,37 @@ export class NavbarComponent {
 
   cartCount = this.cartService.count;
   user = this.authService.currentUser;
-  isLoggedIn = this.authService.isLoggedIn;
+  isLoggedInProp = this.authService.isLoggedIn;
 
   isMenuOpen = signal(false);
   isUserMenuOpen = signal(false);
 
   toggleMenu() {
-    this.isMenuOpen.update((v) => !v);
+    this.isMenuOpen.update(val => !val);
   }
 
   toggleUserMenu() {
-    this.isUserMenuOpen.update((v) => !v);
+    this.isUserMenuOpen.update(val => !val);
+  }
+
+  isLoggedIn(): boolean {
+    return this.user() !== null;
   }
 
   logout() {
-    this.authService.logout();
-    this.isUserMenuOpen.set(false);
+    Swal.fire({
+      title: 'Are You Sure?',
+      text: "You will be Logged out of Your Account!!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#000',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Sign Out'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.logout();
+        this.isUserMenuOpen.set(false);
+      }
+    });
   }
 }
-

@@ -4,6 +4,7 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-login',
@@ -35,7 +36,15 @@ export class LoginComponent {
         if (this.loginForm.valid) {
             this.authService.login(this.loginForm.value).subscribe({
                 next: (res) => {
-                    this.toastService.show(`Login Successful. Welcome to Luxelle, ${res.username}!`, 'success');
+                    Swal.fire({
+                        title: 'Welcome Back!',
+                        text: `Login Successful. Welcome to Luxelle, ${res.username}!`,
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        backdrop: `rgba(0,0,0,0.6)`
+                    });
+
                     if (this.authService.isAdmin()) {
                         this.router.navigate(['/admin/products']);
                     } else {

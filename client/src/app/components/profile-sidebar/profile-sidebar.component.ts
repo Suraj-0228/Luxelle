@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-profile-sidebar',
@@ -16,6 +17,18 @@ export class ProfileSidebarComponent {
     user = this.authService.currentUser;
 
     logout() {
-        this.authService.logout();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out of your account.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#000',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Sign Out'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.authService.logout();
+            }
+        });
     }
 }

@@ -1,21 +1,15 @@
 <div class="min-h-screen bg-white">
     <div class="max-w-[1920px] mx-auto px-6 sm:px-12 lg:px-24 py-12 lg:py-24">
-        <!-- Mobile Header -->
-        <div class="lg:hidden mb-8">
-            <h1 class="text-3xl font-serif font-bold text-gray-900">My Wishlist</h1>
-        </div>
-
-        <div class="lg:flex lg:gap-24">
-            <!-- Sidebar (Fixed 320px) -->
-            <div class="hidden lg:block w-80 shrink-0 lg:border-r lg:border-gray-100 lg:pr-12">
-                <app-profile-sidebar></app-profile-sidebar>
-            </div>
-
+        <div>
             <!-- Content (Flexible) -->
-            <div class="flex-1 min-w-0">
-                <div class="mb-8">
-                    <h1 class="text-2xl font-serif font-medium text-gray-900">My Wishlist</h1>
-                    <p class="mt-1 text-gray-500 font-light">Your curated collection of favorites.</p>
+            <div class="w-full max-w-7xl mx-auto">
+                <!-- Header -->
+                <div
+                    class="mb-12 border-b border-gray-100 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl lg:text-5xl font-serif text-gray-900 tracking-tight">My Wishlist</h1>
+                        <p class="mt-3 text-lg text-gray-500 font-light">Your curated collection of favorites.</p>
+                    </div>
                 </div>
 
                 <div *ngIf="isLoading()" class="text-center py-24">
@@ -43,7 +37,7 @@
 
                 <!-- Grid -->
                 <div *ngIf="!isLoading() && wishlistItems().length > 0"
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-6 xl:gap-x-8">
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-y-10 gap-x-6 xl:gap-x-8">
                     <div *ngFor="let product of wishlistItems()"
                         class="group relative bg-white rounded-sm hover:shadow-lg transition-all duration-300 flex flex-col">
 

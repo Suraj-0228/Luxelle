@@ -1,26 +1,17 @@
 <div class="min-h-screen bg-white">
     <div class="max-w-[1920px] mx-auto px-6 sm:px-12 lg:px-24 py-12 lg:py-24">
-        <!-- Mobile Header -->
-        <div class="lg:hidden mb-8">
-            <h1 class="text-3xl font-serif font-bold text-gray-900">My Orders</h1>
-        </div>
-
-        <div class="lg:flex lg:gap-24">
-            <!-- Sidebar (Fixed 320px) -->
-            <div class="hidden lg:block w-80 shrink-0 lg:border-r lg:border-gray-100 lg:pr-12">
-                <app-profile-sidebar></app-profile-sidebar>
-            </div>
-
+        <div>
             <!-- Content (Flexible) -->
-            <div class="flex-1 min-w-0">
-                <!-- Header (Desktop) -->
-                <div class="flex items-center justify-between mb-8">
+            <div class="w-full max-w-7xl mx-auto">
+                <!-- Header -->
+                <div
+                    class="mb-12 border-b border-gray-100 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
                     <div>
-                        <h2 class="text-2xl font-serif font-medium text-gray-900">Order History</h2>
-                        <p class="mt-1 text-gray-500 font-light">View and track your past purchases.</p>
+                        <h1 class="text-3xl lg:text-5xl font-serif text-gray-900 tracking-tight">Order History</h1>
+                        <p class="mt-3 text-lg text-gray-500 font-light">View and track your past purchases.</p>
                     </div>
                     <a routerLink="/shop"
-                        class="hidden sm:inline-block text-sm font-medium text-gray-900 border-b border-gray-900 pb-0.5 hover:text-black hover:border-black transition-colors">
+                        class="inline-block text-sm font-medium text-gray-900 border-b border-gray-900 pb-0.5 hover:text-black hover:border-black transition-colors">
                         Continue Shopping
                     </a>
                 </div>
@@ -79,9 +70,10 @@
                             </div>
                             <div>
                                 <span [ngClass]="{
-                                    'bg-gray-100 text-gray-800': order.orderStatus === 'Pending',
+                                    'bg-gray-100 text-gray-800': order.orderStatus === 'Pending' || order.orderStatus === 'Processing',
                                     'bg-green-50 text-green-700': order.orderStatus === 'Delivered',
-                                    'bg-blue-50 text-blue-700': order.orderStatus === 'Shipped'
+                                    'bg-blue-50 text-blue-700': order.orderStatus === 'Shipped',
+                                    'bg-red-50 text-red-700': order.orderStatus === 'Cancelled'
                                 }" class="px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
                                     {{ order.orderStatus }}
                                 </span>
@@ -92,6 +84,16 @@
                                             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                     </svg>
                                     Invoice
+                                </button>
+                                <button
+                                    *ngIf="order.orderStatus !== 'Delivered' && order.orderStatus !== 'Shipped' && order.orderStatus !== 'Cancelled'"
+                                    (click)="cancelOrder(order)"
+                                    class="ml-4 px-3 py-1 text-[10px] font-bold uppercase tracking-widest border border-red-600 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors lg:mt-0 mt-2 inline-flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                    Cancel
                                 </button>
                             </div>
                         </div>
