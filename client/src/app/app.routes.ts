@@ -23,6 +23,7 @@ import { AdminProductsComponent } from './pages/admin/admin-products/admin-produ
 import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
 import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
 import { AdminSettingsComponent } from './pages/admin/admin-settings/admin-settings.component';
+import { AdminCategoriesComponent } from './pages/admin/admin-categories/admin-categories.component';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,7 @@ export const routes: Routes = [
             { path: 'products', component: AdminProductsComponent, title: 'Admin - Products' },
             { path: 'users', component: AdminUsersComponent, title: 'Admin - Users' },
             { path: 'orders', component: AdminOrdersComponent, title: 'Admin - Orders' },
+            { path: 'categories', component: AdminCategoriesComponent, title: 'Admin - Categories' },
             { path: 'settings', component: AdminSettingsComponent, title: 'Admin - Settings' },
         ]
     },

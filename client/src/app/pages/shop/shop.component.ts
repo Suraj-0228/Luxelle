@@ -14,7 +14,7 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 export class ShopComponent implements OnInit {
   products: any[] = [];
   allProducts: any[] = []; // Store all fetched products
-  categories = ['All', 'Bags', 'Watches', 'Sunglasses', 'Belts'];
+  categories: string[] = ['All'];
   selectedCategory = 'All';
   searchQuery = '';
   selectedPriceRange = 'All';
@@ -34,6 +34,7 @@ export class ShopComponent implements OnInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getCategories();
     this.route.queryParams.subscribe(params => {
       // Logic could be enhanced here to parse params for search/price too
       if (params['category']) {
@@ -43,6 +44,12 @@ export class ShopComponent implements OnInit {
         this.selectedSort = params['sort'];
       }
       this.getAllProducts();
+    });
+  }
+
+  getCategories() {
+    this.apiService.getCategories().subscribe(data => {
+      this.categories = ['All', ...data.map((c: any) => c.name)];
     });
   }
 

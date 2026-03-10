@@ -2,7 +2,7 @@
   {
     "fullname": "Admin User",
     "email": "admin@luxelle.com",
-    "username": "admin_001",
+    "username": "Admin_001",
     "password": "adminPassword",
     "isAdmin": true
   }

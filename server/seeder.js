@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const User = require('./models/User');
 const Product = require('./models/Product');
+const Category = require('./models/Category');
 
 // Connect to DB
 const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/fashion_store_db';
@@ -11,6 +12,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 // Read JSON files
 const users = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/users.json'), 'utf-8'));
 const products = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/products.json'), 'utf-8'));
+const categories = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/categories.json'), 'utf-8'));
 
 // Import data into DB
 const importData = async () => {
@@ -20,6 +22,7 @@ const importData = async () => {
 
     await User.insertMany(users);
     await Product.insertMany(products);
+    await Category.insertMany(categories);
 
     console.log('Data Imported!');
     process.exit();
@@ -34,6 +37,7 @@ const destroyData = async () => {
   try {
     await User.deleteMany();
     await Product.deleteMany();
+    await Category.deleteMany();
 
     console.log('Data Destroyed!');
     process.exit();

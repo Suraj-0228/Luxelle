@@ -10,7 +10,7 @@ import { ProfileSidebarComponent } from '../../components/profile-sidebar/profil
 @Component({
     selector: 'app-wishlist',
     standalone: true,
-    imports: [CommonModule, RouterLink, ProfileSidebarComponent],
+    imports: [CommonModule, RouterLink],
     templateUrl: './wishlist.component.html',
 })
 export class WishlistComponent implements OnInit {

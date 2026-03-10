@@ -4,7 +4,9 @@ import { ApiService } from '../../services/api.service';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,6 +22,9 @@ export class ProductDetailComponent implements OnInit {
   private apiService = inject(ApiService);
   private cartService = inject(CartService);
   private wishlistService = inject(WishlistService);
+  private authService = inject(AuthService);
+  private toastService = inject(ToastService);
+  private router = inject(Router);
 
   isInWishlist = computed(() => this.product ? this.wishlistService.isInWishlist(this.product._id)() : false);
   selectedColor: string = '';
@@ -41,6 +46,12 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart() {
+    if (!this.authService.isLoggedIn()) {
+      this.toastService.show('Please login to add items to your bag', 'error');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     if (this.product) {
       const productToAdd = { ...this.product, selectedColor: this.selectedColor };
       this.cartService.addToCart(productToAdd);
@@ -48,6 +59,12 @@ export class ProductDetailComponent implements OnInit {
   }
 
   toggleWishlist() {
+    if (!this.authService.isLoggedIn()) {
+      this.toastService.show('Please login to manage your wishlist', 'error');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     if (this.product) {
       this.wishlistService.toggleWishlist(this.product);
     }

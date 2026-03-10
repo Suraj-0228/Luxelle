@@ -10,7 +10,7 @@ import { ProfileSidebarComponent } from '../../components/profile-sidebar/profil
 @Component({
     selector: 'app-orders',
     standalone: true,
-    imports: [CommonModule, RouterLink, DatePipe, ProfileSidebarComponent],
+    imports: [CommonModule, RouterLink, DatePipe],
     templateUrl: './orders.component.html',
 })
 export class OrdersComponent implements OnInit {

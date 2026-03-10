@@ -213,12 +213,9 @@ import { ToastService } from '../../../services/toast.service';
 
                     <div class="form-control w-full">
                         <label class="label pl-1"><span class="label-text font-bold text-gray-700">Category</span></label>
-                        <select formControlName="category" class="select select-bordered border-2 px-3 w-full bg-white border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/20 transition-all rounded-lg h-12">
+                        <select formControlName="category" class="select select-bordered border-2 pl-4 pr-12 w-full bg-white border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/20 transition-all rounded-lg h-12 appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%234b5563%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M19%209l-7%207-7-7%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E')] bg-[length:1.25rem] bg-[position:right_1rem_center] bg-no-repeat cursor-pointer">
                             <option value="" disabled selected>Select Category</option>
-                            <option value="Bags">Bags</option>
-                            <option value="Watches">Watches</option>
-                            <option value="Sunglasses">Sunglasses</option>
-                            <option value="Belts">Belts</option>
+                            <option *ngFor="let cat of categories()" [value]="cat.name">{{ cat.name }}</option>
                         </select>
                          <div *ngIf="productForm.get('category')?.touched && productForm.get('category')?.invalid" class="text-red-500 text-xs mt-1 pl-1">
                             <span *ngIf="productForm.get('category')?.errors?.['required']">Category is required</span>
@@ -286,6 +283,8 @@ export class AdminProductsComponent {
     isEditing = signal(false);
     currentId: string | null = null;
 
+    categories = signal<any[]>([]);
+
     // Computed Stats
     totalProducts = computed(() => this.products().length);
     avgPrice = computed(() => {
@@ -318,6 +317,14 @@ export class AdminProductsComponent {
 
     constructor() {
         this.loadProducts();
+        this.loadCategories();
+    }
+
+    loadCategories() {
+        this.apiService.getCategories().subscribe({
+            next: (data) => this.categories.set(data),
+            error: () => this.toastService.show('Failed to load categories', 'error')
+        });
     }
 
     loadProducts() {

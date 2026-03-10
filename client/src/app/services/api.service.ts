@@ -57,4 +57,21 @@ export class ApiService {
   deleteUser(id: string): Observable<any> {
     return this.http.delete(`http://localhost:5000/api/auth/${id}`);
   }
+
+  // Categories
+  getCategories(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:5000/api/categories');
+  }
+
+  createCategory(category: any): Observable<any> {
+    return this.http.post('http://localhost:5000/api/categories', category);
+  }
+
+  updateCategory(id: string, category: any): Observable<any> {
+    return this.http.put(`http://localhost:5000/api/categories/${id}`, category);
+  }
+
+  deleteCategory(id: string): Observable<any> {
+    return this.http.delete(`http://localhost:5000/api/categories/${id}`);
+  }
 }
