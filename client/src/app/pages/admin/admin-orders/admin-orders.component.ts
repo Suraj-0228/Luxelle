@@ -145,15 +145,16 @@ import { FormsModule } from '@angular/forms';
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </button>
-                                 <select class="select select-bordered select-sm w-full max-w-[130px] bg-white hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary transition-all" 
-                                        [ngModel]="order.orderStatus" 
-                                        (ngModelChange)="updateStatus(order._id, $event)">
-                                    <option value="Confirmed">Confirmed</option>
-                                    <option value="Processing">Processing</option>
-                                    <option value="Shipped">Shipped</option>
-                                    <option value="Delivered">Delivered</option>
-                                    <option value="Cancelled">Cancelled</option>
-                                </select>
+                                 <select class="select select-bordered select-sm w-full max-w-[130px] bg-white hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary transition-all disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed" 
+                                         [ngModel]="order.orderStatus" 
+                                         [disabled]="order.orderStatus === 'Cancelled' || order.orderStatus === 'Delivered'"
+                                         (ngModelChange)="updateStatus(order._id, $event)">
+                                     <option value="Confirmed">Confirmed</option>
+                                     <option value="Processing">Processing</option>
+                                     <option value="Shipped">Shipped</option>
+                                     <option value="Delivered">Delivered</option>
+                                     <option *ngIf="order.orderStatus === 'Cancelled'" value="Cancelled">Cancelled</option>
+                                 </select>
                              </div>
                         </td>
                     </tr>

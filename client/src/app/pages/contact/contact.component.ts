@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-contact',
@@ -22,7 +23,12 @@ export class ContactComponent {
         // Mock submission
         setTimeout(() => {
             this.isSubmitting = false;
-            alert('Message sent successfully!');
+            Swal.fire({
+                title: 'Sent!',
+                text: 'Message sent successfully!',
+                icon: 'success',
+                confirmButtonColor: '#111827'
+            });
             this.contact = { name: '', email: '', message: '' }; // Reset
         }, 1500);
     }

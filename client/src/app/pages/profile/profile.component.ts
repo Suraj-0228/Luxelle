@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { OrderService } from '../../services/order.service';
 import { ApiService } from '../../services/api.service';
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 @Component({
     selector: 'app-profile',
     standalone: true,
-    imports: [CommonModule, ProfileSidebarComponent, FormsModule],
+    imports: [CommonModule, ProfileSidebarComponent, FormsModule, RouterLink],
     templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
@@ -26,15 +27,27 @@ export class ProfileComponent implements OnInit {
     isEditing = signal(false);
     editData = {
         fullname: '',
-        email: ''
+        username: '',
+        email: '',
+        phone: ''
     };
+    
+    styleProfile = signal(localStorage.getItem('styleProfile') || 'Classic Luxury');
+    memberSince = signal('2025');
 
     ngOnInit() {
         if (this.user()) {
             this.editData = {
-                fullname: this.user()!.fullname,
-                email: this.user()!.email
+                fullname: this.user()!.fullname || '',
+                username: this.user()!.username || '',
+                email: this.user()!.email || '',
+                phone: this.user()!.phone || ''
             };
+
+            if (this.user()!.createdAt) {
+                const date = new Date(this.user()!.createdAt);
+                this.memberSince.set(date.getFullYear().toString());
+            }
 
             this.orderService.getOrders(this.user()._id).subscribe({
                 next: (res: any) => {
@@ -63,8 +76,10 @@ export class ProfileComponent implements OnInit {
         if (!this.isEditing() && this.user()) {
             // Reset if cancelled
             this.editData = {
-                fullname: this.user()!.fullname,
-                email: this.user()!.email
+                fullname: this.user()!.fullname || '',
+                username: this.user()!.username || '',
+                email: this.user()!.email || '',
+                phone: this.user()!.phone || ''
             };
         }
     }
@@ -77,11 +92,38 @@ export class ProfileComponent implements OnInit {
                 // Properly update the auth service state (signal + localStorage)
                 this.authService.setUser(updatedUser);
                 this.toggleEdit(); // Close modal
+                Swal.fire({
+                    title: 'Profile Updated',
+                    text: 'Your luxury profile details have been securely saved.',
+                    icon: 'success',
+                    confirmButtonColor: '#000',
+                    confirmButtonText: 'Excellent'
+                });
             },
             error: (err) => {
                 console.error('Failed to update profile', err);
-                alert('Failed to update profile. Please try again.');
+                Swal.fire({
+                    title: 'Update Failed',
+                    text: 'Failed to update your personal details. Please try again.',
+                    icon: 'error',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Acknowledge'
+                });
             }
+        });
+    }
+
+    setStyleProfile(style: string) {
+        this.styleProfile.set(style);
+        localStorage.setItem('styleProfile', style);
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: `Style Aesthetic: ${style}`,
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true
         });
     }
 

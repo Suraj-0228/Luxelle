@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
@@ -37,11 +37,37 @@ export class CheckoutComponent {
     importDuty = this.cartService.importDuty;
     processingFee = this.cartService.processingFee;
 
+    gstRate = computed(() => Math.round(this.cartService.gstRate() * 100));
+    importDutyRate = computed(() => Math.round(this.cartService.importDutyRate() * 100));
+
     isSubmitting = signal(false);
     errorMsg = signal('');
     activePaymentTab = signal('COD');
     currentStep = signal<'shipping' | 'payment'>('shipping');
     showMobileSummary = false;
+
+    user = this.authService.currentUser;
+
+    hasStoredAddress = computed(() => {
+        const u = this.user();
+        return !!(u && u.address && u.address.street && u.address.city);
+    });
+
+    useStoredAddress() {
+        const u = this.user();
+        if (u && u.address) {
+            this.checkoutForm.get('shippingAddress')?.patchValue({
+                fullName: u.fullname || '',
+                email: u.email || '',
+                phone: u.phone || '',
+                street: u.address.street || '',
+                city: u.address.city || '',
+                state: u.address.state || '',
+                zip: u.address.zip || '',
+                country: u.address.country || 'India'
+            });
+        }
+    }
 
     toggleMobileSummary() {
         this.showMobileSummary = !this.showMobileSummary;

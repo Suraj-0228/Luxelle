@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { ProfileSidebarComponent } from '../../components/profile-sidebar/profile-sidebar.component';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-wishlist',
@@ -63,6 +64,11 @@ export class WishlistComponent implements OnInit {
         this.cartService.addToCart(product);
         // Optional: remove from wishlist after adding to bag?
         // for now, keep it.
-        alert('Added to bag');
+        Swal.fire({
+            title: 'Added to Bag',
+            text: `${product.name} has been added to your shopping bag.`,
+            icon: 'success',
+            confirmButtonColor: '#111827'
+        });
     }
 }

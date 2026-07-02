@@ -39,7 +39,7 @@
                 </a>
 
                 <!-- User Menu -->
-                <div class="relative hidden md:block">
+                <div class="relative">
                     <ng-container *ngIf="isLoggedIn(); else loginBtn">
                         <button (click)="toggleUserMenu()"
                             class="flex items-center space-x-2 text-sm font-medium text-gray-300 hover:text-white transition-colors focus:outline-none group">
@@ -106,10 +106,12 @@
                     </ng-container>
 
                     <ng-template #loginBtn>
-                        <a routerLink="/login"
-                            class="text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 px-6 py-2 border border-primary-600 uppercase tracking-widest text-xs transition-all duration-200">
-                            Sign In
-                        </a>
+                        <div class="hidden md:block">
+                            <a routerLink="/login"
+                                class="text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 px-6 py-2 border border-primary-600 uppercase tracking-widest text-xs transition-all duration-200">
+                                Sign In
+                            </a>
+                        </div>
                     </ng-template>
                 </div>
 
@@ -146,41 +148,14 @@
                 class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">Contact</a>
         </div>
 
-        <div class="pt-4 pb-4 border-t border-gray-800">
-            <div class="flex items-center px-5" *ngIf="isLoggedIn()">
-                <div class="flex-shrink-0">
-                    <div
-                        class="h-10 w-10 rounded-full bg-gray-700 text-primary-400 border border-gray-600 flex items-center justify-center font-bold">
-                        {{ user()?.fullname?.charAt(0) || 'U' }}
-                    </div>
-                </div>
-                <div class="ml-3">
-                    <div class="text-base font-medium leading-none text-white">{{ user()?.fullname }}</div>
-                    <div class="text-sm font-medium leading-none text-gray-400 mt-1">{{ user()?.email }}</div>
-                </div>
-            </div>
-            <div class="mt-3 px-2 space-y-1">
-                <ng-container *ngIf="isLoggedIn()">
-                    <a routerLink="/profile" (click)="toggleMenu()"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Your
-                        Profile</a>
-                    <a routerLink="/wishlist" (click)="toggleMenu()"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">My
-                        Wishlist</a>
-                    <a routerLink="/orders" (click)="toggleMenu()"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Orders</a>
-                    <button (click)="logout(); toggleMenu()"
-                        class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-500 hover:text-red-400 hover:bg-gray-700">Sign
-                        out</button>
-                </ng-container>
-                <ng-container *ngIf="!isLoggedIn()">
-                    <a routerLink="/login" (click)="toggleMenu()"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Sign
-                        in</a>
-                    <a routerLink="/register" (click)="toggleMenu()"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Create
-                        Account</a>
-                </ng-container>
+        <div class="pt-4 pb-4 border-t border-gray-800" *ngIf="!isLoggedIn()">
+            <div class="px-2 space-y-1">
+                <a routerLink="/login" (click)="toggleMenu()"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Sign
+                    in</a>
+                <a routerLink="/register" (click)="toggleMenu()"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Create
+                    Account</a>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
     "fullname": "Admin User",
     "email": "admin@luxelle.com",
     "username": "Admin_001",
-    "password": "adminPassword",
+    "password": "$2b$10$ZN3ZyXmcjSU258kWGVdcyO3wEtE26OpEWR28Dgk6iPpOC6w3YHwEy",
     "isAdmin": true
   }
 ]

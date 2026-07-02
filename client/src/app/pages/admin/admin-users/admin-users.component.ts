@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../services/api.service';
 import { ToastService } from '../../../services/toast.service';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-users',
@@ -218,14 +219,24 @@ export class AdminUsersComponent {
   }
 
   deleteUser(id: string) {
-    if (confirm('Are you sure you want to delete this user? This cannot be undone.')) {
-      this.apiService.deleteUser(id).subscribe({
-        next: () => {
-          this.toastService.show('User deleted', 'success');
-          this.loadUsers();
-        },
-        error: () => this.toastService.show('Failed to delete user', 'error')
-      });
-    }
+    Swal.fire({
+        title: 'Delete User?',
+        text: 'Are you sure you want to delete this user? This cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#111827',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.apiService.deleteUser(id).subscribe({
+                next: () => {
+                    this.toastService.show('User deleted', 'success');
+                    this.loadUsers();
+                },
+                error: () => this.toastService.show('Failed to delete user', 'error')
+            });
+        }
+    });
   }
 }

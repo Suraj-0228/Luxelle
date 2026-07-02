@@ -29,7 +29,7 @@
                                     <p class="mt-1 text-sm text-gray-500 font-light">{{ item.product.material }}</p>
                                     <p *ngIf="item.product.selectedColor" class="mt-1 text-sm text-gray-500 font-light">
                                         Color: {{ item.product.selectedColor }}</p>
-                                    <p class="mt-4 text-base font-medium text-gray-900">${{ item.product.price }}</p>
+                                    <p class="mt-4 text-base font-medium text-gray-900">₹{{ item.product.price }}</p>
                                 </div>
 
                                 <div class="mt-4 sm:mt-0 sm:pr-9">
@@ -68,22 +68,22 @@
                 <dl class="space-y-4">
                     <div class="flex items-center justify-between">
                         <dt class="text-sm text-gray-600 font-light">Subtotal</dt>
-                        <dd class="text-sm font-medium text-gray-900">${{ subtotal().toFixed(2) }}</dd>
+                        <dd class="text-sm font-medium text-gray-900">₹{{ subtotal().toFixed(2) }}</dd>
                     </div>
 
                     <div class="flex items-center justify-between">
-                        <dt class="text-sm text-gray-500 font-light">State Tax (8%)</dt>
-                        <dd class="text-sm font-medium text-gray-500">+${{ stateTax().toFixed(2) }}</dd>
+                        <dt class="text-sm text-gray-500 font-light">GST ({{ gstRate() }}%)</dt>
+                        <dd class="text-sm font-medium text-gray-500">+₹{{ stateTax().toFixed(2) }}</dd>
                     </div>
 
                     <div class="flex items-center justify-between">
-                        <dt class="text-sm text-gray-500 font-light">Import Duty (5%)</dt>
-                        <dd class="text-sm font-medium text-gray-500">+${{ importDuty().toFixed(2) }}</dd>
+                        <dt class="text-sm text-gray-500 font-light">Import Duty ({{ importDutyRate() }}%)</dt>
+                        <dd class="text-sm font-medium text-gray-500">+₹{{ importDuty().toFixed(2) }}</dd>
                     </div>
 
                     <div class="flex items-center justify-between">
                         <dt class="text-sm text-gray-500 font-light">Processing Fee</dt>
-                        <dd class="text-sm font-medium text-gray-500">+${{ processingFee().toFixed(2) }}</dd>
+                        <dd class="text-sm font-medium text-gray-500">+₹{{ processingFee().toFixed(2) }}</dd>
                     </div>
 
                     <div class="flex items-center justify-between border-t border-gray-500 pt-4 mt-4">
@@ -93,7 +93,7 @@
 
                     <div class="border-t border-gray-500 pt-6 flex items-center justify-between">
                         <dt class="text-base font-bold text-gray-900">Total</dt>
-                        <dd class="text-base font-bold text-gray-900">${{ totalPrice().toFixed(2) }}</dd>
+                        <dd class="text-base font-bold text-gray-900">₹{{ totalPrice().toFixed(2) }}</dd>
                     </div>
                 </dl>
 

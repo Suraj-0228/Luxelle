@@ -67,7 +67,7 @@
                             </h3>
                             <p class="mt-1 text-sm text-gray-500">{{ product.brand || 'LUXELLE' }}</p>
                             <div class="mt-4 flex-1 flex items-end justify-between">
-                                <p class="text-sm font-medium text-gray-900">${{ product.price }}</p>
+                                <p class="text-sm font-medium text-gray-900">₹{{ product.price }}</p>
                             </div>
 
                             <button (click)="addToBag(product); $event.stopPropagation()"

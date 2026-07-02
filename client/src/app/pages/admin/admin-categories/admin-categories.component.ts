@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { ToastService } from '../../../services/toast.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-admin-categories',
@@ -147,14 +148,24 @@ export class AdminCategoriesComponent {
     }
 
     deleteCategory(id: string) {
-        if (confirm('Are you sure? This will not affect existing products but the category will be removed from future selection.')) {
-            this.apiService.deleteCategory(id).subscribe({
-                next: () => {
-                    this.toastService.show('Category removed', 'success');
-                    this.loadCategories();
-                },
-                error: () => this.toastService.show('Failed to remove category', 'error')
-            });
-        }
+        Swal.fire({
+            title: 'Remove Category?',
+            text: 'Are you sure? This will not affect existing products but the category will be removed from future selection.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#111827',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.apiService.deleteCategory(id).subscribe({
+                    next: () => {
+                        this.toastService.show('Category removed', 'success');
+                        this.loadCategories();
+                    },
+                    error: () => this.toastService.show('Failed to remove category', 'error')
+                });
+            }
+        });
     }
 }

@@ -74,4 +74,21 @@ export class ApiService {
   deleteCategory(id: string): Observable<any> {
     return this.http.delete(`http://localhost:5000/api/categories/${id}`);
   }
+
+  // Taxes
+  getTaxes(): Observable<any> {
+    return this.http.get('http://localhost:5000/api/taxes');
+  }
+
+  createTax(tax: any): Observable<any> {
+    return this.http.post('http://localhost:5000/api/taxes', tax);
+  }
+
+  updateTax(id: string, tax: any): Observable<any> {
+    return this.http.put(`http://localhost:5000/api/taxes/${id}`, tax);
+  }
+
+  deleteTax(id: string): Observable<any> {
+    return this.http.delete(`http://localhost:5000/api/taxes/${id}`);
+  }
 }

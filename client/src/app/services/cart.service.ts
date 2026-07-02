@@ -1,9 +1,18 @@
 import { Injectable, signal, computed, effect, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { ToastService } from './toast.service';
 
 export interface CartItem {
   product: any;
   quantity: number;
+}
+
+export interface TaxConfig {
+  _id?: string;
+  name: string;
+  rate: number;
+  type: 'percentage' | 'flat';
+  code: string;
 }
 
 @Injectable({
@@ -12,21 +21,51 @@ export interface CartItem {
 export class CartService {
   cartItems = signal<CartItem[]>(this.getCartFromStorage());
   private toastService = inject(ToastService);
+  private http = inject(HttpClient);
+
+  taxes = signal<TaxConfig[]>([]);
 
   count = computed(() => this.cartItems().reduce((acc, item) => acc + item.quantity, 0));
   subtotal = computed(() => this.cartItems().reduce((acc, item) => acc + (item.product.price * item.quantity), 0));
 
-  // Tax Calculations
-  stateTax = computed(() => this.subtotal() * 0.08); // 8% State Tax
-  importDuty = computed(() => this.subtotal() * 0.05); // 5% Import Duty
-  processingFee = computed(() => 2.99); // Flat Processing Fee
+  // Dynamic rates from DB
+  gstRate = computed(() => this.taxes().find(t => t.code === 'gst')?.rate ?? 0.18);
+  importDutyRate = computed(() => this.taxes().find(t => t.code === 'import_duty')?.rate ?? 0.05);
+  processingFeeAmount = computed(() => this.taxes().find(t => t.code === 'processing_fee')?.rate ?? 150);
+
+  // Dynamic tax computations
+  gstTax = computed(() => this.subtotal() * this.gstRate());
+  importDuty = computed(() => this.subtotal() * this.importDutyRate());
+  processingFee = computed(() => this.subtotal() > 0 ? this.processingFeeAmount() : 0);
+
+  // Compatibility alias for existing templates
+  stateTax = computed(() => this.gstTax());
 
   // Grand Total
-  totalPrice = computed(() => this.subtotal() + this.stateTax() + this.importDuty() + this.processingFee());
+  totalPrice = computed(() => this.subtotal() + this.gstTax() + this.importDuty() + this.processingFee());
 
   constructor() {
     effect(() => {
       this.saveCartToStorage(this.cartItems());
+    });
+    this.fetchTaxes();
+  }
+
+  fetchTaxes() {
+    this.http.get<{ success: boolean, data: TaxConfig[] }>('http://localhost:5000/api/taxes').subscribe({
+      next: (res) => {
+        if (res && res.success && res.data) {
+          this.taxes.set(res.data);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching taxes from DB, using fallback defaults:', err);
+        this.taxes.set([
+          { name: 'GST Tax', rate: 0.18, type: 'percentage', code: 'gst' },
+          { name: 'Import Duty', rate: 0.05, type: 'percentage', code: 'import_duty' },
+          { name: 'Processing Fee', rate: 150, type: 'flat', code: 'processing_fee' }
+        ]);
+      }
     });
   }
 

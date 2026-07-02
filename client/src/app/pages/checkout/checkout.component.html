@@ -19,7 +19,7 @@
                             <p class="text-sm text-gray-500">{{ item.product.brand }}</p>
                             <p class="text-xs text-gray-400 mt-1">{{ item.product.material }}</p>
                         </div>
-                        <p class="font-medium text-gray-900">${{ item.product.price }}</p>
+                        <p class="font-medium text-gray-900">₹{{ item.product.price }}</p>
                     </li>
                 </ul>
             </div>
@@ -27,19 +27,19 @@
             <dl class="text-sm font-medium text-gray-500 space-y-4 mt-10 pt-10 border-t border-gray-500">
                 <div class="flex justify-between">
                     <dt>Subtotal</dt>
-                    <dd class="text-gray-900">${{ subtotal().toFixed(2) }}</dd>
+                    <dd class="text-gray-900">₹{{ subtotal().toFixed(2) }}</dd>
                 </div>
                 <div class="flex justify-between">
-                    <dt>State Tax (8%)</dt>
-                    <dd class="text-gray-900">${{ stateTax().toFixed(2) }}</dd>
+                    <dt>GST ({{ gstRate() }}%)</dt>
+                    <dd class="text-gray-900">₹{{ stateTax().toFixed(2) }}</dd>
                 </div>
                 <div class="flex justify-between">
-                    <dt>Import Duty (5%)</dt>
-                    <dd class="text-gray-900">${{ importDuty().toFixed(2) }}</dd>
+                    <dt>Import Duty ({{ importDutyRate() }}%)</dt>
+                    <dd class="text-gray-900">₹{{ importDuty().toFixed(2) }}</dd>
                 </div>
                 <div class="flex justify-between">
                     <dt>Processing Fee</dt>
-                    <dd class="text-gray-900">${{ processingFee().toFixed(2) }}</dd>
+                    <dd class="text-gray-900">₹{{ processingFee().toFixed(2) }}</dd>
                 </div>
                 <div class="flex justify-between">
                     <dt>Shipping</dt>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="flex justify-between border-t border-gray-500 pt-6 items-center">
                     <dt class="text-base text-gray-900">Total</dt>
-                    <dd class="text-2xl font-serif font-bold text-gray-900">${{ totalPrice().toFixed(2) }}</dd>
+                    <dd class="text-2xl font-serif font-bold text-gray-900">₹{{ totalPrice().toFixed(2) }}</dd>
                 </div>
             </dl>
         </div>
@@ -92,7 +92,7 @@
                             </path>
                         </svg>
                     </div>
-                    <p class="font-medium text-gray-900">${{ totalPrice().toFixed(2) }}</p>
+                    <p class="font-medium text-gray-900">₹{{ totalPrice().toFixed(2) }}</p>
                 </div>
 
                 <div *ngIf="showMobileSummary" class="mt-6 border-t border-gray-200 pt-6 space-y-4">
@@ -111,18 +111,18 @@
                                     <h3 class="text-sm font-medium text-gray-900">{{ item.product.name }}</h3>
                                     <p class="text-xs text-gray-500">{{ item.product.brand }}</p>
                                 </div>
-                                <p class="text-sm font-medium text-gray-900">${{ item.product.price }}</p>
+                                <p class="text-sm font-medium text-gray-900">₹{{ item.product.price }}</p>
                             </li>
                         </ul>
                     </div>
                     <dl class="text-sm font-medium text-gray-500 space-y-2 mt-4 pt-4 border-t border-gray-200">
                         <div class="flex justify-between">
                             <dt>Subtotal</dt>
-                            <dd class="text-gray-900">${{ subtotal().toFixed(2) }}</dd>
+                            <dd class="text-gray-900">₹{{ subtotal().toFixed(2) }}</dd>
                         </div>
                         <div class="flex justify-between">
                             <dt>Taxes & Fees</dt>
-                            <dd class="text-gray-900">${{ (stateTax() + importDuty() + processingFee()).toFixed(2) }}
+                            <dd class="text-gray-900">₹{{ (stateTax() + importDuty() + processingFee()).toFixed(2) }}
                             </dd>
                         </div>
                     </dl>
@@ -141,7 +141,18 @@
                 <!-- STEP 1: Shipping Address -->
                 <div *ngIf="currentStep() === 'shipping'" class="animate-fadeIn">
                     <div formGroupName="shippingAddress">
-                        <h3 class="text-lg font-medium text-gray-900 mb-6">Contact Information</h3>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-medium text-gray-900">Contact Information</h3>
+                            <button *ngIf="hasStoredAddress()" type="button" (click)="useStoredAddress()" class="text-xs font-bold uppercase tracking-widest text-gray-900 hover:text-gray-600 flex items-center gap-1.5 transition-colors border-b border-gray-900 pb-0.5 hover:cursor-pointer bg-transparent border-0 outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.745 3.745 0 0 1 3.296-1.043A3.745 3.745 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                </svg>
+                                Use Stored Address
+                            </button>
+                            <span *ngIf="!hasStoredAddress()" class="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                No saved address found
+                            </span>
+                        </div>
                         <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                             <div class="sm:col-span-2">
                                 <label for="email"
@@ -422,7 +433,7 @@
                         </button>
                         <button type="submit" [disabled]="checkoutForm.invalid || isSubmitting()"
                             class="bg-gray-900 border border-transparent rounded-sm shadow-sm py-4 px-8 text-sm font-bold uppercase tracking-widest text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-                            {{ isSubmitting() ? 'Processing...' : 'Pay $' + totalPrice().toFixed(2) }}
+                            {{ isSubmitting() ? 'Processing...' : 'Pay ₹' + totalPrice().toFixed(2) }}
                         </button>
                     </div>
                 </div>

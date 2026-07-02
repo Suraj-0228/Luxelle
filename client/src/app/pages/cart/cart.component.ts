@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -22,6 +22,9 @@ export class CartComponent {
   stateTax = this.cartService.stateTax;
   importDuty = this.cartService.importDuty;
   processingFee = this.cartService.processingFee;
+
+  gstRate = computed(() => Math.round(this.cartService.gstRate() * 100));
+  importDutyRate = computed(() => Math.round(this.cartService.importDutyRate() * 100));
 
   updateQuantity(id: string, newQty: number, selectedColor?: string) {
     this.cartService.updateQuantity(id, newQty, selectedColor);

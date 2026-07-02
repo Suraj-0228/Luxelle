@@ -66,8 +66,8 @@ const loginUser = async (req, res) => {
 
     console.log('User found in DB:', user); // Added for debugging
 
-    // In a real app, you would compare the password with the hashed password
-    if (user && (password === user.password)) {
+    // Compare password with hashed password in DB
+    if (user && (await user.comparePassword(password))) {
       if (user.isBlocked) {
         return res.status(403).json({ message: 'Your account has been blocked. Please contact support.' });
       }
@@ -79,7 +79,9 @@ const loginUser = async (req, res) => {
         email: user.email,
         username: user.username,
         isAdmin: user.isAdmin,
-        // token: generateToken(user._id),
+        phone: user.phone,
+        address: user.address,
+        createdAt: user.createdAt,
       });
     } else {
       console.log('Password comparison failed'); // Added for debugging
@@ -123,9 +125,18 @@ const updateUser = async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
+      // Update password if provided
+      if (req.body.newPassword) {
+        if (!req.body.currentPassword || !(await user.comparePassword(req.body.currentPassword))) {
+          return res.status(400).json({ message: 'Current password is incorrect' });
+        }
+        user.password = req.body.newPassword;
+      }
+
       user.fullname = req.body.fullname || user.fullname;
       user.email = req.body.email || user.email;
       user.username = req.body.username || user.username;
+      user.phone = req.body.phone !== undefined ? req.body.phone : user.phone;
 
       // Update address if provided
       if (req.body.address) {
@@ -148,8 +159,10 @@ const updateUser = async (req, res) => {
         fullname: updatedUser.fullname,
         email: updatedUser.email,
         username: updatedUser.username,
+        phone: updatedUser.phone,
         address: updatedUser.address, // Return address
         isAdmin: updatedUser.isAdmin,
+        createdAt: updatedUser.createdAt,
       });
     } else {
       res.status(404).json({ message: 'User not found' });
@@ -159,4 +172,26 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, getUsers, deleteUser, updateUser };
+const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      res.json({
+        _id: user._id,
+        fullname: user.fullname,
+        email: user.email,
+        username: user.username,
+        phone: user.phone,
+        address: user.address,
+        isAdmin: user.isAdmin,
+        createdAt: user.createdAt,
+      });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { registerUser, loginUser, getUsers, deleteUser, updateUser, getUserById };

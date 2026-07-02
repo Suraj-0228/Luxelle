@@ -4,6 +4,7 @@ const path = require('path');
 const User = require('./models/User');
 const Product = require('./models/Product');
 const Category = require('./models/Category');
+const Tax = require('./models/Tax');
 
 // Connect to DB
 const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/fashion_store_db';
@@ -19,10 +20,23 @@ const importData = async () => {
   try {
     await User.deleteMany();
     await Product.deleteMany();
+    await Category.deleteMany();
+    await Tax.deleteMany();
 
-    await User.insertMany(users);
+    const bcrypt = require('bcryptjs');
+    const hashedUsers = await Promise.all(users.map(async (u) => {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(u.password, salt);
+      return { ...u, password: hashedPassword };
+    }));
+    await User.insertMany(hashedUsers);
     await Product.insertMany(products);
     await Category.insertMany(categories);
+    await Tax.insertMany([
+      { name: 'GST Tax', rate: 0.18, type: 'percentage', code: 'gst' },
+      { name: 'Import Duty', rate: 0.05, type: 'percentage', code: 'import_duty' },
+      { name: 'Processing Fee', rate: 150, type: 'flat', code: 'processing_fee' }
+    ]);
 
     console.log('Data Imported!');
     process.exit();
@@ -38,6 +52,7 @@ const destroyData = async () => {
     await User.deleteMany();
     await Product.deleteMany();
     await Category.deleteMany();
+    await Tax.deleteMany();
 
     console.log('Data Destroyed!');
     process.exit();

@@ -15,11 +15,27 @@ export class AuthService {
     isLoggedIn = computed(() => !!this.currentUser());
     isAdmin = computed(() => this.currentUser()?.isAdmin || false);
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router) {
+        const user = this.currentUser();
+        if (user && user._id) {
+            this.refreshUser(user._id);
+        }
+    }
 
     private getUserFromStorage() {
         const userStr = localStorage.getItem('user');
         return userStr ? JSON.parse(userStr) : null;
+    }
+
+    refreshUser(userId: string) {
+        this.http.get(`${this.apiUrl}/${userId}`).subscribe({
+            next: (updatedUser) => {
+                this.setUser(updatedUser);
+            },
+            error: (err) => {
+                console.error('Failed to refresh user profile data', err);
+            }
+        });
     }
 
     register(userData: any): Observable<any> {

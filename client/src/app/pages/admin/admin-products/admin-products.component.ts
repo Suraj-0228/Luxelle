@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { ToastService } from '../../../services/toast.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-admin-products',
@@ -381,15 +382,25 @@ export class AdminProductsComponent {
     }
 
     deleteProduct(id: string) {
-        if (confirm('Are you sure you want to delete this product?')) {
-            this.apiService.deleteProduct(id).subscribe({
-                next: () => {
-                    this.toastService.show('Product deleted', 'success');
-                    this.loadProducts();
-                },
-                error: () => this.toastService.show('Failed to delete product', 'error')
-            });
-        }
+        Swal.fire({
+            title: 'Delete Product?',
+            text: 'Are you sure you want to delete this product?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#111827',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.apiService.deleteProduct(id).subscribe({
+                    next: () => {
+                        this.toastService.show('Product deleted', 'success');
+                        this.loadProducts();
+                    },
+                    error: () => this.toastService.show('Failed to delete product', 'error')
+                });
+            }
+        });
     }
 
     changePage(page: number) {
