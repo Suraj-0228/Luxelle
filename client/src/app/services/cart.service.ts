@@ -1,6 +1,7 @@
 import { Injectable, signal, computed, effect, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from './toast.service';
+import { environment } from '../../environments/environment';
 
 export interface CartItem {
   product: any;
@@ -52,7 +53,7 @@ export class CartService {
   }
 
   fetchTaxes() {
-    this.http.get<{ success: boolean, data: TaxConfig[] }>('http://localhost:5000/api/taxes').subscribe({
+    this.http.get<{ success: boolean, data: TaxConfig[] }>(`${environment.apiUrl}/taxes`).subscribe({
       next: (res) => {
         if (res && res.success && res.data) {
           this.taxes.set(res.data);
