@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = environment.apiUrl;
-  private apiUrl = `${this.baseUrl}/products`;
+  private apiUrl = 'http://localhost:5000/api/products';
 
   constructor(private http: HttpClient) { }
 
@@ -25,20 +23,20 @@ export class ApiService {
   }
 
   updateUser(id: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/auth/${id}`, data);
+    return this.http.put(`http://localhost:5000/api/auth/${id}`, data);
   }
 
   getWishlist(userId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/wishlist/${userId}`);
+    return this.http.get(`http://localhost:5000/api/wishlist/${userId}`);
   }
 
   addToWishlist(userId: string, productId: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/wishlist`, { userId, productId });
+    return this.http.post(`http://localhost:5000/api/wishlist`, { userId, productId });
   }
 
   removeFromWishlist(userId: string, productId: string): Observable<any> {
     // Angular HttpClient delete/request with body workaround
-    return this.http.request('delete', `${this.baseUrl}/wishlist`, { body: { userId, productId } });
+    return this.http.request('delete', `http://localhost:5000/api/wishlist`, { body: { userId, productId } });
   }
   createProduct(product: any): Observable<any> {
     return this.http.post(this.apiUrl, product);
@@ -53,44 +51,44 @@ export class ApiService {
   }
 
   getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/auth`);
+    return this.http.get<any[]>('http://localhost:5000/api/auth');
   }
 
   deleteUser(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/auth/${id}`);
+    return this.http.delete(`http://localhost:5000/api/auth/${id}`);
   }
 
   // Categories
   getCategories(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/categories`);
+    return this.http.get<any[]>('http://localhost:5000/api/categories');
   }
 
   createCategory(category: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/categories`, category);
+    return this.http.post('http://localhost:5000/api/categories', category);
   }
 
   updateCategory(id: string, category: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/categories/${id}`, category);
+    return this.http.put(`http://localhost:5000/api/categories/${id}`, category);
   }
 
   deleteCategory(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/categories/${id}`);
+    return this.http.delete(`http://localhost:5000/api/categories/${id}`);
   }
 
   // Taxes
   getTaxes(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/taxes`);
+    return this.http.get('http://localhost:5000/api/taxes');
   }
 
   createTax(tax: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/taxes`, tax);
+    return this.http.post('http://localhost:5000/api/taxes', tax);
   }
 
   updateTax(id: string, tax: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/taxes/${id}`, tax);
+    return this.http.put(`http://localhost:5000/api/taxes/${id}`, tax);
   }
 
   deleteTax(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/taxes/${id}`);
+    return this.http.delete(`http://localhost:5000/api/taxes/${id}`);
   }
 }

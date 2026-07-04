@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -28,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 // Database Connection
-const dbURI = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://localhost:27017/fashion_store_db';
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/fashion_store_db';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
     console.log('MongoDB Connected!');
