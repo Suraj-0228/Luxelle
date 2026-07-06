@@ -1,4 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#111827"/>
-  <text x="50" y="70" font-family="serif" font-size="60" text-anchor="middle" fill="#FFFFFF">L</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Rounded rectangle background with solid luxury dark gray/black -->
+  <rect width="64" height="64" rx="16" fill="#111827" />
+  <!-- A subtle luxury gold border circle -->
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="none" stroke="#d97706" stroke-width="1.5" stroke-opacity="0.6" />
+  <!-- Elegant Serif Letter "L" -->
+  <text 
+    x="32" 
+    y="44" 
+    font-family="'Playfair Display', 'Georgia', 'Didot', serif" 
+    font-size="34" 
+    font-weight="bold" 
+    fill="url(#goldGradient)" 
+    text-anchor="middle"
+    letter-spacing="0.05em"
+  >L</text>
+  <defs>
+    <!-- Premium Gold Gradient -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" /> <!-- Light Gold -->
+      <stop offset="50%" stop-color="#d97706" /> <!-- Deep Gold -->
+      <stop offset="100%" stop-color="#b45309" /> <!-- Dark Gold -->
+    </linearGradient>
+  </defs>
 </svg>

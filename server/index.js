@@ -43,7 +43,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/taxes', taxRoutes);
 app.get('/', (req, res) => {
-  res.send('Plant Nursery Server is Running!');
+  res.send('Luxelle Server is Running!');
 });
 
 app.listen(port, () => {

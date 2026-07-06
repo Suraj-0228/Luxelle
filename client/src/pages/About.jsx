@@ -1,0 +1,115 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+export default function About() {
+  return (
+    <>
+      {/* Hero Section */}
+      <div className="relative h-[60vh] min-h-[500px] mt-5 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://i.pinimg.com/1200x/a8/16/1b/a8161ba4d5e6348e1858210511f9221a.jpg"
+            className="w-full h-full object-cover"
+            alt="About Luxelle"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6">The Art of Elegance</h1>
+          <p className="text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto">
+            Curating timeless fashion for the modern soul since 2026.
+          </p>
+        </div>
+      </div>
+
+      {/* Story Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-20">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+          <div className="relative aspect-[4/5] bg-gray-100 rounded-sm overflow-hidden mb-12 lg:mb-0">
+            <img
+              src="https://i.pinimg.com/1200x/ad/80/58/ad80583c5bcda8102ca6aac0707a6237.jpg"
+              className="w-full h-full object-cover"
+              alt="Model"
+            />
+          </div>
+          <div>
+            <span className="text-yellow-600 font-bold uppercase tracking-widest text-xs mb-4 block">Our Story</span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-6">Designed for the Exceptional</h2>
+            <div className="prose prose-lg text-gray-500 font-light">
+              <p className="mb-6">
+                Luxelle began with a simple philosophy: true luxury is not just about price, but about the feeling
+                it evokes. We set out to create a collection where every stitch, every curve, and every material
+                tells a story of dedication and artistry.
+              </p>
+              <p>
+                From our humble beginnings as a boutique studio to becoming a destination for fashion connoisseurs,
+                our mission has remained unchanged – to empower you to express your unique identity through pieces
+                that stand the test of time.
+              </p>
+            </div>
+            <div className="mt-10">
+              <img
+                src="https://i.pinimg.com/736x/c0/df/a3/c0dfa38a95004600e05b40d4d1fc539f.jpg"
+                className="h-52 opacity-60"
+                alt="Signature"
+              />
+              <p className="text-sm text-gray-900 mt-2">Founder & Creative Director</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Values Section */}
+      <div className="bg-gray-50 my-20 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-serif font-bold text-gray-900">Our Values</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <div className="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-yellow-600">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-serif font-bold text-gray-900 mb-3">Uncompromising Quality</h3>
+              <p className="text-gray-500 font-light">We source only the finest materials from ethical suppliers around the globe.</p>
+            </div>
+            <div className="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-yellow-600">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-serif font-bold text-gray-900 mb-3">Timeless Design</h3>
+              <p className="text-gray-500 font-light">Trends fade, but style is eternal. Our pieces are designed to be cherished for years.</p>
+            </div>
+            <div className="p-5 border border-gray-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-yellow-600">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-serif font-bold text-gray-900 mb-3">Sustainable Future</h3>
+              <p className="text-gray-500 font-light">Committed to reducing our footprint with eco-friendly packaging and processes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="bg-gray-900 my-5 py-20 text-center px-4">
+        <h2 className="text-4xl md:text-5xl font-serif text-white mb-6 tracking-tight">Experience the Collection</h2>
+        <p className="text-gray-400 font-light max-w-xl mx-auto mb-10 text-lg leading-relaxed">
+          Discover the pieces that define modern luxury. Elevate your wardrobe with our curated selection.
+        </p>
+        <Link
+          to="/shop"
+          className="inline-block bg-white text-black px-12 py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-gray-100 transform hover:-translate-y-1 transition-all duration-300 shadow-xl"
+        >
+          Shop Now
+        </Link>
+      </div>
+    </>
+  );
+}

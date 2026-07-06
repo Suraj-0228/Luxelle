@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom fade animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.2s ease-out forwards;
+}
+
+/* Redesigned Toast Animations */
+@keyframes toastProgress {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+.animate-toastProgress {
+  animation: toastProgress 3000ms linear forwards;
+}
+
+@keyframes toastSlideIn {
+  from {
+    transform: translateX(120%) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-toastSlideIn {
+  animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Premium SweetAlert2 Luxury Styles */
+.swal2-container {
+  z-index: 99999 !important;
+}
+
+.swal2-popup {
+  background: rgba(17, 24, 39, 0.97) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  padding: 2.5rem 2rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6) !important;
+}
+
+.swal2-title {
+  color: #ffffff !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  font-size: 1.75rem !important;
+  margin-top: 1rem !important;
+}
+
+.swal2-html-container {
+  color: #d1d5db !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 300 !important;
+  line-height: 1.6 !important;
+  font-size: 0.95rem !important;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* Actions buttons container */
+.swal2-actions {
+  margin-top: 1.5rem !important;
+  gap: 12px !important;
+}
+
+/* Confirm and Cancel Buttons styling */
+.swal2-styled {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  padding: 12px 30px !important;
+  border-radius: 2px !important;
+  transition: all 0.2s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+.swal2-styled.swal2-confirm {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: none !important;
+}
+
+.swal2-styled.swal2-confirm:hover {
+  background-color: #f3f4f6 !important;
+  border-color: #f3f4f6 !important;
+}
+
+.swal2-styled.swal2-cancel {
+  background-color: transparent !important;
+  color: #9ca3af !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: none !important;
+}
+
+.swal2-styled.swal2-cancel:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Redesigning SweetAlert Icons to look premium */
+.swal2-icon {
+  border-width: 2px !important;
+  margin: 0 auto 0.5rem auto !important;
+  transform: scale(0.9) !important;
+}
+
+/* Success Icon Override */
+.swal2-icon.swal2-success {
+  border-color: #10b981 !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #10b981 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 4px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-fix,
+.swal2-icon.swal2-success [class^='swal2-success-circular-line'] {
+  background-color: rgba(17, 24, 39, 0.97) !important;
+}
+
+/* Warning Icon Override */
+.swal2-icon.swal2-warning {
+  border-color: #f59e0b !important;
+  color: #f59e0b !important;
+}
+
+/* Error Icon Override */
+.swal2-icon.swal2-error {
+  border-color: #ef4444 !important;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: #ef4444 !important;
+}
+
+/* Info Icon Override */
+.swal2-icon.swal2-info {
+  border-color: #3b82f6 !important;
+  color: #3b82f6 !important;
+}
+
+
