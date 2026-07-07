@@ -42,6 +42,51 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/taxes', taxRoutes);
+// Database Seeder Endpoint
+app.get('/api/seed', async (req, res) => {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const bcrypt = require('bcryptjs');
+    const User = require('./models/User');
+    const Product = require('./models/Product');
+    const Category = require('./models/Category');
+    
+    // Read JSON files
+    const users = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/users.json'), 'utf-8'));
+    const products = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/products.json'), 'utf-8'));
+    const categories = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/categories.json'), 'utf-8'));
+
+    // Clear existing collections
+    await User.deleteMany();
+    await Product.deleteMany();
+    await Category.deleteMany();
+    await Tax.deleteMany();
+
+    // Hash passwords for seed users
+    const hashedUsers = await Promise.all(users.map(async (u) => {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(u.password, salt);
+      return { ...u, password: hashedPassword };
+    }));
+
+    // Seed collections
+    await User.insertMany(hashedUsers);
+    await Product.insertMany(products);
+    await Category.insertMany(categories);
+    await Tax.insertMany([
+      { name: 'GST Tax', rate: 0.18, type: 'percentage', code: 'gst' },
+      { name: 'Import Duty', rate: 0.05, type: 'percentage', code: 'import_duty' },
+      { name: 'Processing Fee', rate: 150, type: 'flat', code: 'processing_fee' }
+    ]);
+
+    res.status(200).json({ success: true, message: 'Database seeded successfully!' });
+  } catch (error) {
+    console.error('Seeding error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.get('/', (req, res) => {
   res.send('Luxelle Server is Running!');
 });
