@@ -13,8 +13,12 @@ export function AuthProvider({ children }) {
   const isAdmin = currentUser?.isAdmin || false;
 
   useEffect(() => {
-    if (currentUser && currentUser._id) {
-      refreshUser(currentUser._id);
+    if (currentUser) {
+      if (!currentUser.token) {
+        logout();
+      } else if (currentUser._id) {
+        refreshUser(currentUser._id);
+      }
     }
   }, []);
 

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const generateToken = require('../utils/generateToken');
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
@@ -34,7 +35,7 @@ const registerUser = async (req, res) => {
         fullname: user.fullname,
         email: user.email,
         username: user.username,
-        // token: generateToken(user._id), // You would generate a token here
+        token: generateToken(user._id),
       });
     }
   } catch (error) {
@@ -56,6 +57,7 @@ const loginUser = async (req, res) => {
       email: 'admin@example.com',
       username: 'admin',
       isAdmin: true,
+      token: generateToken('admin'),
     });
   }
 
@@ -81,6 +83,7 @@ const loginUser = async (req, res) => {
         isAdmin: user.isAdmin,
         phone: user.phone,
         address: user.address,
+        token: generateToken(user._id),
         createdAt: user.createdAt,
       });
     } else {
@@ -162,6 +165,7 @@ const updateUser = async (req, res) => {
         phone: updatedUser.phone,
         address: updatedUser.address, // Return address
         isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser._id),
         createdAt: updatedUser.createdAt,
       });
     } else {

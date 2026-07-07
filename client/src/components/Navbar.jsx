@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
@@ -11,9 +11,22 @@ export default function Navbar() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = () => {
     Swal.fire({
@@ -114,12 +127,12 @@ export default function Navbar() {
             </Link>
 
             {/* User Menu */}
-            <div className="relative">
+            <div className="relative" ref={userMenuRef}>
               {isLoggedIn ? (
                 <>
                   <button
                     onClick={toggleUserMenu}
-                    className="flex items-center space-x-2 text-sm font-medium text-gray-300 hover:text-white transition-colors focus:outline-none group"
+                    className="flex items-center space-x-2 text-sm font-medium text-gray-300 hover:text-white transition-colors focus:outline-none group cursor-pointer"
                   >
                     <div className="h-8 w-8 rounded-full bg-gray-800 text-white border border-gray-500 flex items-center justify-center font-serif font-bold group-hover:bg-gray-700 transition-colors">
                       {currentUser?.fullname?.charAt(0) || 'U'}
@@ -162,7 +175,7 @@ export default function Navbar() {
                           </svg>
                           Settings
                         </Link>
-                        <button onClick={handleLogout} className="group w-full flex items-center px-5 py-3 text-sm text-red-500 hover:bg-gray-800 hover:text-red-400 transition-colors text-left">
+                        <button onClick={handleLogout} className="group w-full flex items-center px-5 py-3 text-sm text-red-500 hover:bg-gray-800 hover:text-red-400 transition-colors text-left cursor-pointer">
                           <svg className="mr-3 h-4 w-4 text-red-500/70 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                           </svg>

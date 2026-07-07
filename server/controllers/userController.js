@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const generateToken = require('../utils/generateToken');
 
 // @desc    Update user profile
 // @route   PUT /api/users/:id
@@ -30,6 +31,7 @@ const updateUserProfile = async (req, res) => {
       isAdmin: updatedUser.isAdmin,
       phone: updatedUser.phone,
       address: updatedUser.address,
+      token: generateToken(updatedUser._id),
     });
   } else {
     res.status(404);

@@ -61,7 +61,7 @@ export default function Home() {
             Spring Collection 2026
           </span>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-2xl">
-            Redefine Your <br /> <span class="italic text-white underline">Elegance</span>
+            Redefine Your <br /> <span className="italic text-white underline">Elegance</span>
           </h1>
           <p className="text-lg md:text-2xl text-gray-200 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
             Curated pieces for the modern visionary. Experience luxury in every detail.

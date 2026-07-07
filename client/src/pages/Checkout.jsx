@@ -472,7 +472,7 @@ export default function Checkout() {
                   <button
                     type="button"
                     onClick={proceedToPayment}
-                    className="bg-gray-900 border border-transparent rounded-sm shadow-sm py-4 px-8 text-sm font-bold uppercase tracking-widest text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-colors"
+                    className="bg-gray-900 border border-transparent rounded-sm shadow-sm py-4 px-8 text-sm font-bold uppercase tracking-widest text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-colors cursor-pointer"
                   >
                     Continue to Payment
                   </button>
@@ -635,7 +635,7 @@ export default function Checkout() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-gray-900 border border-transparent rounded-sm shadow-sm py-4 px-8 text-sm font-bold uppercase tracking-widest text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="bg-gray-900 border border-transparent rounded-sm shadow-sm py-4 px-8 text-sm font-bold uppercase tracking-widest text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
                   >
                     {isSubmitting ? 'Processing...' : `Pay ₹${totalPrice.toFixed(2)}`}
                   </button>

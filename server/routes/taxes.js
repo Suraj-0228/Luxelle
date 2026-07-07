@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Tax = require('../models/Tax');
+const { protect, admin } = require('../middleware/authMiddleware');
 
 // Get all taxes
 router.get('/', async (req, res) => {
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 // Create new tax
-router.post('/', async (req, res) => {
+router.post('/', protect, admin, async (req, res) => {
   try {
     const { name, rate, type, code } = req.body;
     const tax = new Tax({ name, rate, type, code });
@@ -25,7 +26,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update tax by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id', protect, admin, async (req, res) => {
   try {
     const { name, rate, type, code } = req.body;
     const tax = await Tax.findByIdAndUpdate(
@@ -43,7 +44,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete tax by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', protect, admin, async (req, res) => {
   try {
     const tax = await Tax.findByIdAndDelete(req.params.id);
     if (!tax) {

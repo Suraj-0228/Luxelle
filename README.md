@@ -7,12 +7,12 @@
 ### 1.1 Project Overview
 **Luxelle** is a state-of-the-art e-commerce web application designed specifically for the modern fashion retailer. It bridges the gap between high-end aesthetics and robust technical functionality. The platform is engineered to facilitate the seamless management of a fashion brand's operations—from inventory to customer relations—while offering shoppers a premium, intuitive, and engaging digital storefront.
 
-Unlike generic e-commerce templates, Luxelle focuses on a "Luxury First" design philosophy, utilizing a sophisticated typography system, curated color palettes, and micro-interactions to elevate the user experience.
+Unlike generic e-commerce templates, Luxelle focuses on a "Luxury First" design philosophy, utilizing a sophisticated typography system, curated color palettes, glassmorphism UI elements, and premium micro-interactions to elevate the user experience.
 
 ### 1.2 Key Objectives
 The primary goals of the Luxelle platform are:
 *   **Elevate Brand Identity:** To provide a visually stunning interface that reflects the exclusivity of high-fashion products.
-*   **Streamline Operations:** To simplify complex e-commerce workflows (inventory, orders) for administrators.
+*   **Streamline Operations:** To simplify complex e-commerce workflows (inventory, orders, tax settings) for administrators.
 *   **Enhance User Engagement:** To create a frictionless journey from product discovery to checkout, reducing cart abandonment.
 *   **Ensure Scalability:** To build a robust architecture capable of handling growing traffic and product lines.
 
@@ -26,134 +26,105 @@ Luxelle is built on the robust **MERN Stack**, ensuring a full JavaScript-based 
 
 | Component | Technology | Role & Description |
 | :--- | :--- | :--- |
-| **Frontend** | ![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white) **Angular 21+** | The core user interface framework. It pushes for a component-based architecture, utilizing **Signals** for reactive state management and standalone components for optimized loading. |
-| **Styling** | ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white) **Tailwind CSS** | A utility-first CSS framework that allows for rapid UI development and implementing a bespoke design system without fighting default styles. |
-| **Backend** | ![NodeJS](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white) **Node.js** | The server-side runtime that handles API requests, business logic, and database communication asynchronously. |
-| **API Framework** | ![ExpressJS](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) **Express.js** | A minimalistic web framework used to define RESTful API routes, middleware for authentication, and error handling. |
-| **Database** | ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white) **MongoDB** | A NoSQL database that stores data in flexible, JSON-like documents, ideal for handling varied product attributes and complex user data. |
+| **Frontend** | ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) **React 19** | Core user interface framework using React functional components, hooks (`useContext`, `useMemo`, `useEffect`), and Vite for fast compiling and hot-module reloading. |
+| **Styling** | ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white) **Tailwind CSS v4 & DaisyUI** | Utility-first CSS framework coupled with DaisyUI plugins inside pure CSS config to define a premium dark/gold style theme. |
+| **Backend** | ![NodeJS](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white) **Node.js** | Server-side runtime that handles API requests and database communication asynchronously. |
+| **API Framework** | ![ExpressJS](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) **Express.js** | Minimalistic web framework defining RESTful API routes, schema parsing, and mock auth middleware. |
+| **Database** | ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white) **MongoDB** | NoSQL database storing flexible, document-based records for users, orders, categories, and taxes. |
 
 ### 2.2 System Design Highlights
-*   **Single Page Application (SPA):** Ensures smooth transitions between pages without reloading, providing a native-app-like feel.
-*   **RESTful API:** The backend exposes structured endpoints used by the frontend to fetch and manipulate data.
-*   **Component Modularity:** The frontend is broken down into reusable components (e.g., `ProductCard`, `ProfileSidebar`), promoting code reusability and easier maintenance.
+*   **Single Page Application (SPA):** Uses React Router v7 for smooth client-side routing.
+*   **Modularity**: Highly reusable component architectures (e.g. `ProductCard`, `ProfileSidebar`, `ScrollToTopButton`).
+*   **Robust Session Merging**: Automatic merge-handling of JWT auth tokens in local storage to prevent session stripping on profile updates.
 
 ---
 
 ## 3. Comprehensive Features & Functionality
 
-Luxelle offers a rich set of features divided into three main pillars: Product Discovery, User Management, and Transaction Processing.
+Luxelle offers a rich set of features divided into three main pillars:
 
 ### 3.1 🛍️ Shopping & Discovery
-*   **Dynamic Product Catalog:** Users can browse an extensive collection of products. The catalog supports advanced filtering by:
-    *   **Category:** Bags, Watches, Sunglasses, Jewelry.
-    *   **Price Range:** Filter products within a specific budget.
-    *   **Brand:** Select items from favorite designers.
-*   **Rich Product Details:** Each product page features high-resolution image galleries, detailed material descriptions, color variants, and stock availability status.
-*   **Smart Search:** An intuitive search bar allows users to quickly find products by name or keyword.
+*   **Dynamic Product Catalog**: Advanced filtering by category, price ranges, and designer brands.
+*   **Curated Latest Arrivals Page**: Dedicated `/latest` route showcasing newest inventory releases.
+*   **Premium Toaster system**: Dynamic status-based glassmorphic alerts (Success, Error, Info) with slide-in animations and animated countdown progress bars.
 
-### 3.2 👤 User Dashboard & Account Management
-Registration transforms a visitor into a loyal customer, unlocking a suite of personal management tools:
-*   **Dashboard Overview:** A snapshot of the user's recent activity and account status.
-*   **Order History:** A complete log of past purchases, including order dates, IDs, total costs, and current status (e.g., *Pending*, *Shipped*).
-*   **Wishlist:** A curated collection of favorite items. Users can move items from their wishlist directly to the cart.
-*   **Address Book:** A detailed management system for saving multiple shipping and billing addresses to speed up checkout.
-*   **Security:** Users can securely log out, protecting their personal data.
+### 3.2 👤 Customer Dashboard & Account Management
+*   **Account Settings**: Securely change credentials, passwords, and profile options.
+*   **Address Book**: Maintain billing and shipping destinations with a strict 6-digit numeric ZIP Code validation guard.
+*   **Interactive Orders History**: Inspect past invoice breakups, cancel pending orders, or compile high-resolution PDF invoices via `jsPDF` + `html2canvas`.
+*   **Wishlist**: Save favorite items to purchase later.
 
 ### 3.3 💳 Cart & Checkout Workflow
-*   **Persistent Cart:** Items added to the cart are saved, allowing users to continue shopping without losing their selection. It calculates subtotals, taxes, and shipping in real-time.
-*   **Multi-Step Checkout:** A guided, disturbance-free process:
-    1.  **Shipping:** Select or enter a delivery address.
-    2.  **Billing:** Separate billing address confirmation.
-    3.  **Payment:** Choose a payment method (Credit Card/COD).
-    4.  **Confirmation:** Final review before purchase.
-*   **Instant Feedback:** Users receive immediate visual confirmation upon successful order placement.
+*   **Persistent State Cart**: Client-side state hook calculations for GST rates, import duties, and processing fees.
+*   **Auto-populate saved Address**: Single-click `"Use Stored Address"` button during checkout with instant validation clearance and user feedback.
+*   **Luxury Modals**: Customized global SweetAlert2 popups with glassmorphism overlays and gold-accented buttons.
+
+### 3.4 🛡️ Admin Dashboard
+*   Full admin controls to create/delete/edit products, manage order delivery stages, add categories, configure tax rules, and manage user roles.
 
 ---
 
 ## 4. Getting Started Guide
 
-Follow these detailed steps to set up the Luxelle development environment on your local machine.
-
 ### 4.1 Prerequisites
 Ensure you have the following installed:
-*   **Node.js** (v18.10.0 or higher) - [Download](https://nodejs.org/)
-*   **MongoDB** (Locally installed or a MongoDB Atlas connection string) - [Download](https://www.mongodb.com/try/download/community)
-*   **Angular CLI:** Install globally via terminal: `npm install -g @angular/cli`
+*   **Node.js** (v18.0.0 or higher)
+*   **MongoDB** (Locally installed community server or MongoDB Atlas cluster connection string)
 
 ### 4.2 Installation & Setup
 
 #### Step 1: Clone the Repository
-Get the code on your machine.
 ```bash
 git clone https://github.com/your-username/luxelle.git
 cd Luxelle
 ```
 
 #### Step 2: Configure the Backend (Server)
-The backend handles the API and database connection.
 ```bash
 cd server
-npm install    # Install all backend dependencies (Express, Mongoose, etc.)
-npm start      # Start the backend server (runs on localhost:5000)
+npm install    # Install backend dependencies
+npm start      # Launch server (runs on localhost:5000)
 ```
-*Note: Ensure your MongoDB service is running locally.*
 
 #### Step 3: Configure the Frontend (Client)
-Open a new terminal window for the frontend application.
+Open a new terminal window:
 ```bash
 cd client
-npm install    # Install Angular and frontend dependencies
-npm start      # Launch the development server
+npm install    # Install frontend dependencies
+npm run dev    # Launch Vite development server
 ```
-The application will launch automatically at `http://localhost:4200`.
+The application will launch at `http://localhost:5173`.
 
 ---
 
 ## 5. Data Models & Schema
 
-Luxelle relies on structured data models to ensure consistency. Below are the core schemas used in the MongoDB database.
-
 ### 5.1 Product Schema
-Defines the structure of an item in the store.
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `name` | String | The main display name of the product. |
-| `brand` | String | The designer or manufacturer brand. |
-| `category` | String | Classification (e.g., 'Bags', 'Watches'). |
+| `name` | String | Display name of the product. |
+| `brand` | String | Designer or manufacturer brand. |
+| `category` | String | Classification (e.g. 'Bags', 'Watches'). |
 | `price` | Number | Selling price of the item. |
 | `colors` | Array`<String>` | List of available color options. |
-| `material` | String | Primary material composition (e.g., 'Leather'). |
+| `material` | String | Primary material composition (e.g. 'Leather'). |
 | `image` | String | URL path to the product image asset. |
 | `stock` | Number | Quantity available in inventory. |
 
 ### 5.2 User Schema
-Stores customer account information.
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `fullname` | String | The user's full legal name. |
-| `email` | String | Unique email used for login and notifications. |
-| `password` | String | Securely hashed password string. |
-| `isAdmin` | Boolean | Flag to grant administrative access permissions. |
-
-### 5.3 Order Schema
-Records transaction details.
-| Field | Type | Description |
-| :--- | :--- | :--- |
-| `user` | ObjectId | Link to the User who placed the order. |
-| `items` | Array | List containing Product IDs and purchased quantities. |
-| `totalAmount` | Number | Final calculated cost including taxes/shipping. |
-| `shippingAddress` | Object | Full nested structured address object. |
-| `status` | String | Current state of order ('Pending', 'Delivered'). |
+| `fullname` | String | User's full legal name. |
+| `email` | String | Unique email used for authentication. |
+| `password` | String | Hashed credentials string. |
+| `address` | Object | Nested address profile (`street`, `city`, `state`, `zip`, `country`). |
+| `isAdmin` | Boolean | Administrative access flag. |
 
 ---
 
-## 6. Future Roadmap
+## 🚀 6. Production Deployment Instructions
 
-We are constantly improving Luxelle. Here are the features planned for upcoming releases:
-*   [ ] **Admin Dashboard:** A dedicated portal for adding products and managing order status.
-*   [ ] **Payment Gateway Integration:** Native support for Stripe and PayPal transactions.
-*   [ ] **User Reviews:** Allowing verified buyers to rate and review products.
-*   [ ] **Dark Mode:** A toggle for a dark-themed user interface.
+Please consult the detailed **[Deployment Guide](file:///c:/Users/suraj/.gemini/antigravity/brain/ade1aa51-b521-4bcb-8511-3353efae8e3b/deployment_guide.md)** inside the configurations folder for instructions on configuring a cloud MongoDB Atlas cluster, hosting static client files on Vercel, and deploying backend processes on Render.
 
 ---
 

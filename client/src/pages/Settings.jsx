@@ -26,6 +26,11 @@ export default function Settings() {
   const [isAddingAddress, setIsAddingAddress] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  
+  const [passwordErrors, setPasswordErrors] = useState({});
+  const [addressErrors, setAddressErrors] = useState({});
+  const [passwordServerErr, setPasswordServerErr] = useState('');
+  const [addressServerErr, setAddressServerErr] = useState('');
 
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -36,6 +41,8 @@ export default function Settings() {
   }, [currentUser]);
 
   const resetAddressModel = () => {
+    setAddressErrors({});
+    setAddressServerErr('');
     if (currentUser && currentUser.address) {
       setAddressModel({
         street: currentUser.address.street || '',
@@ -57,43 +64,55 @@ export default function Settings() {
   const handlePasswordChange = (e) => {
     const { name, value } = e.target;
     setPasswordModel(prev => ({ ...prev, [name]: value }));
+    if (passwordErrors[name]) {
+      setPasswordErrors(prev => ({ ...prev, [name]: '' }));
+    }
+    setPasswordServerErr('');
   };
 
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setAddressModel(prev => ({ ...prev, [name]: value }));
+    if (addressErrors[name]) {
+      setAddressErrors(prev => ({ ...prev, [name]: '' }));
+    }
+    setAddressServerErr('');
+
+    if (name === 'zip') {
+      if (!value) {
+        setAddressErrors(prev => ({ ...prev, zip: 'ZIP Code is required' }));
+      } else if (!/^\d+$/.test(value)) {
+        setAddressErrors(prev => ({ ...prev, zip: 'ZIP Code must contain only numbers' }));
+      } else if (value.length !== 6) {
+        setAddressErrors(prev => ({ ...prev, zip: 'ZIP Code must be exactly 6 digits' }));
+      } else {
+        setAddressErrors(prev => ({ ...prev, zip: '' }));
+      }
+    }
+  };
+
+  const validatePasswordForm = () => {
+    const errs = {};
+    if (!passwordModel.currentPassword) {
+      errs.currentPassword = 'Current Password is required';
+    }
+    if (!passwordModel.newPassword) {
+      errs.newPassword = 'New Password is required';
+    } else if (passwordModel.newPassword.length < 6) {
+      errs.newPassword = 'Password must be at least 6 characters';
+    }
+    if (!passwordModel.confirmPassword) {
+      errs.confirmPassword = 'Confirm Password is required';
+    } else if (passwordModel.newPassword !== passwordModel.confirmPassword) {
+      errs.confirmPassword = 'Passwords do not match';
+    }
+    setPasswordErrors(errs);
+    return Object.keys(errs).length === 0;
   };
 
   const changePassword = async () => {
-    if (!passwordModel.currentPassword || !passwordModel.newPassword || !passwordModel.confirmPassword) {
-      Swal.fire({
-        title: 'Missing Fields',
-        text: 'Please fill in all password fields.',
-        icon: 'warning',
-        confirmButtonColor: '#000'
-      });
-      return;
-    }
-
-    if (passwordModel.newPassword !== passwordModel.confirmPassword) {
-      Swal.fire({
-        title: 'Password Mismatch',
-        text: 'New passwords do not match.',
-        icon: 'error',
-        confirmButtonColor: '#000'
-      });
-      return;
-    }
-
-    if (passwordModel.newPassword.length < 6) {
-      Swal.fire({
-        title: 'Weak Password',
-        text: 'Password must be at least 6 characters long.',
-        icon: 'warning',
-        confirmButtonColor: '#000'
-      });
-      return;
-    }
+    setPasswordServerErr('');
+    if (!validatePasswordForm()) return;
 
     const payload = {
       currentPassword: passwordModel.currentPassword,
@@ -104,6 +123,7 @@ export default function Settings() {
       const updatedUser = await apiService.updateUser(currentUser._id, payload);
       setUser(updatedUser);
       setPasswordModel({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      setPasswordErrors({});
       Swal.fire({
         title: 'Password Changed',
         text: 'Your password has been successfully updated.',
@@ -113,31 +133,37 @@ export default function Settings() {
     } catch (err) {
       console.error('Failed to change password', err);
       const errMsg = err.response?.data?.message || 'Failed to change password. Please check your current password.';
-      Swal.fire({
-        title: 'Error',
-        text: errMsg,
-        icon: 'error',
-        confirmButtonColor: '#d33'
-      });
+      setPasswordServerErr(errMsg);
     }
   };
 
-  const saveAddress = async () => {
-    if (!addressModel.street || !addressModel.city || !addressModel.state || !addressModel.zip || !addressModel.country) {
-      Swal.fire({
-        title: 'Missing Fields',
-        text: 'Please, fill in all address fields!!',
-        icon: 'warning',
-        confirmButtonColor: '#000'
-      });
-      return;
+  const validateAddressForm = () => {
+    const errs = {};
+    if (!addressModel.street) errs.street = 'Street Address is required';
+    if (!addressModel.city) errs.city = 'City is required';
+    if (!addressModel.state) errs.state = 'State / Province is required';
+    if (!addressModel.zip) {
+      errs.zip = 'ZIP Code is required';
+    } else if (!/^\d+$/.test(addressModel.zip)) {
+      errs.zip = 'ZIP Code must contain only numbers';
+    } else if (addressModel.zip.length !== 6) {
+      errs.zip = 'ZIP Code must be exactly 6 digits';
     }
+    if (!addressModel.country) errs.country = 'Country is required';
+    setAddressErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const saveAddress = async () => {
+    setAddressServerErr('');
+    if (!validateAddressForm()) return;
 
     try {
       const updatedUser = await apiService.updateUser(currentUser._id, { address: addressModel });
       setUser(updatedUser);
       setIsEditingAddress(false);
       setIsAddingAddress(false);
+      setAddressErrors({});
       Swal.fire({
         title: 'Address Saved',
         text: 'Your Address has been saved Successfully.',
@@ -146,12 +172,7 @@ export default function Settings() {
       });
     } catch (err) {
       console.error('Failed to save address', err);
-      Swal.fire({
-        title: 'Error!!',
-        text: 'Failed to save Address, Please try again!!',
-        icon: 'error',
-        confirmButtonColor: '#d33'
-      });
+      setAddressServerErr('Failed to save Address, Please try again!!');
     }
   };
 
@@ -271,6 +292,14 @@ export default function Settings() {
                     <h2 className="text-xl font-bold font-serif text-gray-900 mb-6 pb-2 border-b border-gray-100">Security & Password</h2>
 
                     <div className="max-w-md space-y-6">
+                      {passwordServerErr && (
+                        <div className="bg-red-50 text-red-600 p-4 rounded-sm text-sm flex items-start border border-red-100">
+                          <svg className="h-5 w-5 text-red-400 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          {passwordServerErr}
+                        </div>
+                      )}
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Current Password</label>
                         <div className="relative">
@@ -299,6 +328,7 @@ export default function Settings() {
                             )}
                           </button>
                         </div>
+                        {passwordErrors.currentPassword && <div className="text-red-500 font-bold text-xs mt-1">{passwordErrors.currentPassword}</div>}
                       </div>
 
                       <div>
@@ -329,6 +359,7 @@ export default function Settings() {
                             )}
                           </button>
                         </div>
+                        {passwordErrors.newPassword && <div className="text-red-500 font-bold text-xs mt-1">{passwordErrors.newPassword}</div>}
                       </div>
 
                       <div>
@@ -359,6 +390,7 @@ export default function Settings() {
                             )}
                           </button>
                         </div>
+                        {passwordErrors.confirmPassword && <div className="text-red-500 font-bold text-xs mt-1">{passwordErrors.confirmPassword}</div>}
                       </div>
 
                       <button
@@ -420,6 +452,14 @@ export default function Settings() {
                     {/* Address Edit / Add Inline Form */}
                     {(isEditingAddress || isAddingAddress) && (
                       <div className="max-w-xl space-y-6">
+                        {addressServerErr && (
+                          <div className="bg-red-50 text-red-600 p-4 rounded-sm text-sm flex items-start border border-red-100">
+                            <svg className="h-5 w-5 text-red-400 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {addressServerErr}
+                          </div>
+                        )}
                         <div>
                           <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Street Address</label>
                           <textarea
@@ -429,6 +469,7 @@ export default function Settings() {
                             placeholder="123 Main St"
                             className="w-full h-[90px] text-base text-gray-900 font-light border border-gray-300 focus:border-black focus:outline-none px-3 py-2 bg-transparent transition-colors placeholder-gray-300 rounded-sm mt-1"
                           ></textarea>
+                          {addressErrors.street && <div className="text-red-500 font-bold text-xs mt-1">{addressErrors.street}</div>}
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -442,9 +483,10 @@ export default function Settings() {
                               placeholder="New York"
                               className="w-full text-base text-gray-900 font-light border border-gray-300 focus:border-black focus:outline-none px-3 py-2 bg-transparent transition-colors placeholder-gray-300 rounded-sm mt-1"
                             />
+                            {addressErrors.city && <div className="text-red-500 font-bold text-xs mt-1">{addressErrors.city}</div>}
                           </div>
                           <div>
-                            <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-400">State / Province</label>
+                            <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400">State / Province</label>
                             <input
                               type="text"
                               name="state"
@@ -453,6 +495,7 @@ export default function Settings() {
                               placeholder="NY"
                               className="w-full text-base text-gray-900 font-light border border-gray-300 focus:border-black focus:outline-none px-3 py-2 bg-transparent transition-colors placeholder-gray-300 rounded-sm mt-1"
                             />
+                            {addressErrors.state && <div className="text-red-500 font-bold text-xs mt-1">{addressErrors.state}</div>}
                           </div>
                         </div>
 
@@ -467,6 +510,7 @@ export default function Settings() {
                               placeholder="10001"
                               className="w-full text-base text-gray-900 font-light border border-gray-300 focus:border-black focus:outline-none px-3 py-2 bg-transparent transition-colors placeholder-gray-300 rounded-sm mt-1"
                             />
+                            {addressErrors.zip && <div className="text-red-500 font-bold text-xs mt-1">{addressErrors.zip}</div>}
                           </div>
                           <div>
                             <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Country</label>
@@ -478,6 +522,7 @@ export default function Settings() {
                               placeholder="United States"
                               className="w-full text-base text-gray-900 font-light border border-gray-300 focus:border-black focus:outline-none px-3 py-2 bg-transparent transition-colors placeholder-gray-300 rounded-sm mt-1"
                             />
+                            {addressErrors.country && <div className="text-red-500 font-bold text-xs mt-1">{addressErrors.country}</div>}
                           </div>
                         </div>
 
