@@ -30,8 +30,48 @@ const importData = async () => {
       const hashedPassword = await bcrypt.hash(u.password, salt);
       return { ...u, password: hashedPassword };
     }));
-    await User.insertMany(hashedUsers);
-    await Product.insertMany(products);
+    const createdUsers = await User.insertMany(hashedUsers);
+
+    // Get non-admin users for reviews
+    const reviewUsers = createdUsers.filter(u => !u.isAdmin);
+    
+    const reviewTemplates = [
+      { comment: "Absolutely stunning quality and fits perfectly! Very happy.", rating: 5 },
+      { comment: "The material is extremely premium. Highly recommend!", rating: 5 },
+      { comment: "Excellent design and attention to detail. Worth every rupee.", rating: 4 },
+      { comment: "A beautiful addition to my luxury wardrobe.", rating: 5 },
+      { comment: "Comfortable, stylish, and very chic. Will buy again!", rating: 4 },
+      { comment: "Beautiful color representation and fast shipping.", rating: 5 }
+    ];
+
+    const productsWithReviews = products.map(product => {
+      // Pick 3-4 random reviews
+      const numReviews = Math.floor(Math.random() * 2) + 3; // generates 3 or 4
+      const shuffled = [...reviewTemplates].sort(() => 0.5 - Math.random());
+      const selectedTemplates = shuffled.slice(0, numReviews);
+      
+      const reviewsList = selectedTemplates.map((template, index) => {
+        const user = reviewUsers[index % reviewUsers.length] || createdUsers[0];
+        return {
+          user: user._id,
+          name: user.fullname,
+          rating: template.rating,
+          comment: template.comment,
+          createdAt: new Date(Date.now() - Math.floor(Math.random() * 10) * 24 * 60 * 60 * 1000)
+        };
+      });
+
+      const avgRating = reviewsList.reduce((acc, item) => item.rating + acc, 0) / reviewsList.length;
+
+      return {
+        ...product,
+        reviews: reviewsList,
+        numReviews: reviewsList.length,
+        rating: avgRating
+      };
+    });
+
+    await Product.insertMany(productsWithReviews);
     await Category.insertMany(categories);
     await Tax.insertMany([
       { name: 'GST Tax', rate: 0.18, type: 'percentage', code: 'gst' },

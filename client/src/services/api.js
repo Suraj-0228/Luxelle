@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+let baseURL = import.meta.env.VITE_API_URL || (window.location.origin.includes('localhost') ? 'http://localhost:5000/api' : '/api');
+
+// Auto-append '/api' if the custom API URL is missing it
+if (baseURL && baseURL.startsWith('http') && !baseURL.endsWith('/api') && !baseURL.endsWith('/api/')) {
+  baseURL = baseURL.endsWith('/') ? `${baseURL}api` : `${baseURL}/api`;
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || (window.location.origin.includes('localhost') ? 'http://localhost:5000/api' : '/api')
+  baseURL
 });
 
 // Add request interceptor for auth token
@@ -41,6 +48,7 @@ export const apiService = {
   createProduct: (product) => api.post('/products', product).then(res => res.data),
   updateProduct: (id, product) => api.put(`/products/${id}`, product).then(res => res.data),
   deleteProduct: (id) => api.delete(`/products/${id}`).then(res => res.data),
+  addProductReview: (id, reviewData) => api.post(`/products/${id}/reviews`, reviewData).then(res => res.data),
 
   // Users / Auth
   login: (credentials) => api.post('/auth/login', credentials).then(res => res.data),

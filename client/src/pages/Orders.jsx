@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas-pro';
 import { useAuth } from '../context/AuthContext';
 import { apiService } from '../services/api';
 import ProfileSidebar from '../components/ProfileSidebar';
@@ -261,10 +261,13 @@ export default function Orders() {
     `;
 
     const container = document.createElement('div');
-    container.style.position = 'absolute';
-    container.style.left = '-9999px';
+    container.style.position = 'fixed';
+    container.style.left = '0';
     container.style.top = '0';
     container.style.width = '800px';
+    container.style.zIndex = '-9999';
+    container.style.opacity = '0.001';
+    container.style.pointerEvents = 'none';
     container.innerHTML = printContents;
     document.body.appendChild(container);
 
@@ -274,7 +277,8 @@ export default function Orders() {
 
       const elementToCapture = container.firstElementChild;
 
-      const canvas = await html2canvas(elementToCapture || container, {
+      const html2canvasFn = html2canvas.default || html2canvas;
+      const canvas = await html2canvasFn(elementToCapture || container, {
         scale: 2,
         useCORS: true,
         backgroundColor: '#ffffff',
@@ -286,7 +290,8 @@ export default function Orders() {
 
       const imgData = canvas.toDataURL('image/png');
 
-      const pdf = new jsPDF('p', 'mm', 'a4');
+      const jsPDFClass = jsPDF.jsPDF || jsPDF;
+      const pdf = new jsPDFClass('p', 'mm', 'a4');
       const pdfPageWidth = pdf.internal.pageSize.getWidth();
       const pdfPageHeight = pdf.internal.pageSize.getHeight();
 
@@ -307,7 +312,7 @@ export default function Orders() {
       console.error('Error generating PDF', error);
       Swal.fire({
         title: 'Error',
-        text: 'Could not generate PDF invoice. Please try again.',
+        text: `Could not generate PDF invoice. Details: ${error.message || error}`,
         icon: 'error',
         confirmButtonColor: '#111827'
       });

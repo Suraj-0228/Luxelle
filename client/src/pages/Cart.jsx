@@ -145,7 +145,7 @@ export default function Cart() {
               <div className="mt-8">
                 <button
                   onClick={handleProceedToCheckout}
-                  className="w-full bg-gray-900 text-white py-4 px-8 text-sm font-bold uppercase tracking-[0.2em] hover:bg-black transition-all duration-300 shadow-md"
+                  className="w-full bg-gray-900 text-white py-4 px-8 text-sm font-bold uppercase tracking-[0.2em] hover:bg-black transition-all duration-300 shadow-md cursor-pointer"
                 >
                   Proceed to Checkout
                 </button>
