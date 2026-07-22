@@ -148,114 +148,137 @@ export default function Orders() {
     const displayedTotal = order.totalAmount || (orderSubtotal + gstTax + importDuty + processingFee).toFixed(2);
 
     let printContents = `
-      <div style="font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif; width: 800px; padding: 50px; background: #ffffff; color: #1f2937; box-sizing: border-box;">
-        <div style="border: 1px solid #e5e7eb; padding: 45px; background: #ffffff; position: relative; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+      <div style="font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif; width: 800px; padding: 40px; background: #ffffff; color: #1f2937; box-sizing: border-box;">
+        <div style="border: 2px solid #111827; background: #ffffff; position: relative; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);">
           
-          <!-- Decorative Top Black Border Bar -->
-          <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #111827;"></div>
-
-          <!-- Header -->
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 50px;">
+          <!-- Top Onyx Luxury Header Banner -->
+          <div style="background: #111827; color: #ffffff; padding: 36px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #ca8a04;">
             <div>
-              <h1 style="margin: 0; font-size: 40px; letter-spacing: 5px; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 500; text-transform: uppercase; color: #111827; line-height: 1;">Luxelle</h1>
-              <p style="margin: 8px 0 0; color: #4b5563; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; font-weight: 500;">Maison de Couture</p>
+              <h1 style="margin: 0; font-size: 34px; letter-spacing: 7px; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700; text-transform: uppercase; color: #ffffff; line-height: 1;">LUXELLE</h1>
+              <p style="margin: 8px 0 0; color: #d1d5db; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; font-weight: 500;">MAISON DE HAUTE COUTURE • ${(order.shippingAddress?.country || 'INDIA').toUpperCase()}</p>
             </div>
             <div style="text-align: right;">
-              <h2 style="margin: 0 0 10px 0; color: #111827; font-size: 16px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 600;">Invoice</h2>
-              <div style="font-size: 12px; color: #4b5563; line-height: 1.6; font-weight: 300;">
-                <p style="margin: 0;">Invoice ID: <strong style="color: #111827; font-family: monospace; font-size: 13px;">#${order._id.substring(order._id.length - 8).toUpperCase()}</strong></p>
-                <p style="margin: 0;">Date: <span style="color: #111827; font-weight: 400;">${new Date(order.orderDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span></p>
-                <p style="margin: 0;">Status: <span style="display: inline-block; background: #f3f4f6; color: #111827; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 9999px; margin-top: 4px;">${order.orderStatus}</span></p>
-              </div>
+              <h2 style="margin: 0; color: #ffffff; font-size: 20px; letter-spacing: 4px; text-transform: uppercase; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700;">TAX INVOICE</h2>
+              <p style="margin: 6px 0 0; color: #9ca3af; font-size: 11px; font-family: monospace; letter-spacing: 1px;">#${order._id.substring(order._id.length - 8).toUpperCase()}</p>
             </div>
           </div>
 
-          <!-- Client and Bill info grid -->
-          <div style="display: flex; justify-content: space-between; margin-bottom: 50px; gap: 40px;">
+          <!-- Invoice Quick Meta Strip -->
+          <div style="background: #f9fafb; border-bottom: 1px solid #e5e7eb; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #4b5563;">
+            <div>
+              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 6px;">Issue Date:</span>
+              <strong style="color: #111827; font-weight: 500;">${new Date(order.orderDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
+            </div>
+            <div>
+              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 6px;">Payment Method:</span>
+              <strong style="color: #111827; font-weight: 500; text-transform: uppercase;">${order.paymentMethod || 'Card'}</strong>
+            </div>
+            <div>
+              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 8px;">Fulfillment Status:</span>
+              <span style="display: inline-block; background: #111827; color: #ffffff; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 3px 10px; border-radius: 2px;">${order.orderStatus}</span>
+            </div>
+          </div>
+
+          <!-- Customer & Destination Grid -->
+          <div style="padding: 35px 40px 25px 40px; display: flex; justify-content: space-between; gap: 40px;">
+            <!-- Shipping & Billing Destination -->
             <div style="flex: 1;">
-              <p style="margin: 0 0 12px; font-size: 10px; font-weight: 700; color: #111827; letter-spacing: 2px; text-transform: uppercase;">Shipping & Billing Destination</p>
-              <div style="border-top: 1px solid #e5e7eb; padding-top: 12px; font-size: 13px; line-height: 1.6; color: #4b5563; font-weight: 300;">
-                <p style="margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #111827; letter-spacing: 0.5px;">${order.shippingAddress.fullName}</p>
+              <p style="margin: 0 0 8px; font-size: 10px; font-weight: 700; color: #111827; letter-spacing: 2px; text-transform: uppercase;">Destination & Recipient</p>
+              <div style="border-top: 1.5px solid #111827; padding-top: 12px; font-size: 13px; line-height: 1.6; color: #4b5563;">
+                <p style="margin: 0 0 3px; font-size: 14px; font-weight: 600; color: #111827;">${order.shippingAddress.fullName}</p>
                 <p style="margin: 0;">${order.shippingAddress.street}</p>
                 <p style="margin: 0;">${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zip}</p>
-                <p style="margin: 0; text-transform: uppercase; font-weight: 400; color: #111827; font-size: 12px; margin-top: 2px;">${order.shippingAddress.country}</p>
+                <p style="margin: 3px 0 0; text-transform: uppercase; font-weight: 600; color: #111827; font-size: 11px; letter-spacing: 0.5px;">${order.shippingAddress.country}</p>
               </div>
             </div>
-            <div style="width: 250px; text-align: right;">
-              <p style="margin: 0 0 12px; font-size: 10px; font-weight: 700; color: #111827; letter-spacing: 2px; text-transform: uppercase;">Customer Details</p>
-              <div style="border-top: 1px solid #e5e7eb; padding-top: 12px; font-size: 13px; line-height: 1.6; color: #4b5563; font-weight: 300;">
-                <p style="margin: 0; font-weight: 500; color: #111827;">${order.user?.fullname || order.shippingAddress.fullName}</p>
-                <p style="margin: 0; font-family: monospace;">${order.user?.email || 'Client'}</p>
-                ${order.shippingAddress.phone ? `<p style="margin: 4px 0 0; font-size: 12px;">Phone No.: ${order.shippingAddress.phone}</p>` : ''}
+
+            <!-- Client Account Details -->
+            <div style="width: 260px; text-align: right;">
+              <p style="margin: 0 0 8px; font-size: 10px; font-weight: 700; color: #111827; letter-spacing: 2px; text-transform: uppercase;">Customer Account</p>
+              <div style="border-top: 1.5px solid #111827; padding-top: 12px; font-size: 13px; line-height: 1.6; color: #4b5563;">
+                <p style="margin: 0 0 3px; font-weight: 600; color: #111827;">${order.user?.fullname || order.shippingAddress.fullName}</p>
+                <p style="margin: 0; font-family: monospace; font-size: 12px; color: #4b5563;">${order.user?.email || order.shippingAddress.email || 'Client'}</p>
+                ${order.shippingAddress.phone ? `<p style="margin: 3px 0 0; font-size: 12px; color: #6b7280;">Tel: ${order.shippingAddress.phone}</p>` : ''}
               </div>
             </div>
           </div>
 
-          <!-- Items Table -->
-          <table style="width: 100%; border-collapse: collapse; margin-bottom: 50px;">
-            <thead>
-              <tr style="border-bottom: 2px solid #111827;">
-                <th style="padding: 0 0 12px 0; text-align: left; font-size: 11px; font-weight: 600; color: #111827; letter-spacing: 1.5px; text-transform: uppercase;">Item Description</th>
-                <th style="padding: 0 0 12px 0; text-align: center; font-size: 11px; font-weight: 600; color: #111827; letter-spacing: 1.5px; text-transform: uppercase; width: 100px;">Color</th>
-                <th style="padding: 0 0 12px 0; text-align: center; font-size: 11px; font-weight: 600; color: #111827; letter-spacing: 1.5px; text-transform: uppercase; width: 80px;">Qty</th>
-                <th style="padding: 0 0 12px 0; text-align: right; font-size: 11px; font-weight: 600; color: #111827; letter-spacing: 1.5px; text-transform: uppercase; width: 120px;">Unit Price</th>
-                <th style="padding: 0 0 12px 0; text-align: right; font-size: 11px; font-weight: 600; color: #111827; letter-spacing: 1.5px; text-transform: uppercase; width: 120px;">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${order.items.map(item => `
-                <tr style="border-bottom: 1px solid #f3f4f6;">
-                  <td style="padding: 18px 0; vertical-align: middle;">
-                    <span style="display: block; font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 2px;">${item.product?.name || 'Item'}</span>
-                    <span style="display: inline-block; font-size: 10px; color: #9ca3af; letter-spacing: 1px; text-transform: uppercase; font-weight: 500;">${item.product?.brand || 'LUXELLE'}</span>
-                  </td>
-                  <td style="padding: 18px 0; text-align: center; vertical-align: middle; font-size: 13px; color: #4b5563; font-weight: 300;">${item.selectedColor || '-'}</td>
-                  <td style="padding: 18px 0; text-align: center; vertical-align: middle; font-size: 13px; color: #4b5563; font-weight: 300;">${item.quantity}</td>
-                  <td style="padding: 18px 0; text-align: right; vertical-align: middle; font-size: 13px; color: #4b5563; font-weight: 300;">₹${item.product?.price?.toFixed(2) || '0.00'}</td>
-                  <td style="padding: 18px 0; text-align: right; vertical-align: middle; font-size: 14px; font-weight: 500; color: #111827;">₹${(item.quantity * (item.product?.price || 0)).toFixed(2)}</td>
+          <!-- Itemized Breakdown Table -->
+          <div style="padding: 0 40px 25px 40px;">
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #111827; color: #ffffff;">
+                  <th style="padding: 12px 14px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: none;">Item Description</th>
+                  <th style="padding: 12px 14px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 90px; border: none;">Color</th>
+                  <th style="padding: 12px 14px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 70px; border: none;">Qty</th>
+                  <th style="padding: 12px 14px; text-align: right; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 110px; border: none;">Unit Price</th>
+                  <th style="padding: 12px 14px; text-align: right; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 110px; border: none;">Total</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                ${order.items.map(item => `
+                  <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <td style="padding: 16px 14px; vertical-align: middle;">
+                      <span style="display: block; font-size: 14px; font-weight: 600; color: #111827; font-family: 'Playfair Display', serif;">${item.product?.name || 'Item'}</span>
+                      <span style="display: inline-block; font-size: 9px; color: #6b7280; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; margin-top: 2px;">${item.product?.brand || 'LUXELLE'}</span>
+                    </td>
+                    <td style="padding: 16px 14px; text-align: center; vertical-align: middle; font-size: 12px; color: #4b5563;">
+                      ${item.selectedColor ? `<span style="display: inline-block; padding: 2px 8px; background: #f3f4f6; border-radius: 2px; font-size: 11px; font-weight: 500;">${item.selectedColor}</span>` : '-'}
+                    </td>
+                    <td style="padding: 16px 14px; text-align: center; vertical-align: middle; font-size: 13px; color: #111827; font-weight: 600;">${item.quantity}</td>
+                    <td style="padding: 16px 14px; text-align: right; vertical-align: middle; font-size: 13px; color: #4b5563;">₹${item.product?.price?.toFixed(2) || '0.00'}</td>
+                    <td style="padding: 16px 14px; text-align: right; vertical-align: middle; font-size: 14px; font-weight: 600; color: #111827;">₹${(item.quantity * (item.product?.price || 0)).toFixed(2)}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
 
-          <!-- Totals and Footer Grid -->
-          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px;">
-            <!-- Thank You message & terms -->
-            <div style="max-w: 300px; font-size: 11px; line-height: 1.6; color: #9ca3af; font-weight: 300;">
-              <p style="margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 14px; color: #111827; margin-bottom: 6px; font-weight: 700;">Thank you for your purchase.</p>
-              <p style="margin: 0;">For inquiries regarding return policy or customer service, please visit our online concierge or contact support@luxelle.com.</p>
+          <!-- Financial Summary & Concierge Guarantee -->
+          <div style="padding: 0 40px 30px 40px; display: flex; justify-content: space-between; align-items: flex-end; gap: 10px;">
+            <!-- Left Guarantee Box -->
+            <div style="width: 300px; background: #fdfbf7; border: 1px dashed #d1d5db; padding: 18px; border-radius: 2px; box-sizing: border-box;">
+              <p style="margin: 0 0 6px 0; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #92400e; font-family: 'Playfair Display', serif;">★ CONCIERGE GUARANTEE</p>
+              <p style="margin: 0; font-size: 11px; line-height: 1.5; color: #6b7280; font-weight: 300;">
+                All items are certified authentic haute couture products. For inquiries, complimentary returns, or concierge assistance, contact <strong>concierge@luxelle.com</strong>.
+              </p>
             </div>
 
-            <!-- Summary Block -->
-            <div style="width: 380px; background: #f9fafb; border: 1px solid #e5e7eb; padding: 24px; border-radius: 2px;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; color: #4b5563; font-weight: 300; align-items: center;">
+            <!-- Right Totals Card -->
+            <div style="width: 340px; background: #ffffff; border: 1px solid #e5e7eb; padding: 20px; border-radius: 2px; box-sizing: border-box;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #4b5563;">
                 <span>Subtotal</span>
-                <span style="font-weight: 400; color: #111827;">₹${orderSubtotal.toFixed(2)}</span>
+                <span style="font-weight: 500; color: #111827;">₹${orderSubtotal.toFixed(2)}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; color: #4b5563; font-weight: 300; align-items: center;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #4b5563;">
                 <span>GST (${(gstRate * 100).toFixed(0)}%)</span>
-                <span style="font-weight: 400; color: #111827;">₹${gstTax.toFixed(2)}</span>
+                <span style="font-weight: 500; color: #111827;">₹${gstTax.toFixed(2)}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; color: #4b5563; font-weight: 300; align-items: center;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #4b5563;">
                 <span>Import Duty (${(importDutyRate * 100).toFixed(0)}%)</span>
-                <span style="font-weight: 400; color: #111827;">₹${importDuty.toFixed(2)}</span>
+                <span style="font-weight: 500; color: #111827;">₹${importDuty.toFixed(2)}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; color: #4b5563; font-weight: 300; align-items: center;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #4b5563;">
                 <span>Processing Fee</span>
-                <span style="font-weight: 400; color: #111827;">₹${processingFee.toFixed(2)}</span>
+                <span style="font-weight: 500; color: #111827;">₹${processingFee.toFixed(2)}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 12px; color: #4b5563; font-weight: 300; align-items: center;">
-                <span>Shipping & Handling</span>
-                <span style="color: #111827; font-weight: 500; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; flex-shrink: 0; margin-left: 10px;">Complimentary</span>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 12px; color: #4b5563;">
+                <span>Express Delivery</span>
+                <span style="color: #16a34a; font-weight: 700; text-transform: uppercase; font-size: 10px; letter-spacing: 1px;">Complimentary</span>
               </div>
-              
-              <div style="display: flex; justify-content: space-between; padding-top: 16px; border-top: 1px solid #111827; align-items: center;">
-                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #111827; white-space: nowrap; margin-right: 15px;">Total Amount</span>
-                <span style="font-size: 22px; font-family: 'Playfair Display', 'Georgia', serif; color: #111827; font-weight: 600; line-height: 1; white-space: nowrap; flex-shrink: 0;">₹${Number(displayedTotal).toFixed(2)}</span>
+
+              <div style="display: flex; justify-content: space-between; background: #111827; color: #ffffff; padding: 12px 16px; border-radius: 2px; align-items: center;">
+                <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #ffffff;">Total Paid</span>
+                <span style="font-size: 20px; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700; color: #ffffff; line-height: 1;">₹${Number(displayedTotal).toFixed(2)}</span>
               </div>
             </div>
           </div>
-          
+
+          <!-- Bottom Branding Footer -->
+          <div style="background: #f9fafb; border-top: 1px solid #e5e7eb; padding: 14px 40px; text-align: center; font-size: 9px; color: #9ca3af; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 500;">
+            ★ THANK YOU FOR YOUR PATRONAGE ★
+          </div>
+
         </div>
       </div>
     `;
@@ -279,11 +302,13 @@ export default function Orders() {
 
       const html2canvasFn = html2canvas.default || html2canvas;
       const canvas = await html2canvasFn(elementToCapture || container, {
-        scale: 2,
+        scale: 4, // Ultra-HD 300+ DPI resolution capture for crystal-sharp text on zoom
         useCORS: true,
         backgroundColor: '#ffffff',
         scrollY: 0,
-        scrollX: 0
+        scrollX: 0,
+        windowWidth: 800,
+        logging: false
       });
 
       window.scrollTo(0, originalScrollY);

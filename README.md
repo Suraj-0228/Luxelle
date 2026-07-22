@@ -1,6 +1,6 @@
 # Luxelle - Premium Fashion E-Commerce Platform
 
-![Luxelle Banner](https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&auto=format&fit=crop&q=60)
+![Luxelle Banner](https://i.pinimg.com/1200x/0a/5a/4f/0a5a4fc417a4572edc12766127ef4093.jpg)
 
 ## 1. Introduction
 
@@ -44,14 +44,15 @@ Luxelle is built on the robust **MERN Stack**, ensuring a full JavaScript-based 
 Luxelle offers a rich set of features divided into three main pillars:
 
 ### 3.1 🛍️ Shopping & Discovery
-*   **Dynamic Product Catalog**: Advanced filtering by category, price ranges, and designer brands.
+*   **Dynamic Product Catalog**: Advanced filtering by category, price ranges, and designer brands with dynamic star rating badges.
 *   **Curated Latest Arrivals Page**: Dedicated `/latest` route showcasing newest inventory releases.
+*   **Interactive Product Reviews**: Authenticated customers can submit 1–5 star ratings and detailed feedback via an interactive modal overlay. Reviews display user avatars, verified buyer badges, and automatically calculate real-time product rating averages.
 *   **Premium Toaster system**: Dynamic status-based glassmorphic alerts (Success, Error, Info) with slide-in animations and animated countdown progress bars.
 
 ### 3.2 👤 Customer Dashboard & Account Management
-*   **Account Settings**: Securely change credentials, passwords, and profile options.
+*   **Account Settings**: Securely change credentials, passwords, and profile options with inline form validations.
 *   **Address Book**: Maintain billing and shipping destinations with a strict 6-digit numeric ZIP Code validation guard.
-*   **Interactive Orders History**: Inspect past invoice breakups, cancel pending orders, or compile high-resolution PDF invoices via `jsPDF` + `html2canvas`.
+*   **Ultra-HD PDF Invoices**: Generate 4x Retina-quality (300+ DPI) printable tax invoices via `jsPDF` + `html2canvas-pro` with Onyx/Gold luxury branding, concierge guarantee, dynamic destination country tagging, and itemized tax breakdowns.
 *   **Wishlist**: Save favorite items to purchase later.
 
 ### 3.3 💳 Cart & Checkout Workflow
@@ -110,6 +111,9 @@ The application will launch at `http://localhost:5173`.
 | `material` | String | Primary material composition (e.g. 'Leather'). |
 | `image` | String | URL path to the product image asset. |
 | `stock` | Number | Quantity available in inventory. |
+| `reviews` | Array`<Review>` | Nested list of customer reviews (`user`, `name`, `rating`, `comment`). |
+| `rating` | Number | Aggregated average rating score (1 to 5 stars). |
+| `numReviews` | Number | Total count of submitted product reviews. |
 
 ### 5.2 User Schema
 | Field | Type | Description |
