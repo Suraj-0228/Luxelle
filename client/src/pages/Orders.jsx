@@ -147,18 +147,20 @@ export default function Orders() {
 
     const displayedTotal = order.totalAmount || (orderSubtotal + gstTax + importDuty + processingFee).toFixed(2);
 
+    const nbsp = (str) => (str ? String(str).replace(/ /g, '&nbsp;') : '');
+
     let printContents = `
-      <div style="font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif; width: 800px; padding: 40px; background: #ffffff; color: #1f2937; box-sizing: border-box;">
-        <div style="border: 2px solid #111827; background: #ffffff; position: relative; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);">
+      <div id="luxelle-invoice-render" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; width: 800px; min-width: 800px; max-width: 800px; padding: 40px; background: #ffffff; color: #1f2937; box-sizing: border-box; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; word-spacing: normal; letter-spacing: normal;">
+        <div style="border: 2px solid #111827; background: #ffffff; position: relative; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08); -webkit-text-size-adjust: 100%; text-size-adjust: 100%;">
           
           <!-- Top Onyx Luxury Header Banner -->
           <div style="background: #111827; color: #ffffff; padding: 36px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #ca8a04;">
             <div>
               <h1 style="margin: 0; font-size: 34px; letter-spacing: 7px; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700; text-transform: uppercase; color: #ffffff; line-height: 1;">LUXELLE</h1>
-              <p style="margin: 8px 0 0; color: #d1d5db; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; font-weight: 500;">MAISON DE HAUTE COUTURE • ${(order.shippingAddress?.country || 'INDIA').toUpperCase()}</p>
+              <p style="margin: 8px 0 0; color: #d1d5db; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; font-weight: 500;">MAISON&nbsp;DE&nbsp;HAUTE&nbsp;COUTURE&nbsp;•&nbsp;${nbsp((order.shippingAddress?.country || 'INDIA').toUpperCase())}</p>
             </div>
             <div style="text-align: right;">
-              <h2 style="margin: 0; color: #ffffff; font-size: 20px; letter-spacing: 4px; text-transform: uppercase; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700;">TAX INVOICE</h2>
+              <h2 style="margin: 0; color: #ffffff; font-size: 20px; letter-spacing: 4px; text-transform: uppercase; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700;">TAX&nbsp;INVOICE</h2>
               <p style="margin: 6px 0 0; color: #9ca3af; font-size: 11px; font-family: monospace; letter-spacing: 1px;">#${order._id.substring(order._id.length - 8).toUpperCase()}</p>
             </div>
           </div>
@@ -166,16 +168,16 @@ export default function Orders() {
           <!-- Invoice Quick Meta Strip -->
           <div style="background: #f9fafb; border-bottom: 1px solid #e5e7eb; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #4b5563;">
             <div>
-              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 6px;">Issue Date:</span>
-              <strong style="color: #111827; font-weight: 500;">${new Date(order.orderDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
+              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 6px;">Issue&nbsp;Date:</span>
+              <strong style="color: #111827; font-weight: 500;">${nbsp(new Date(order.orderDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }))}</strong>
             </div>
             <div>
-              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 6px;">Payment Method:</span>
-              <strong style="color: #111827; font-weight: 500; text-transform: uppercase;">${order.paymentMethod || 'Card'}</strong>
+              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 6px;">Payment&nbsp;Method:</span>
+              <strong style="color: #111827; font-weight: 500; text-transform: uppercase;">${nbsp(order.paymentMethod || 'Card')}</strong>
             </div>
             <div>
-              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 8px;">Fulfillment Status:</span>
-              <span style="display: inline-block; background: #111827; color: #ffffff; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 3px 10px; border-radius: 2px;">${order.orderStatus}</span>
+              <span style="text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #6b7280; font-size: 10px; margin-right: 8px;">Fulfillment&nbsp;Status:</span>
+              <span style="display: inline-block; background: #111827; color: #ffffff; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 3px 10px; border-radius: 2px;">${nbsp(order.orderStatus)}</span>
             </div>
           </div>
 
@@ -183,22 +185,22 @@ export default function Orders() {
           <div style="padding: 35px 40px 25px 40px; display: flex; justify-content: space-between; gap: 40px;">
             <!-- Shipping & Billing Destination -->
             <div style="flex: 1;">
-              <p style="margin: 0 0 8px; font-size: 10px; font-weight: 700; color: #111827; letter-spacing: 2px; text-transform: uppercase;">Destination & Recipient</p>
+              <p style="margin: 0 0 8px; font-size: 10px; font-weight: 700; color: #111827; letter-spacing: 2px; text-transform: uppercase;">Destination&nbsp;&amp;&nbsp;Recipient</p>
               <div style="border-top: 1.5px solid #111827; padding-top: 12px; font-size: 13px; line-height: 1.6; color: #4b5563;">
-                <p style="margin: 0 0 3px; font-size: 14px; font-weight: 600; color: #111827;">${order.shippingAddress.fullName}</p>
-                <p style="margin: 0;">${order.shippingAddress.street}</p>
-                <p style="margin: 0;">${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zip}</p>
-                <p style="margin: 3px 0 0; text-transform: uppercase; font-weight: 600; color: #111827; font-size: 11px; letter-spacing: 0.5px;">${order.shippingAddress.country}</p>
+                <p style="margin: 0 0 3px; font-size: 14px; font-weight: 600; color: #111827;">${nbsp(order.shippingAddress.fullName)}</p>
+                <p style="margin: 0; white-space: normal; overflow-wrap: break-word;">${order.shippingAddress.street}</p>
+                <p style="margin: 0;">${nbsp(order.shippingAddress.city)},&nbsp;${nbsp(order.shippingAddress.state)}&nbsp;${nbsp(order.shippingAddress.zip)}</p>
+                <p style="margin: 3px 0 0; text-transform: uppercase; font-weight: 600; color: #111827; font-size: 11px; letter-spacing: 0.5px;">${nbsp(order.shippingAddress.country)}</p>
               </div>
             </div>
 
             <!-- Client Account Details -->
             <div style="width: 260px; text-align: right;">
-              <p style="margin: 0 0 8px; font-size: 10px; font-weight: 700; color: #111827; letter-spacing: 2px; text-transform: uppercase;">Customer Account</p>
+              <p style="margin: 0 0 8px; font-size: 10px; font-weight: 700; color: #111827; letter-spacing: 2px; text-transform: uppercase;">Customer&nbsp;Account</p>
               <div style="border-top: 1.5px solid #111827; padding-top: 12px; font-size: 13px; line-height: 1.6; color: #4b5563;">
-                <p style="margin: 0 0 3px; font-weight: 600; color: #111827;">${order.user?.fullname || order.shippingAddress.fullName}</p>
+                <p style="margin: 0 0 3px; font-weight: 600; color: #111827;">${nbsp(order.user?.fullname || order.shippingAddress.fullName)}</p>
                 <p style="margin: 0; font-family: monospace; font-size: 12px; color: #4b5563;">${order.user?.email || order.shippingAddress.email || 'Client'}</p>
-                ${order.shippingAddress.phone ? `<p style="margin: 3px 0 0; font-size: 12px; color: #6b7280;">Tel: ${order.shippingAddress.phone}</p>` : ''}
+                ${order.shippingAddress.phone ? `<p style="margin: 3px 0 0; font-size: 12px; color: #6b7280;">Tel:&nbsp;${nbsp(order.shippingAddress.phone)}</p>` : ''}
               </div>
             </div>
           </div>
@@ -208,10 +210,10 @@ export default function Orders() {
             <table style="width: 100%; border-collapse: collapse;">
               <thead>
                 <tr style="background: #111827; color: #ffffff;">
-                  <th style="padding: 12px 14px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: none;">Item Description</th>
+                  <th style="padding: 12px 14px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: none;">Item&nbsp;Description</th>
                   <th style="padding: 12px 14px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 90px; border: none;">Color</th>
                   <th style="padding: 12px 14px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 70px; border: none;">Qty</th>
-                  <th style="padding: 12px 14px; text-align: right; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 110px; border: none;">Unit Price</th>
+                  <th style="padding: 12px 14px; text-align: right; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 110px; border: none;">Unit&nbsp;Price</th>
                   <th style="padding: 12px 14px; text-align: right; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; width: 110px; border: none;">Total</th>
                 </tr>
               </thead>
@@ -219,11 +221,11 @@ export default function Orders() {
                 ${order.items.map(item => `
                   <tr style="border-bottom: 1px solid #e5e7eb;">
                     <td style="padding: 16px 14px; vertical-align: middle;">
-                      <span style="display: block; font-size: 14px; font-weight: 600; color: #111827; font-family: 'Playfair Display', serif;">${item.product?.name || 'Item'}</span>
-                      <span style="display: inline-block; font-size: 9px; color: #6b7280; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; margin-top: 2px;">${item.product?.brand || 'LUXELLE'}</span>
+                      <span style="display: block; font-size: 14px; font-weight: 600; color: #111827; font-family: 'Playfair Display', serif;">${nbsp(item.product?.name || 'Item')}</span>
+                      <span style="display: inline-block; font-size: 9px; color: #6b7280; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; margin-top: 2px;">${nbsp(item.product?.brand || 'LUXELLE')}</span>
                     </td>
                     <td style="padding: 16px 14px; text-align: center; vertical-align: middle; font-size: 12px; color: #4b5563;">
-                      ${item.selectedColor ? `<span style="display: inline-block; padding: 2px 8px; background: #f3f4f6; border-radius: 2px; font-size: 11px; font-weight: 500;">${item.selectedColor}</span>` : '-'}
+                      ${item.selectedColor ? `<span style="display: inline-block; padding: 2px 8px; background: #f3f4f6; border-radius: 2px; font-size: 11px; font-weight: 500;">${nbsp(item.selectedColor)}</span>` : '-'}
                     </td>
                     <td style="padding: 16px 14px; text-align: center; vertical-align: middle; font-size: 13px; color: #111827; font-weight: 600;">${item.quantity}</td>
                     <td style="padding: 16px 14px; text-align: right; vertical-align: middle; font-size: 13px; color: #4b5563;">₹${item.product?.price?.toFixed(2) || '0.00'}</td>
@@ -238,8 +240,8 @@ export default function Orders() {
           <div style="padding: 0 40px 30px 40px; display: flex; justify-content: space-between; align-items: flex-end; gap: 10px;">
             <!-- Left Guarantee Box -->
             <div style="width: 300px; background: #fdfbf7; border: 1px dashed #d1d5db; padding: 18px; border-radius: 2px; box-sizing: border-box;">
-              <p style="margin: 0 0 6px 0; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #92400e; font-family: 'Playfair Display', serif;">★ CONCIERGE GUARANTEE</p>
-              <p style="margin: 0; font-size: 11px; line-height: 1.5; color: #6b7280; font-weight: 300;">
+              <p style="margin: 0 0 6px 0; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #92400e; font-family: 'Playfair Display', serif;">★&nbsp;CONCIERGE&nbsp;GUARANTEE</p>
+              <p style="margin: 0; font-size: 11px; line-height: 1.5; color: #6b7280; font-weight: 300; white-space: normal; word-break: normal; overflow-wrap: break-word;">
                 All items are certified authentic haute couture products. For inquiries, complimentary returns, or concierge assistance, contact <strong>concierge@luxelle.com</strong>.
               </p>
             </div>
@@ -251,24 +253,24 @@ export default function Orders() {
                 <span style="font-weight: 500; color: #111827;">₹${orderSubtotal.toFixed(2)}</span>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #4b5563;">
-                <span>GST (${(gstRate * 100).toFixed(0)}%)</span>
+                <span>GST&nbsp;(${(gstRate * 100).toFixed(0)}%)</span>
                 <span style="font-weight: 500; color: #111827;">₹${gstTax.toFixed(2)}</span>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #4b5563;">
-                <span>Import Duty (${(importDutyRate * 100).toFixed(0)}%)</span>
+                <span>Import&nbsp;Duty&nbsp;(${(importDutyRate * 100).toFixed(0)}%)</span>
                 <span style="font-weight: 500; color: #111827;">₹${importDuty.toFixed(2)}</span>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #4b5563;">
-                <span>Processing Fee</span>
+                <span>Processing&nbsp;Fee</span>
                 <span style="font-weight: 500; color: #111827;">₹${processingFee.toFixed(2)}</span>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 12px; color: #4b5563;">
-                <span>Express Delivery</span>
+                <span>Express&nbsp;Delivery</span>
                 <span style="color: #16a34a; font-weight: 700; text-transform: uppercase; font-size: 10px; letter-spacing: 1px;">Complimentary</span>
               </div>
 
               <div style="display: flex; justify-content: space-between; background: #111827; color: #ffffff; padding: 12px 16px; border-radius: 2px; align-items: center;">
-                <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #ffffff;">Total Paid</span>
+                <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #ffffff;">Total&nbsp;Paid</span>
                 <span style="font-size: 20px; font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700; color: #ffffff; line-height: 1;">₹${Number(displayedTotal).toFixed(2)}</span>
               </div>
             </div>
@@ -276,7 +278,7 @@ export default function Orders() {
 
           <!-- Bottom Branding Footer -->
           <div style="background: #f9fafb; border-top: 1px solid #e5e7eb; padding: 14px 40px; text-align: center; font-size: 9px; color: #9ca3af; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 500;">
-            ★ THANK YOU FOR YOUR PATRONAGE ★
+            ★&nbsp;THANK&nbsp;YOU&nbsp;FOR&nbsp;YOUR&nbsp;PATRONAGE&nbsp;★
           </div>
 
         </div>
@@ -288,9 +290,13 @@ export default function Orders() {
     container.style.left = '0';
     container.style.top = '0';
     container.style.width = '800px';
+    container.style.minWidth = '800px';
+    container.style.maxWidth = '800px';
     container.style.zIndex = '-9999';
     container.style.opacity = '0.001';
     container.style.pointerEvents = 'none';
+    container.style.webkitTextSizeAdjust = '100%';
+    container.style.textSizeAdjust = '100%';
     container.innerHTML = printContents;
     document.body.appendChild(container);
 
@@ -308,7 +314,14 @@ export default function Orders() {
         scrollY: 0,
         scrollX: 0,
         windowWidth: 800,
-        logging: false
+        logging: false,
+        onclone: (clonedDoc) => {
+          const allElems = clonedDoc.getElementsByTagName('*');
+          for (let i = 0; i < allElems.length; i++) {
+            allElems[i].style.webkitTextSizeAdjust = '100%';
+            allElems[i].style.textSizeAdjust = '100%';
+          }
+        }
       });
 
       window.scrollTo(0, originalScrollY);
